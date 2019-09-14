@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">Fishmarker_Kotlin</string>
+
+    //////////////////////////////////REGISRATION
+    <string name="name">name</string>
+    <string name="Name">Name</string>
+    <string name="email">email</string>
+    <string name="Email">Email</string>
+    <string name="password">password</string>
+    <string name="Password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="Location">Country</string>
+    <string name="location">country</string>
+    <string name="Dont_have">Dont have account, create</string>
+    <string name="Register">Registration</string>
+    <string name="empty_name">empty name</string>
+    <string name="empty_email">empty email</string>
+    <string name="not_valid_email">not valid email</string>
+    <string name="not_valid_password">not valid password</string>
+    <string name="empty_email_or_password">email or password is empty</string>
+    <string name="requirementsy">does not meet the requirementsy</string>
+    <string name="autorithation">Autorithation error, login or password not true</string>
+    <string name="successfully">successfully logged in</string>
+    <string name="verify">please verify your account on email</string>
+    <string name="sent">password sent to your email</string>
+    <string name="valid">"not valid data</string>
+    <string name="password_empty">password empty</string>
+    <string name="password_not_valid">password not valid</string>
+    <string name="check">please check email</string>
+    <string name="password_requirements">Password requirements:</string>
+    <string name="requirements">1)At least 8 chars\n2)Digit must occur at least once\n3)A lower case letter must occur at least once\n4)An upper case letter must occur at least once\n5)No whitespace allowed in the entire string</string>
+    <string name="sent_pass">Send my Password</string>
+    <string name="forgot">Forgot Password</string>
+    <string name="not_valid_name">not valid name</string>
+    <string name="registration">Registration</string>
+    <string name="registration_big">REGISTRATION</string>
+    <string name="places">Places</string>
+    <string name="markers">Markers</string>
+    <string name="add_marker_activity">Add marker</string>
+    <string name="water_object">Water object</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="sign_in_activity">Sign In</string>
+    <string name="add_places">Add place</string>
+
+
 </resources>
