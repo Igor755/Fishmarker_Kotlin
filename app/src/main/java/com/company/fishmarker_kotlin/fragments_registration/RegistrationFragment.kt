@@ -1,4 +1,4 @@
-package com.company.fishmarker_kotlin.registration_fragments
+package com.company.fishmarker_kotlin.fragments_registration
 
 import android.os.Bundle
 import android.view.LayoutInflater

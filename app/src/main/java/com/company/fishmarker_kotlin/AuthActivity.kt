@@ -2,7 +2,7 @@ package com.company.fishmarker_kotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.company.fishmarker_kotlin.registration_fragments.SignInFragment
+import com.company.fishmarker_kotlin.fragments_registration.SignInFragment
 
 class AuthActivity : AppCompatActivity() {
 

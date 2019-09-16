@@ -1,70 +1,48 @@
 package com.company.fishmarker_kotlin.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.company.fishmarker_kotlin.modelclass.Place
-import com.company.fishmarker_kotlin.modelclass.WaterObject
+import com.bumptech.glide.Glide
+import com.company.fishmarker_kotlin.R
+import com.company.fishmarker_kotlin.modelclass.BigWater
 
 
-class AdapterPlace(var context: Context?, val listplace: List<Place>?) : BaseAdapter() {
+class AdapterPlace(context: Context) : ArrayAdapter<BigWater>(context, 0, BigWater.values()) {
 
-    val layoutInflater : LayoutInflater? = null
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-
-        val holder : ViewHolder
-
-        if (convertView == null){
-            val convertView = layoutInflater?.inflate(com.company.fishmarker_kotlin.R.layout.one_item_place, null)
-            holder = ViewHolder()
-            holder.imagePhoto = convertView?.findViewById(com.company.fishmarker_kotlin.R.id.imageViewWater) as ImageView
-            holder.namePhoto = convertView.findViewById(com.company.fishmarker_kotlin.R.id.textViewWaterName) as TextView
-            convertView.setTag(holder)
-
-        }else{
-
-            holder = convertView.getTag() as ViewHolder
-
-        }
-
-        val WaterObject = listplace?.get(position)
-
-       /* holder.namePhoto.setText(WaterObject.getName())
-
-
-        val imageId = this.getMipmapResIdByName(WaterObject.getPhoto())
+    var layoutInflater : LayoutInflater? = null
 
 
 
-        holder.imagePhoto.setImageResource(imageId)
-*/
+    init {
+        this.layoutInflater = LayoutInflater.from(context)
+    }
+
+    @Suppress("NAME_SHADOWING")
+    @SuppressLint("ViewHolder", "InflateParams")
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
 
+             val convertView = layoutInflater?.inflate(R.layout.one_item_place, null)
 
 
-        return convertView!!
+            val imagePhoto = convertView?.findViewById(R.id.imageViewWater) as ImageView
+            val nameWaterName = convertView.findViewById(R.id.textViewWaterName) as TextView
+
+            nameWaterName.text = BigWater.values()[position].nameWater
+            //imagePhoto.setImageResource(BigWater.values()[position].photoWater)
+        Glide.with(context).load(BigWater.values()[position].photoWater).into(imagePhoto)
+
+        return convertView
     }
 
 
-    override fun getItem(position: Int): Any {
-        return listplace?.get(position)!!
-    }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getCount(): Int {
-        return listplace?.size!!
-    }
-    class ViewHolder{
-
-        var imagePhoto : ImageView? = null
-        var namePhoto : TextView? = null
-    }
 }
+
+
