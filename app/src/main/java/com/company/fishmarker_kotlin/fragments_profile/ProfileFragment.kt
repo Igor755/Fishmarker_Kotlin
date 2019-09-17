@@ -28,21 +28,21 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
 
-        gridView  = view.findViewById(R.id.gridView) as GridView
+       // gridView  = view.findViewById(R.id.gridView) as GridView
 
 
         adapterGrid  = context?.let { AdapterPlace(it) }
 
-        gridView!!.adapter = adapterGrid
+      //  gridView!!.adapter = adapterGrid
 
-        gridView!!.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-
-
-            val bigWater = BigWater.values()[position]
-            PlaceName(bigWater.nameWater)
+      //  gridView!!.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
 
-        }
+           // val bigWater = BigWater.values()[position]
+           // PlaceName(bigWater.nameWater)
+
+
+     //   }
         return view
 
     }
