@@ -1,8 +1,6 @@
 package com.company.fishmarker_kotlin
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -41,7 +39,7 @@ class ProfileActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
 
             setOf(
-                R.id.nav_profile_fragment/*, R.id.nav_gallery, R.id.nav_slideshow,
+                R.id.nav_profile_fragment, R.id.nav_place_fragment /*, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send*/
 
             ), drawerLayout
