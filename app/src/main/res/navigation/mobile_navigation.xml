@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_place_fragment"
-        android:name="com.company.fishmarker_kotlin.fragments_profile.PlaceFragment"
+        android:name="com.company.fishmarker_kotlin.fragments_profile.BigWaterFragment"
         android:label="Big Water"
-        tools:layout="@layout/fragment_place"/>
+        tools:layout="@layout/fragment_big_water"/>
 
    <!-- <fragment
         android:id="@+id/nav_gallery"

@@ -3,16 +3,20 @@ package com.company.fishmarker_kotlin
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.company.fishmarker_kotlin.fragments_place.AddPlace
 
 class PlaceActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
+        setContentView(R.layout.activity_place)
 
-
-        var namewater: String = intent.getStringExtra("nameWater")
-        Toast.makeText(this, namewater, Toast.LENGTH_SHORT).show()
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container_auth, AddPlace())
+                .commit()
+        }
     }
 }

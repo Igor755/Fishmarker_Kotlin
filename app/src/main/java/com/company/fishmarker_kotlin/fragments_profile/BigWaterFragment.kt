@@ -10,13 +10,13 @@ import android.widget.GridView
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.PlaceActivity
 import com.company.fishmarker_kotlin.R
-import com.company.fishmarker_kotlin.adapter.AdapterPlace
+import com.company.fishmarker_kotlin.adapter.AdapterPlaceBigWater
 import com.company.fishmarker_kotlin.modelclass.BigWater
 
-class  PlaceFragment : Fragment() {
+class  BigWaterFragment : Fragment() {
 
     private var gridView: GridView? = null
-    private var adapterGrid: AdapterPlace? = null
+    private var adapterGrid: AdapterPlaceBigWater? = null
 
 
     override fun onCreateView(
@@ -24,13 +24,13 @@ class  PlaceFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_place, container, false)
+        val view = inflater.inflate(R.layout.fragment_big_water, container, false)
 
 
         gridView = view.findViewById(R.id.gridView) as GridView
 
 
-        adapterGrid = context?.let { AdapterPlace(it) }
+        adapterGrid = context?.let { AdapterPlaceBigWater(it) }
 
         gridView!!.adapter = adapterGrid
 

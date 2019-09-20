@@ -57,4 +57,10 @@
     <string name="menu_send">Send</string>
 
 
+    <string name="text_user_place">Here could be your water features.
+    To add an object, click on the drop and select an object.
+    Specify the middle of the water body using and set the zoom.
+    Anchor to the right place.</string>
+
+
 </resources>
