@@ -11,13 +11,13 @@ import com.company.fishmarker_kotlin.modelclass.Place
 class AdapterPlace(private val list: List<Place>) : RecyclerView.Adapter<AdapterPlace.RecyclerViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterPlace.RecyclerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return RecyclerViewHolder(inflater, parent)
     }
 
 
-    override fun onBindViewHolder(holder: AdapterPlace.RecyclerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val place: Place = list[position]
         holder.bind(place)
     }
@@ -46,8 +46,8 @@ class AdapterPlace(private val list: List<Place>) : RecyclerView.Adapter<Adapter
         fun bind(place: Place) {
 
             txtnameplace?.text = place.name_place
-            txtlatitude?.text = place.toString()
-            txtlongitude?.text = place.toString()
+            txtlatitude?.text = place.latitude.toString()
+            txtlongitude?.text = place.longitude.toString()
             txtzoom?.text = place.zoom.toString()
         }
 

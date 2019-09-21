@@ -15,7 +15,7 @@ class PlaceActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container_auth, AddPlace())
+                .replace(R.id.fragment_container_place, AddPlace())
                 .commit()
         }
     }
