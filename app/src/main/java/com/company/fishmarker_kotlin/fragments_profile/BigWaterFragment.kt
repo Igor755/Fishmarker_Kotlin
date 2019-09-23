@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.PlaceActivity
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.adapter.AdapterPlaceBigWater
-import com.company.fishmarker_kotlin.fragments_place.AddPlace
 import com.company.fishmarker_kotlin.modelclass.BigWater
 
 class  BigWaterFragment : Fragment() {

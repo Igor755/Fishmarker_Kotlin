@@ -4,20 +4,27 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.adapter.AdapterPlace
+import com.company.fishmarker_kotlin.fragments_marker.MapMarkerFragment
 import com.company.fishmarker_kotlin.modelclass.Place
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class AddPlace : Fragment() {
+class AddPlaceFragment : Fragment() {
 
     private var mListRecyclerView: RecyclerView? = null
+    private var txtnameplace : TextView? = null
+    private var progressbar : ProgressBar? = null
 
     @SuppressLint("WrongConstant")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -27,9 +34,9 @@ class AddPlace : Fragment() {
 
 
         mListRecyclerView = view.findViewById(R.id.my_recycler_view) as RecyclerView
+        txtnameplace = view.findViewById(R.id.txtnameplace) as TextView
+        progressbar = view.findViewById(R.id.progressbar) as ProgressBar
 
-
-        //val placelist : ArrayList<Place>? = null
 
         val list: MutableList<Place> = ArrayList()
 
@@ -52,17 +59,37 @@ class AddPlace : Fragment() {
 
         }
 
-        var mAdapter = AdapterPlace(list)
+        if (list.size != 0){
+            txtnameplace!!.visibility = INVISIBLE
+            progressbar!!.visibility = INVISIBLE
+        } else{
+            txtnameplace!!.visibility = VISIBLE
+            progressbar!!.visibility = VISIBLE
+
+        }
+
+        val mAdapter = AdapterPlace(list)
 
         mListRecyclerView!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-
-
         mListRecyclerView!!.adapter = mAdapter
+
+
+        mAdapter.setOnItemClickListener(object : AdapterPlace.ClickListener {
+            override fun onClick(pos: Int, aView: View) {
+
+                fragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.fragment_container_place, MapMarkerFragment())
+                    ?.addToBackStack(null)
+                    ?.commit()
+
+            }
+        })
 
         fab!!.setOnClickListener{
             fragmentManager
                 ?.beginTransaction()
-                ?.replace(R.id.fragment_container_place, MapAddPlace())
+                ?.replace(R.id.fragment_container_place, MapPlaceFragment())
                 ?.addToBackStack(null)
                 ?.commit()
         }

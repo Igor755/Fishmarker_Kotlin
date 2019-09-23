@@ -1,9 +1,8 @@
 package com.company.fishmarker_kotlin
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.company.fishmarker_kotlin.fragments_place.AddPlace
+import com.company.fishmarker_kotlin.fragments_place.AddPlaceFragment
 
 class PlaceActivity : AppCompatActivity() {
 
@@ -15,7 +14,7 @@ class PlaceActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container_place, AddPlace())
+                .replace(R.id.fragment_container_place, AddPlaceFragment())
                 .commit()
         }
     }
