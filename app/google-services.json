@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "36261826390",
+    "firebase_url": "https://fishmarkerkotlin-2a0c5.firebaseio.com",
+    "project_id": "fishmarkerkotlin-2a0c5",
+    "storage_bucket": "fishmarkerkotlin-2a0c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36261826390:android:3b95a385090c94ba2090f7",
+        "android_client_info": {
+          "package_name": "com.company.fishmarker_kotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36261826390-bibi97flvdpm2udr84hsghq7o3aijq6l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.fishmarker_kotlin",
+            "certificate_hash": "fcd94b9e24467a8c8d49e482c5860cafadb98672"
+          }
+        },
+        {
+          "client_id": "36261826390-q394lgiqo8djjoq40l92j1ri1e7btpdq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCncC0J1XVn6kCzSfEhGQXAgtJZFFf51bQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36261826390-q394lgiqo8djjoq40l92j1ri1e7btpdq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

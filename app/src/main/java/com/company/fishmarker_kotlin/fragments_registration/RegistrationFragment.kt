@@ -92,7 +92,7 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
         return PASSWORD_REGEX.containsMatchIn(password)
 
     }
-    fun isEmailValid(email: String) : Boolean{
+    fun  isEmailValid(email: String) : Boolean{
 
         val EMAIL_REGEX = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?".toRegex()
         return EMAIL_REGEX.containsMatchIn(email)
