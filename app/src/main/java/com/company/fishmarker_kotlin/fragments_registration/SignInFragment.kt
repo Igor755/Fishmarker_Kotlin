@@ -13,6 +13,10 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.EditText
 import android.widget.Toast
+import com.company.fishmarker_kotlin.AuthActivity
+import com.company.fishmarker_kotlin.R
+import kotlinx.android.synthetic.main.activity_auth.*
+import kotlin.system.exitProcess
 
 
 class SignInFragment : Fragment() {
@@ -34,11 +38,6 @@ class SignInFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth!!.currentUser
 
-        //если уже авторизован
-        if (currentUser != null) {
-            val intent = Intent(activity, ProfileActivity::class.java)
-            startActivity(intent)
-        }
 
 
 
@@ -82,6 +81,8 @@ class SignInFragment : Fragment() {
         mAuth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener { task ->
             if (task.isSuccessful){
                 checkIfEmailVerified()
+
+
             }else{
                 Toast.makeText(context, com.company.fishmarker_kotlin.R.string.autorithation, Toast.LENGTH_SHORT).show()
             }
@@ -95,6 +96,12 @@ class SignInFragment : Fragment() {
         if (user.isEmailVerified){
             val intent = Intent(activity, ProfileActivity::class.java)
             startActivity(intent)
+
+
+            AuthActivity().finish()
+            fragmentManager?.beginTransaction()?.remove(SignInFragment())?.commit()
+
+
         }else{
             Toast.makeText(context, com.company.fishmarker_kotlin.R.string.verify, Toast.LENGTH_SHORT).show()
             FirebaseAuth.getInstance().signOut()

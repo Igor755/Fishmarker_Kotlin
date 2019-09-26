@@ -185,7 +185,6 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
                 fragmentManager
                     ?.beginTransaction()
                     ?.replace(R.id.fragment_container_auth, SignInFragment())
-                    ?.addToBackStack(null)
                     ?.commit()
 
                 Toast.makeText(context, R.string.check, Toast.LENGTH_LONG).show()

@@ -1,5 +1,7 @@
 package com.company.fishmarker_kotlin
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,6 +13,15 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -21,19 +32,11 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-/*
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }*/
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
 
 
         appBarConfiguration = AppBarConfiguration(
@@ -53,9 +56,41 @@ class ProfileActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.profile, menu)
         return true
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+
+        if (id == R.id.exit){
+
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("You seriosly want exit?")
+            builder.setMessage("Now you exit the application and you will need to login to the new")
+
+            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(this, AuthActivity::class.java)
+                startActivity(intent)
+                finish()
+
+            }
+
+            builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                Toast.makeText(applicationContext,
+                    android.R.string.no, Toast.LENGTH_SHORT).show()
+            }
+
+
+            builder.show()
+        }
+
+
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
 }
