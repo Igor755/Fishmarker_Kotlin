@@ -227,7 +227,8 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:longClickable="false"
-                android:focusableInTouchMode="false"/>
+                android:focusableInTouchMode="false"
+                tools:ignore="TextFields" />
 
         </LinearLayout>
     </LinearLayout>

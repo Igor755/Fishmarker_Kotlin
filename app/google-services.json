@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "36261826390-dqt3c5uhhu1ilcvleaabohv8jtntil3h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.fishmarker_kotlin",
+            "certificate_hash": "6ab75c8921240d687dad43e833068e151efe4713"
+          }
+        },
+        {
           "client_id": "36261826390-bibi97flvdpm2udr84hsghq7o3aijq6l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
