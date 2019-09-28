@@ -1,7 +1,5 @@
 package com.company.fishmarker_kotlin.fragments_registration
 
-import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +7,15 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.R
+import com.company.fishmarker_kotlin.helper_class.StaticHelper
 import com.company.fishmarker_kotlin.modelclass.User
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_registration.*
-import java.util.*
-import java.util.regex.Pattern
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+
+
+
 
 
 @Suppress("NAME_SHADOWING")
@@ -46,28 +43,13 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
 
 
 
-    val allCountry : ArrayList<String> = ArrayList()
-    val coutryCodes : Array<out String>? = Locale.getISOCountries()
-    val coutryCodes2 : String? = null
-
-
-    if (coutryCodes != null) {
-        for (coutryCodes2 in coutryCodes) {
-
-            val locale: Locale = Locale("", coutryCodes2)
-            val coutryName : String = locale.getDisplayCountry()
-            allCountry.add(coutryName)
-
-        }
-
-    }
-    allCountry.sort()
-
     val adapter  = ArrayAdapter<String>(context,
-        android.R.layout.simple_spinner_item, allCountry)
+        android.R.layout.simple_spinner_item,  StaticHelper.getValue())
 
-    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+    adapter.setDropDownViewResource(com.company.fishmarker_kotlin.R.layout.support_simple_spinner_dropdown_item)
     spinner_location.adapter = adapter
+
+
 
 
     btnReg.setOnClickListener {
@@ -99,23 +81,17 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
     }
     fun newRegistrationUser() {
 
-        val countries: HashMap<String, String> = HashMap()
-        val isoCountryCodes = Locale.getISOCountries()
 
+        val position = spinner_location.selectedItemPosition
 
-        for (iso in isoCountryCodes) {
-
-            val l: Locale = Locale("", iso)
-            countries[l.displayCountry] = iso
-        }
 
         val name: String = edit_text_name.text.toString().trim()
         val email: String = edit_text_email.text.toString().trim()
         val password: String = edit_text_password.text.toString().trim()
-        val location: String? = countries[spinner_location.selectedItem.toString().trim()]
+        val location: String? = StaticHelper.getValue()[position]
 
         if (name.isEmpty()) {
-            edit_text_name.error = getText(R.string.empty_name)
+            edit_text_name.error = getText(com.company.fishmarker_kotlin.R.string.empty_name)
             edit_text_name.requestFocus()
             return
         }
@@ -149,8 +125,8 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful){
 
-                    val user : User =  User(name, email, location.toString())
                     val userID : String = FirebaseAuth.getInstance().currentUser!!.uid
+                    val user : User =  User(userID, name, email, location.toString())
 
                     FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user).addOnCompleteListener { task ->
                         progressbar!!.visibility = View.INVISIBLE
@@ -184,10 +160,10 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
 
                 fragmentManager
                     ?.beginTransaction()
-                    ?.replace(R.id.fragment_container_auth, SignInFragment())
+                    ?.replace(com.company.fishmarker_kotlin.R.id.fragment_container_auth, SignInFragment())
                     ?.commit()
 
-                Toast.makeText(context, R.string.check, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, com.company.fishmarker_kotlin.R.string.check, Toast.LENGTH_LONG).show()
 
 
             }else{
