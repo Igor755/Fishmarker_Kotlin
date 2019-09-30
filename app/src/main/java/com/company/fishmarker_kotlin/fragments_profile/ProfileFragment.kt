@@ -1,10 +1,7 @@
 package com.company.fishmarker_kotlin.fragments_profile
 
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
