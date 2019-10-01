@@ -141,15 +141,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
-
-
             <Spinner
                 android:id="@+id/spinner_location"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"/>
-
-
         </LinearLayout>
+
+
     </LinearLayout>
 
 
@@ -364,44 +362,5 @@
 
 
 </LinearLayout>
-
-
-  <!--  /////////BLOCK About Me
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/about_me"
-        android:layout_below="@+id/trophies">
-
-        <TextView
-            style="@style/CategoryStyle"
-            android:text="About Me"
-            android:layout_marginLeft="20sp"/>
-
-        <LinearLayout
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
-
-            <EditText
-                android:id="@+id/edit_about_me"
-                style="@style/EditorFieldStyle"
-                android:hint="About Me"
-                android:inputType="textCapWords"
-                android:autofillHints=""
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:longClickable="false"
-                android:focusableInTouchMode="false"/>
-
-        </LinearLayout>
-    </LinearLayout>-->
-
 
 </RelativeLayout>

@@ -1,11 +1,16 @@
 package com.company.fishmarker_kotlin.fragments_profile
 
+import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Spinner
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,6 +19,7 @@ import com.company.fishmarker_kotlin.helper_class.StaticHelper
 import com.company.fishmarker_kotlin.modelclass.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
@@ -26,41 +32,47 @@ class ProfileFragment : Fragment() {
     lateinit var pref: SharedPreferences
     lateinit var adapter: ArrayAdapter<String>
     val uid : String = mAuth.currentUser?.uid.toString()
+    private val PICK_IMAGE_REQUEST : Int  = 1
+    lateinit var filePath : Uri
 
 
 
 
+
+
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        val spinner_location = view.findViewById<Spinner>(R.id.spinner_location)
-        val change_account = view.findViewById<Button>(R.id.change_account)
+        val spinnerLocation = view.findViewById<Spinner>(R.id.spinner_location)
+        val changeAccount = view.findViewById<Button>(R.id.change_account)
         val cancel = view.findViewById<Button>(R.id.cancel)
         val save = view.findViewById<Button>(R.id.save)
+        val changePhoto = view.findViewById<Button>(R.id.change_photo)
+        val photo_user = view.findViewById<ImageView>(R.id.photo_user)
 
         cancel.isVisible = false
-        spinner_location.isEnabled = false
-        spinner_location.isClickable = false
+        spinnerLocation.isEnabled = false
+        spinnerLocation.isClickable = false
         save.isVisible = false
 
 
-
-
         pref = context!!.getSharedPreferences("USER",MODE_PRIVATE)
-
         adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, StaticHelper.getValue())
-
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-        spinner_location.adapter = adapter
-
-
-
+        spinnerLocation.adapter = adapter
 
         loadFirebaseUser()
 
 
-        change_account.setOnClickListener {
+        changePhoto.setOnClickListener{
+
+            chooseImage()
+        }
+
+
+        changeAccount.setOnClickListener {
             activateView()
         }
 
@@ -74,11 +86,12 @@ class ProfileFragment : Fragment() {
             diactivateView()
         }
 
-       /* val result :  Boolean = isNetworkAvailable(context!!)
+        /*val result :  Boolean = isNetworkAvailable(context!!)
 
         if (!result){
 
             localLoadUser()
+
         }*/
 
 
@@ -181,13 +194,13 @@ class ProfileFragment : Fragment() {
     }
     fun localLoadUser(){
 
-        val user_location : String = pref!!.getString("user_location", "")
-        val user_name : String = pref!!.getString("user_name", "")
-        val user_last_name : String = pref!!.getString("user_last_name", "")
-        val user_email : String = pref!!.getString("user_email", "")
-        val user_telephone: String = pref!!.getString("user_telephone", "")
-        val user_trophies : String = pref!!.getString("user_trophies", "")
-        val user_preferred : String = pref!!.getString("user_prefered", "")
+        val user_location : String = pref.getString("user_location", "")
+        val user_name : String = pref.getString("user_name", "")
+        val user_last_name : String = pref.getString("user_last_name", "")
+        val user_email : String = pref.getString("user_email", "")
+        val user_telephone: String = pref.getString("user_telephone", "")
+        val user_trophies : String = pref.getString("user_trophies", "")
+        val user_preferred : String = pref.getString("user_prefered", "")
         val position: Int = adapter.getPosition(user_location)
 
         view?.spinner_location?.setSelection(position)
@@ -261,4 +274,26 @@ class ProfileFragment : Fragment() {
         localLoadUser()
 
     }
-}
+
+    fun chooseImage(){
+
+        val intent : Intent = Intent()
+        intent.type = "image/"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, " Select Picture"), PICK_IMAGE_REQUEST)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && requestCode == RESULT_OK
+            && data != null && data.data != null){
+
+            filePath = data.data
+            Picasso.get().load(filePath).into(photo_user)
+            photo_user.setImageURI(filePath)
+
+        }
+    }
+    }

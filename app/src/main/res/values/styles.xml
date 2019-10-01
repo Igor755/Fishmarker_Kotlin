@@ -37,4 +37,9 @@
     </style>
 
 
+    <style name="mySpinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:textColor">@color/colorRed</item>
+    </style>
+
+
 </resources>
