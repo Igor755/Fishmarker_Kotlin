@@ -20,7 +20,8 @@ import com.google.firebase.auth.FirebaseUser
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import androidx.fragment.app.Fragment
+import com.company.fishmarker_kotlin.fragments_profile.ProfileFragment
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -90,6 +91,12 @@ class ProfileActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        println("WTF")
     }
 
 

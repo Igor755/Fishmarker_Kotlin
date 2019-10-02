@@ -12,7 +12,7 @@ data class User(var user_id: String = "",
            var url_photo : String = "") {
 
     constructor(user_id : String, user_name: String, email: String, location: String) :
-            this(user_id,user_name, "null",email, location, "null", "null", "null", "null", "null")
+            this(user_id,user_name, "",email, location, "", "", "", "", "")
 
 
 }

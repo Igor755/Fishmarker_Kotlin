@@ -2,26 +2,31 @@ package com.company.fishmarker_kotlin.fragments_profile
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.content.ContentResolver
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
+import android.webkit.MimeTypeMap
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.helper_class.StaticHelper
 import com.company.fishmarker_kotlin.modelclass.User
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import java.util.UUID.randomUUID
 
 class ProfileFragment : Fragment() {
 
@@ -34,9 +39,10 @@ class ProfileFragment : Fragment() {
     val uid : String = mAuth.currentUser?.uid.toString()
     private val PICK_IMAGE_REQUEST : Int  = 1
     lateinit var filePath : Uri
-
-
-
+    lateinit var photoUserImageView : ImageView
+    lateinit var changePhotoBtn : Button
+    lateinit var changeAccount : Button
+    lateinit var firebaseStorage: StorageReference
 
 
 
@@ -46,16 +52,27 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         val spinnerLocation = view.findViewById<Spinner>(R.id.spinner_location)
-        val changeAccount = view.findViewById<Button>(R.id.change_account)
+        changeAccount = view.findViewById(R.id.change_account)
         val cancel = view.findViewById<Button>(R.id.cancel)
         val save = view.findViewById<Button>(R.id.save)
-        val changePhoto = view.findViewById<Button>(R.id.change_photo)
-        val photo_user = view.findViewById<ImageView>(R.id.photo_user)
+        changePhotoBtn = view.findViewById(R.id.change_photo_button)
+        photoUserImageView = view.findViewById(R.id.photo_user_image_view)
+        val cancelBtn = view.findViewById<Button>(R.id.cancelBtn)
+        val okBtn = view.findViewById<Button>(R.id.okBtn)
+        val loader = view.findViewById<ProgressBar>(R.id.loader)
+
 
         cancel.isVisible = false
         spinnerLocation.isEnabled = false
         spinnerLocation.isClickable = false
         save.isVisible = false
+        cancelBtn.isVisible = false
+        okBtn.isVisible = false
+        loader.isVisible = false
+
+
+        firebaseStorage = FirebaseStorage.getInstance().getReference("images")
+
 
 
         pref = context!!.getSharedPreferences("USER",MODE_PRIVATE)
@@ -66,11 +83,19 @@ class ProfileFragment : Fragment() {
         loadFirebaseUser()
 
 
-        changePhoto.setOnClickListener{
+        changePhotoBtn.setOnClickListener{
 
             chooseImage()
         }
 
+        cancelBtn.setOnClickListener {
+
+            diactivateView()
+        }
+        okBtn.setOnClickListener {
+
+            savePictureCloudFirebaseAndDatabase()
+        }
 
         changeAccount.setOnClickListener {
             activateView()
@@ -138,9 +163,13 @@ class ProfileFragment : Fragment() {
     }
     fun diactivateView() {
 
+        loader.isVisible = false
         cancel.isVisible = false
         change_account.isVisible = true
         save.isVisible = false
+        cancelBtn.isVisible = false
+        okBtn.isVisible = false
+        changePhotoBtn.isVisible = true
 
 
         ////////клик по view
@@ -227,6 +256,7 @@ class ProfileFragment : Fragment() {
                 }
 
                 val position: Int = adapter.getPosition(user.location)
+                val myUri : Uri = Uri.parse(user.url_photo)
 
 
                 view?.edit_name?.setText(user.user_name)
@@ -236,7 +266,8 @@ class ProfileFragment : Fragment() {
                 view?.edit_telephone?.setText(user.telephone)
                 view?.edit_trophies?.setText(user.trophies)
                 view?.edit_preferred_type_of_fishing?.setText(user.type_of_fishing)
-                //view?.edit_about_me?.setText(user.about_me)
+                //view?.photo_user_image_view?.setImageURI(myUri)
+                Picasso.get().load(myUri).into(photo_user_image_view)
 
                 localSaveUser(user)
                 //localLoadUser()
@@ -277,23 +308,90 @@ class ProfileFragment : Fragment() {
 
     fun chooseImage(){
 
-        val intent : Intent = Intent()
-        intent.type = "image/"
+        val intent  = Intent()
+        intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, " Select Picture"), PICK_IMAGE_REQUEST)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun  onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGE_REQUEST && requestCode == RESULT_OK
-            && data != null && data.data != null){
+        if (requestCode == PICK_IMAGE_REQUEST  && resultCode == RESULT_OK && data != null && data.data != null){
 
             filePath = data.data
-            Picasso.get().load(filePath).into(photo_user)
-            photo_user.setImageURI(filePath)
+            println(filePath)
+            Picasso.get().load(filePath).into(photoUserImageView)
+            photoUserImageView.setImageURI(filePath)
+
+            cancelBtn.isVisible = true
+            okBtn.isVisible = true
+            changePhotoBtn.isVisible = false
+            changeAccount.isVisible = false
 
         }
     }
+    fun getFileExtension(uri: Uri) : String{
+
+        val contentResolverUri : ContentResolver = context!!.contentResolver
+        val mimeTypeMap : MimeTypeMap = MimeTypeMap.getSingleton()
+        return mimeTypeMap.getExtensionFromMimeType(contentResolverUri.getType(uri))
+
     }
+    fun savePictureCloudFirebaseAndDatabase(){
+
+        if (filePath != null){
+
+            loader.isVisible = true
+
+            val storageReference : StorageReference = firebaseStorage.child(randomUUID().toString()  + "." + getFileExtension(filePath))
+            val upload = storageReference.putFile(filePath)
+
+            val urlTask = upload.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                return@Continuation storageReference.downloadUrl
+            }).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    addUploadRecordToDb(downloadUri.toString())
+                } else {
+                    // Handle failures
+                }
+            }.addOnFailureListener{
+
+            }
+        }else{
+            Toast.makeText(context, "Please Upload an Image", Toast.LENGTH_SHORT).show()
+        }
+        }
+
+    fun addUploadRecordToDb(uri: String){
+
+
+        var user_update_photo : User = User(user.user_id,
+            user.user_name,
+            user.last_name,
+            user.email ,
+            user.location,
+            user.telephone,
+            user.type_of_fishing ,
+            user.trophies, "null",uri)
+
+        val myUri : Uri = Uri.parse(uri)
+        Picasso.get().load(myUri).into(photoUserImageView)
+        loader.isVisible = false
+
+        FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user_update_photo)
+
+        diactivateView()
+        Toast.makeText(context, " AHHAHAHHA EASY", Toast.LENGTH_SHORT).show()
+
+    }
+
+    }
+
