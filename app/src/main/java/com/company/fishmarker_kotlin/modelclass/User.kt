@@ -8,11 +8,10 @@ data class User(var user_id: String = "",
            var telephone: String = "",
            var type_of_fishing: String= "",
            var trophies: String = "",
-           var about_me: String = "",
            var url_photo : String = "") {
 
     constructor(user_id : String, user_name: String, email: String, location: String) :
-            this(user_id,user_name, "",email, location, "", "", "", "", "")
+            this(user_id,user_name, "",email, location, "", "", "", "")
 
 
 }

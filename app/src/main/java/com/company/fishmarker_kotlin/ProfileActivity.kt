@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.fragments_profile.ProfileFragment
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -95,6 +97,12 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+       /* photo_user_image_view.setImageDrawable(null)
+        Picasso.get().load(data?.data).fit().into(photo_user_image_view)*/
+
+       // filePath = data.data
+       // Picasso.get().load(data?.data).into(photo_user_image_view)
 
         println("WTF")
     }

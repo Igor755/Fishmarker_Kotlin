@@ -8,7 +8,13 @@ import kotlin.collections.ArrayList
 
 class StaticHelper {
 
+
+
+
     companion object {
+
+         var filepathimage = ""
+
 
         fun getValue() : ArrayList<String>{
 
@@ -36,6 +42,7 @@ class StaticHelper {
             activeNetworkInfo = cm.activeNetworkInfo
             return activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
+
 
 
     }
