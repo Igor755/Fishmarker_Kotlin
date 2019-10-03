@@ -3,7 +3,6 @@ package com.company.fishmarker_kotlin.fragments_profile
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.ContentResolver
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -104,10 +103,6 @@ class ProfileFragment : Fragment() {
             loadFirebaseUser()
         }
 
-
-
-
-
         changePhotoBtn.setOnClickListener{
 
             chooseImage()
@@ -123,10 +118,12 @@ class ProfileFragment : Fragment() {
         }
 
         changeAccount.setOnClickListener {
+
             activateView()
         }
 
         cancel.setOnClickListener {
+
             diactivateView()
         }
         save.setOnClickListener {
@@ -151,7 +148,7 @@ class ProfileFragment : Fragment() {
         edit_name.isClickable = true
         edit_last_name.isClickable = true
         spinner_location.isEnabled = true
-        edit_email.isClickable = true
+        //edit_email.isClickable = true
         edit_telephone.isClickable = true
         edit_trophies.isClickable = true
         edit_preferred_type_of_fishing.isClickable = true
@@ -159,7 +156,7 @@ class ProfileFragment : Fragment() {
         ////////visible cursor view
         edit_name.isCursorVisible = true
         edit_last_name.isCursorVisible = true
-        edit_email.isCursorVisible = true
+       // edit_email.isCursorVisible = true
         edit_telephone.isCursorVisible = true
         edit_trophies.isCursorVisible = true
         edit_preferred_type_of_fishing.isCursorVisible = true
@@ -169,8 +166,8 @@ class ProfileFragment : Fragment() {
         edit_name.isFocusableInTouchMode = true
         edit_last_name.isFocusable = true
         edit_last_name.isFocusableInTouchMode = true
-        edit_email.isFocusable = true
-        edit_email.isFocusableInTouchMode = true
+       // edit_email.isFocusable = true
+       // edit_email.isFocusableInTouchMode = true
         edit_telephone.isFocusable = true
         edit_telephone.isFocusableInTouchMode = true
         edit_trophies.isFocusable = true
@@ -264,6 +261,10 @@ class ProfileFragment : Fragment() {
         edittelephone.setText(user_telephone)
         edittrophies.setText(user_trophies)
         edittype.setText(user_preferred)
+
+        if (user_email == ""){
+            Toast.makeText(context, "local data empty too, enable internet", Toast.LENGTH_SHORT).show()
+        }
 
 
 
@@ -359,11 +360,9 @@ class ProfileFragment : Fragment() {
 
     }
 
-  /*  override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
-
         localLoadUser()
-
     }*/
 
     fun chooseImage(){
