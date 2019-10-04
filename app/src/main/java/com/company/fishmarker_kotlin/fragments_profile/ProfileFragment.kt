@@ -39,12 +39,12 @@ class ProfileFragment : Fragment() {
 
     lateinit var pref: SharedPreferences
     lateinit var adapter: ArrayAdapter<String>
-    val uid : String = mAuth.currentUser?.uid.toString()
-    private val PICK_IMAGE_REQUEST : Int  = 1
-    lateinit var filePath : Uri
-    lateinit var photoUserImageView : ImageView
-    lateinit var changePhotoBtn : Button
-    lateinit var changeAccount : Button
+    val uid: String = mAuth.currentUser?.uid.toString()
+    private val PICK_IMAGE_REQUEST: Int = 1
+    lateinit var filePath: Uri
+    lateinit var photoUserImageView: ImageView
+    lateinit var changePhotoBtn: Button
+    lateinit var changeAccount: Button
     lateinit var firebaseStorage: StorageReference
     lateinit var editname: EditText
     lateinit var editlastname: EditText
@@ -55,9 +55,12 @@ class ProfileFragment : Fragment() {
     lateinit var spinnerLocation: Spinner
 
 
-
     @SuppressLint("ResourceAsColor")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
@@ -67,15 +70,15 @@ class ProfileFragment : Fragment() {
         val save = view.findViewById<Button>(R.id.save)
         changePhotoBtn = view.findViewById(R.id.change_photo_button)
         photoUserImageView = view.findViewById(R.id.photo_user_image_view)
-        val cancelBtn = view.findViewById<Button>(R.id.cancelBtn)
-        val okBtn = view.findViewById<Button>(R.id.okBtn)
+        val cancelChangePhotoBtn = view.findViewById<Button>(R.id.cancelBtn)
+        val okChangePhotoBtn = view.findViewById<Button>(R.id.okBtn)
         val loader = view.findViewById<ProgressBar>(R.id.loader)
-        editname= view.findViewById(R.id.edit_name)
-        editlastname= view.findViewById(R.id.edit_last_name)
-        editemail= view.findViewById(R.id.edit_email)
-        edittelephone= view.findViewById(R.id.edit_telephone)
-        edittype= view.findViewById(R.id.edit_preferred_type_of_fishing)
-        edittrophies= view.findViewById(R.id.edit_trophies)
+        editname = view.findViewById(R.id.edit_name)
+        editlastname = view.findViewById(R.id.edit_last_name)
+        editemail = view.findViewById(R.id.edit_email)
+        edittelephone = view.findViewById(R.id.edit_telephone)
+        edittype = view.findViewById(R.id.edit_preferred_type_of_fishing)
+        edittrophies = view.findViewById(R.id.edit_trophies)
 
 
         cancel.isVisible = false
@@ -92,27 +95,28 @@ class ProfileFragment : Fragment() {
 
 
         pref = PreferenceManager.getDefaultSharedPreferences(context)
-        adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, StaticHelper.getValue())
+        adapter =
+            ArrayAdapter(context, android.R.layout.simple_spinner_item, StaticHelper.getValue())
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
         spinnerLocation.adapter = adapter
 
 
-        if(!StaticHelper.isNetworkAvailable(context!!)){
+        if (!StaticHelper.isNetworkAvailable(context!!)) {
             localLoadUser()
-        }else{
+        } else {
             loadFirebaseUser()
         }
 
-        changePhotoBtn.setOnClickListener{
+        changePhotoBtn.setOnClickListener {
 
             chooseImage()
         }
 
-        cancelBtn.setOnClickListener {
+        cancelChangePhotoBtn.setOnClickListener {
 
             diactivateView()
         }
-        okBtn.setOnClickListener {
+        okChangePhotoBtn.setOnClickListener {
 
             savePictureCloudFirebaseAndDatabase()
         }
@@ -138,7 +142,7 @@ class ProfileFragment : Fragment() {
         return view
     }
 
-    fun activateView(){
+    fun activateView() {
 
         cancel.isVisible = true
         change_account.isVisible = false
@@ -156,7 +160,7 @@ class ProfileFragment : Fragment() {
         ////////visible cursor view
         edit_name.isCursorVisible = true
         edit_last_name.isCursorVisible = true
-       // edit_email.isCursorVisible = true
+        // edit_email.isCursorVisible = true
         edit_telephone.isCursorVisible = true
         edit_trophies.isCursorVisible = true
         edit_preferred_type_of_fishing.isCursorVisible = true
@@ -166,8 +170,8 @@ class ProfileFragment : Fragment() {
         edit_name.isFocusableInTouchMode = true
         edit_last_name.isFocusable = true
         edit_last_name.isFocusableInTouchMode = true
-       // edit_email.isFocusable = true
-       // edit_email.isFocusableInTouchMode = true
+        // edit_email.isFocusable = true
+        // edit_email.isFocusableInTouchMode = true
         edit_telephone.isFocusable = true
         edit_telephone.isFocusableInTouchMode = true
         edit_trophies.isFocusable = true
@@ -176,6 +180,7 @@ class ProfileFragment : Fragment() {
         edit_preferred_type_of_fishing.isFocusableInTouchMode = true
 
     }
+
     fun diactivateView() {
 
         loader.isVisible = false
@@ -223,11 +228,10 @@ class ProfileFragment : Fragment() {
 
     }
 
-    fun localSaveUser(userlocal : User){
+    fun localSaveUser(userlocal: User) {
 
 
-
-        val editor  = pref.edit()
+        val editor = pref.edit()
         editor.clear()
         editor.putString("user_name", userlocal.user_name)
         editor.putString("user_last_name", userlocal.last_name)
@@ -236,21 +240,22 @@ class ProfileFragment : Fragment() {
         editor.putString("user_trophies", userlocal.trophies)
         editor.putString("user_prefered", userlocal.type_of_fishing)
         editor.putString("user_location", userlocal.location)
-        editor.putString("user_photo",userlocal.url_photo)
+        editor.putString("user_photo", userlocal.url_photo)
         editor.apply()
 
     }
-    fun localLoadUser(){
+
+    fun localLoadUser() {
 
 
-        val user_name : String = pref.getString("user_name", "")
-        val user_last_name : String = pref.getString("user_last_name", "")
-        val user_email : String = pref.getString("user_email", "")
+        val user_name: String = pref.getString("user_name", "")
+        val user_last_name: String = pref.getString("user_last_name", "")
+        val user_email: String = pref.getString("user_email", "")
         val user_telephone: String = pref.getString("user_telephone", "")
-        val user_trophies : String = pref.getString("user_trophies", "")
-        val user_preferred : String = pref.getString("user_prefered", "")
-        val user_location : String = pref.getString("user_location", "")
-        val user_photo : String = pref.getString("user_photo","")
+        val user_trophies: String = pref.getString("user_trophies", "")
+        val user_preferred: String = pref.getString("user_prefered", "")
+        val user_location: String = pref.getString("user_location", "")
+        val user_photo: String = pref.getString("user_photo", "")
 
         val position: Int = adapter.getPosition(user_location)
 
@@ -262,21 +267,21 @@ class ProfileFragment : Fragment() {
         edittrophies.setText(user_trophies)
         edittype.setText(user_preferred)
 
-        if (user_email == ""){
-            Toast.makeText(context, "local data empty too, enable internet", Toast.LENGTH_SHORT).show()
+        if (user_email == "") {
+            Toast.makeText(context, "local data empty too, enable internet", Toast.LENGTH_SHORT)
+                .show()
         }
 
 
 
         try {
-            if (user_photo == ""){
+            if (user_photo == "") {
                 photoUserImageView.setImageResource(R.drawable.photo_user)
-            }else{
-                val myUri : Uri = Uri.parse(user_photo)
+            } else {
+                val myUri: Uri = Uri.parse(user_photo)
                 Picasso.get().load(myUri).into(photo_user_image_view)
             }// some code
-        }
-        catch (e: IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) {
             photoUserImageView.setImageResource(R.drawable.photo_user)
             Toast.makeText(context, "not internet, not photo", Toast.LENGTH_SHORT).show()
         }
@@ -284,7 +289,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    fun loadFirebaseUser(){
+    fun loadFirebaseUser() {
 
         val myRef: Query = firebaseDatabase.getReference("Users").orderByKey().equalTo(uid)
 
@@ -311,10 +316,10 @@ class ProfileFragment : Fragment() {
                 //view?.photo_user_image_view?.setImageURI(myUri)
 
 
-                if (user.url_photo == ""){
+                if (user.url_photo == "") {
                     photo_user_image_view.setImageResource(R.drawable.photo_user)
-                }else{
-                    val myUri : Uri = Uri.parse(user.url_photo)
+                } else {
+                    val myUri: Uri = Uri.parse(user.url_photo)
                     Picasso.get().load(myUri).into(photo_user_image_view)
                 }
 
@@ -331,27 +336,38 @@ class ProfileFragment : Fragment() {
             }
         })
     }
-    fun changeUserInFirebase(){
+
+    fun changeUserInFirebase() {
 
 
-        val name : String = view?.edit_name?.text.toString()
-        val last_name : String = view?.edit_last_name?.text.toString()
-        val location : String = view?.spinner_location?.selectedItem as String
-        val email : String = view?.edit_email?.text.toString()
-        val telephone : String = view?.edit_telephone?.text.toString()
-        val trophies : String = view?.edit_trophies?.text.toString()
-        val type_fishing : String = view?.edit_preferred_type_of_fishing?.text.toString()
+        val name: String = view?.edit_name?.text.toString()
+        val last_name: String = view?.edit_last_name?.text.toString()
+        val location: String = view?.spinner_location?.selectedItem as String
+        val email: String = view?.edit_email?.text.toString()
+        val telephone: String = view?.edit_telephone?.text.toString()
+        val trophies: String = view?.edit_trophies?.text.toString()
+        val type_fishing: String = view?.edit_preferred_type_of_fishing?.text.toString()
 
 
-        if (filepathimage == ""){
+        if (filepathimage == "") {
             photo_user_image_view.setImageResource(R.drawable.photo_user)
-        }else{
-            val myUri : Uri = Uri.parse(filepathimage)
+        } else {
+            val myUri: Uri = Uri.parse(filepathimage)
             Picasso.get().load(myUri).into(photoUserImageView)
         }
 
 
-        var user_update : User = User(user.user_id, name, last_name,email , location, telephone,type_fishing , trophies,filepathimage)
+        var user_update: User = User(
+            user.user_id,
+            name,
+            last_name,
+            email,
+            location,
+            telephone,
+            type_fishing,
+            trophies,
+            filepathimage
+        )
 
         FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user_update)
 
@@ -365,9 +381,9 @@ class ProfileFragment : Fragment() {
         localLoadUser()
     }*/
 
-    fun chooseImage(){
+    fun chooseImage() {
 
-        val intent  = Intent()
+        val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
@@ -378,10 +394,10 @@ class ProfileFragment : Fragment() {
 
     }
 
-    override fun  onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGE_REQUEST  && resultCode == RESULT_OK && data != null && data.data != null){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
 
             filePath = data.data
             photoUserImageView.setImageDrawable(null)
@@ -389,61 +405,66 @@ class ProfileFragment : Fragment() {
             photoUserImageView.setImageURI(filePath)
 
 
-
         }
     }
-    fun getFileExtension(uri: Uri) : String{
 
-        val contentResolverUri : ContentResolver = context!!.contentResolver
-        val mimeTypeMap : MimeTypeMap = MimeTypeMap.getSingleton()
+    fun getFileExtension(uri: Uri): String {
+
+        val contentResolverUri: ContentResolver = context!!.contentResolver
+        val mimeTypeMap: MimeTypeMap = MimeTypeMap.getSingleton()
         return mimeTypeMap.getExtensionFromMimeType(contentResolverUri.getType(uri))
 
     }
-    fun savePictureCloudFirebaseAndDatabase(){
 
-        if (filePath != null){
+    fun savePictureCloudFirebaseAndDatabase() {
+
+        if (filePath != null) {
 
             loader.isVisible = true
 
-            val storageReference : StorageReference = firebaseStorage.child(randomUUID().toString()  + "." + getFileExtension(filePath))
+            val storageReference: StorageReference =
+                firebaseStorage.child(randomUUID().toString() + "." + getFileExtension(filePath))
             val upload = storageReference.putFile(filePath)
 
-            val urlTask = upload.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
+            val urlTask =
+                upload.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
                     }
-                }
-                return@Continuation storageReference.downloadUrl
-            }).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    addUploadRecordToDb(downloadUri.toString())
-                } else {
-                    // Handle failures
-                }
-            }.addOnFailureListener{
+                    return@Continuation storageReference.downloadUrl
+                }).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        addUploadRecordToDb(downloadUri.toString())
+                    } else {
+                        // Handle failures
+                    }
+                }.addOnFailureListener {
 
-            }
-        }else{
+                }
+        } else {
             Toast.makeText(context, "Please Upload an Image", Toast.LENGTH_SHORT).show()
         }
-        }
+    }
 
-    fun addUploadRecordToDb(uri: String){
+    fun addUploadRecordToDb(uri: String) {
 
 
-        var user_update_photo : User = User(user.user_id,
+        var user_update_photo: User = User(
+            user.user_id,
             user.user_name,
             user.last_name,
-            user.email ,
+            user.email,
             user.location,
             user.telephone,
-            user.type_of_fishing ,
+            user.type_of_fishing,
             user.trophies,
-            uri)
+            uri
+        )
 
-        val myUri : Uri = Uri.parse(uri)
+        val myUri: Uri = Uri.parse(uri)
         Picasso.get().load(myUri).into(photoUserImageView)
         loader.isVisible = false
 
@@ -457,5 +478,22 @@ class ProfileFragment : Fragment() {
 
     }
 
+    fun deleteInFirebaseStorageImage() {
+
+        val imagereference: StorageReference =
+            FirebaseStorage.getInstance().getReferenceFromUrl("URL")
+        imagereference.delete().addOnSuccessListener {
+
+
+            }
+            .addOnFailureListener {
+
+
+
+            }
+
+
     }
+
+}
 
