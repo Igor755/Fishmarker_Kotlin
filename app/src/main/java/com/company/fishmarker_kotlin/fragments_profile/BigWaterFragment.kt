@@ -46,10 +46,10 @@ class  BigWaterFragment : Fragment() {
                 return view
 
             }
-        fun PlaceName(name: String) {
+        fun PlaceName(nameBigWater: String) {
 
             val intent = Intent(activity, PlaceActivity::class.java)
-            intent.putExtra("nameWater", name)
+            intent.putExtra("nameBigWater", nameBigWater)
             startActivity(intent)
 
 

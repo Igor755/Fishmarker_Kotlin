@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments_place.AddPlaceDialogFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/text_add_task"
+            android:text="Add place? The pond center you select will be added with lat and lon coordinates, with the name you specify"
+            android:gravity="center"/>
+
+
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:id="@+id/edit_latitude"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Latitude"
+            android:textSize="15sp"
+            android:layout_below="@+id/text_add_task"
+            tools:ignore="TextFields"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:id="@+id/edit_longitude"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Longitude"
+            android:textSize="15sp"
+            android:layout_below="@+id/edit_latitude"
+            tools:ignore="TextFields"/>
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:id="@+id/edit_name"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Name"
+            android:textSize="15sp"
+            android:layout_below="@+id/edit_longitude"
+            tools:ignore="TextFields"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:id="@+id/ok"
+            android:text="OK"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"
+            android:id="@+id/cancel"
+            android:text="CANCEL"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

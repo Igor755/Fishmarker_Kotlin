@@ -45,7 +45,7 @@ class ProfileActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
 
             setOf(
-                R.id.nav_profile_fragment, R.id.nav_place_fragment /*, R.id.nav_slideshow,
+                R.id.nav_place_fragment, R.id.nav_profile_fragment/*, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send*/
 
             ), drawerLayout
@@ -98,11 +98,6 @@ class ProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-       /* photo_user_image_view.setImageDrawable(null)
-        Picasso.get().load(data?.data).fit().into(photo_user_image_view)*/
-
-       // filePath = data.data
-       // Picasso.get().load(data?.data).into(photo_user_image_view)
 
         println("WTF")
     }

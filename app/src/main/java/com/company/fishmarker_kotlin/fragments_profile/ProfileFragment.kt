@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.*
 import android.webkit.MimeTypeMap
 import android.widget.*
@@ -53,6 +54,9 @@ class ProfileFragment : Fragment() {
     lateinit var edittype: EditText
     lateinit var edittrophies: EditText
     lateinit var spinnerLocation: Spinner
+    lateinit var save: Button
+    lateinit var cancelChangePhotoBtn: Button
+    lateinit var okChangePhotoBtn: Button
 
 
     @SuppressLint("ResourceAsColor")
@@ -67,11 +71,11 @@ class ProfileFragment : Fragment() {
         spinnerLocation = view.findViewById(R.id.spinner_location)
         changeAccount = view.findViewById(R.id.change_account)
         val cancel = view.findViewById<Button>(R.id.cancel)
-        val save = view.findViewById<Button>(R.id.save)
+        save = view.findViewById(R.id.save)
         changePhotoBtn = view.findViewById(R.id.change_photo_button)
         photoUserImageView = view.findViewById(R.id.photo_user_image_view)
-        val cancelChangePhotoBtn = view.findViewById<Button>(R.id.cancelBtn)
-        val okChangePhotoBtn = view.findViewById<Button>(R.id.okBtn)
+        cancelChangePhotoBtn = view.findViewById(R.id.cancelBtn)
+        okChangePhotoBtn = view.findViewById(R.id.okBtn)
         val loader = view.findViewById<ProgressBar>(R.id.loader)
         editname = view.findViewById(R.id.edit_name)
         editlastname = view.findViewById(R.id.edit_last_name)
@@ -85,8 +89,8 @@ class ProfileFragment : Fragment() {
         spinnerLocation.isEnabled = false
         spinnerLocation.isClickable = false
         save.isVisible = false
-        cancelBtn.isVisible = false
-        okBtn.isVisible = false
+        cancelChangePhotoBtn.isVisible = false
+        okChangePhotoBtn.isVisible = false
         loader.isVisible = false
 
 
@@ -123,6 +127,7 @@ class ProfileFragment : Fragment() {
 
         changeAccount.setOnClickListener {
 
+            changePhotoBtn.isVisible = false
             activateView()
         }
 
@@ -187,8 +192,8 @@ class ProfileFragment : Fragment() {
         cancel.isVisible = false
         change_account.isVisible = true
         save.isVisible = false
-        cancelBtn.isVisible = false
-        okBtn.isVisible = false
+        cancelChangePhotoBtn.isVisible = false
+        okChangePhotoBtn.isVisible = false
         changePhotoBtn.isVisible = true
 
 
@@ -468,10 +473,13 @@ class ProfileFragment : Fragment() {
         Picasso.get().load(myUri).into(photoUserImageView)
         loader.isVisible = false
 
+        deleteInFirebaseStorageImage()
 
         filepathimage = uri
+        FirebaseDatabase.getInstance().getReference("Users").child(uid)
+            .setValue(user_update_photo)
 
-        FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user_update_photo)
+
         localSaveUser(user_update_photo)
         diactivateView()
         Toast.makeText(context, " AHHAHAHHA EASY", Toast.LENGTH_SHORT).show()
@@ -480,17 +488,25 @@ class ProfileFragment : Fragment() {
 
     fun deleteInFirebaseStorageImage() {
 
-        val imagereference: StorageReference =
-            FirebaseStorage.getInstance().getReferenceFromUrl("URL")
-        imagereference.delete().addOnSuccessListener {
+        if (user.url_photo != "") {
 
+            val imagereference: StorageReference =
+                FirebaseStorage.getInstance().getReferenceFromUrl(user.url_photo)
+            imagereference.delete().addOnSuccessListener {
+
+                Log.d("storage", "complete")
+
+            }.addOnFailureListener {
+
+                Log.d("storage", "error")
 
             }
-            .addOnFailureListener {
+        } else {
+
+            Log.d("storage", "empty")
 
 
-
-            }
+        }
 
 
     }

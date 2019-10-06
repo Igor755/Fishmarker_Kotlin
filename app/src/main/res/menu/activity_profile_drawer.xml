@@ -6,24 +6,16 @@
     <item android:title="Navigation">
         <menu>
             <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_profile_fragment"
-                    android:icon="@drawable/ico1_navigation"
-                    android:title="Profile" />
+
                 <item
                     android:id="@+id/nav_place_fragment"
                     android:icon="@drawable/ico2_navigation"
                     android:title="Add marker" />
+                <item
+                    android:id="@+id/nav_profile_fragment"
+                    android:icon="@drawable/ico1_navigation"
+                    android:title="Profile" />
 
-                <!--
-               <item
-                   android:id="@+id/nav_slideshow"
-                   android:icon="@drawable/ic_menu_slideshow"
-                   android:title="@string/menu_slideshow" />
-               <item
-                   android:id="@+id/nav_tools"
-                   android:icon="@drawable/ic_menu_manage"
-                   android:title="@string/menu_tools" />-->
             </group>
         </menu>
 
