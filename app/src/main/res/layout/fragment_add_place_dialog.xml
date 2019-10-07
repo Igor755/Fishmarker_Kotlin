@@ -31,6 +31,11 @@
             android:singleLine="true"
             android:layout_centerHorizontal="true"
             android:hint="Latitude"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:longClickable="false"
+            android:focusableInTouchMode="false"
             android:textSize="15sp"
             android:layout_below="@+id/text_add_task"
             tools:ignore="TextFields"/>
@@ -42,6 +47,11 @@
             android:singleLine="true"
             android:layout_centerHorizontal="true"
             android:hint="Longitude"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:longClickable="false"
+            android:focusableInTouchMode="false"
             android:textSize="15sp"
             android:layout_below="@+id/edit_latitude"
             tools:ignore="TextFields"/>

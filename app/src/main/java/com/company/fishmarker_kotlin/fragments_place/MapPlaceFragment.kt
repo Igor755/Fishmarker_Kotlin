@@ -38,11 +38,17 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
         googlemap = mMap
         googlemap?.mapType = MAP_TYPE_HYBRID
 
-        googlemap?.setOnMapLongClickListener {
+        googlemap?.setOnMapLongClickListener { point ->
 
-            val dilog_fragment  : AddPlaceDilogFragment = AddPlaceDilogFragment()
-            dilog_fragment.setTargetFragment(MapPlaceFragment(),2)
-            dilog_fragment.show(childFragmentManager, "AddPlaceDilogFragment")
+            val latitude : Double = point.latitude
+            val longitude : Double = point.longitude
+            var bundle = Bundle()
+            bundle.putDouble("latitude",latitude)
+            bundle.putDouble("longitude", longitude)
+
+            val dialog_fragment = AddPlaceDialogFragment()
+            dialog_fragment.arguments = bundle
+            dialog_fragment.show(childFragmentManager, "AddPlaceDialogFragment")
 
         }
 
