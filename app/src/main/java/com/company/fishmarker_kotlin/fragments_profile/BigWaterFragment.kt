@@ -19,34 +19,25 @@ class  BigWaterFragment : Fragment() {
     private var adapterGrid: AdapterPlaceBigWater? = null
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_big_water, container, false)
-
-
         gridView = view.findViewById(R.id.gridView) as GridView
-
-
         adapterGrid = context?.let { AdapterPlaceBigWater(it) }
-
         gridView!!.adapter = adapterGrid
-
         gridView!!.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
 
 
                 val bigWater = BigWater.values()[position]
-                PlaceName(bigWater.nameWater)
+                bigWaterName(bigWater.nameWater)
 
 
             }
                 return view
 
             }
-        fun PlaceName(nameBigWater: String) {
+        fun bigWaterName(nameBigWater: String) {
 
             val intent = Intent(activity, PlaceActivity::class.java)
             intent.putExtra("nameBigWater", nameBigWater)

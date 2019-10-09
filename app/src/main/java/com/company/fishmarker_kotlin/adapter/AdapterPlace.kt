@@ -62,7 +62,7 @@ class AdapterPlace(private val list: List<Place>) : RecyclerView.Adapter<Adapter
 
         fun bind(place: Place) {
 
-            txtnameplace?.text = place.name_place
+            txtnameplace?.text = place.name
             txtlatitude?.text = place.latitude.toString()
             txtlongitude?.text = place.longitude.toString()
             txtzoom?.text = place.zoom.toString()

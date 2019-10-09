@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="370dp"
         android:padding="10dp">
 
         <TextView
@@ -59,13 +59,51 @@
         <EditText
             android:layout_width="250dp"
             android:layout_height="50dp"
+            android:id="@+id/edit_zoom"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Zoom"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:longClickable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="15sp"
+            android:layout_below="@+id/edit_longitude"
+            tools:ignore="TextFields"/>
+
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:id="@+id/edit_big_water"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Big water"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:longClickable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="15sp"
+            android:layout_below="@+id/edit_zoom"
+            tools:ignore="TextFields"/>
+
+
+
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:id="@+id/edit_name"
             android:imeOptions="actionDone"
             android:singleLine="true"
             android:layout_centerHorizontal="true"
             android:hint="Name"
             android:textSize="15sp"
-            android:layout_below="@+id/edit_longitude"
+            android:layout_below="@+id/edit_big_water"
             tools:ignore="TextFields"/>
 
 

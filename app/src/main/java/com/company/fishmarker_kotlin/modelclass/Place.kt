@@ -1,16 +1,19 @@
 package com.company.fishmarker_kotlin.modelclass
 
 data class Place(
-    var name_place: String,
-    var latitude: Double,
-    var longitude: Double,
-    var zoom: Double,
+    var id: String,
     var uid: String?,
-    var place_id: String?,
-    var water_object: Int?){
+    var name: String,
+    var latitude: Double?,
+    var longitude: Double?,
+    var zoom: Float?,
+    var bigwater: String?) {
 
-    constructor(name_place: String, latitude: Double, longitude: Double, zoom: Double) :
-            this(name_place, latitude, longitude, zoom, null,null, null)
+    constructor(name: String, latitude: Double, longitude: Double, zoom: Float) :
+            this("", "", name, latitude, longitude, zoom, "")
+
+    constructor() :
+            this("", "", "", 0.0, 0.0,0.0f, "")
 }
 
 

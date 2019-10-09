@@ -12,10 +12,10 @@ class PlaceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place)
 
-        val intent : Intent = this.intent
+      /*  val intent : Intent = this.intent
 
         val fff : String = intent.getStringExtra("nameBigWater")
-
+*/
 
         if (savedInstanceState == null) {
             supportFragmentManager

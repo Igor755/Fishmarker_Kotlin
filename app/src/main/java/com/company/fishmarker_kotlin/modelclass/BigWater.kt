@@ -14,4 +14,5 @@ enum class BigWater(val nameWater: String, val photoWater: Int) {
     Type8("POND",R.drawable.sea),
     Type9("ANOTHER",R.drawable.sea),
 
+
 }

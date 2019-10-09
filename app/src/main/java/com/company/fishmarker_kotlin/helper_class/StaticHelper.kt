@@ -3,20 +3,22 @@ package com.company.fishmarker_kotlin.helper_class
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import com.company.fishmarker_kotlin.modelclass.Place
 import java.util.*
 import kotlin.collections.ArrayList
 
 class StaticHelper {
 
 
-
-
     companion object {
 
-         var filepathimage = ""
+        var filepathimage = ""
+
+        @JvmStatic
+        var allplace: ArrayList<Place> = ArrayList()
 
 
-        fun getValue() : ArrayList<String>{
+        fun getValue(): ArrayList<String> {
 
             val allCountry: ArrayList<String> = ArrayList()
             val coutryCodes: Array<out String>? = Locale.getISOCountries()
@@ -42,10 +44,7 @@ class StaticHelper {
             activeNetworkInfo = cm.activeNetworkInfo
             return activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
-
-
-
     }
 
-
 }
+

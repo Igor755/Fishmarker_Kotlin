@@ -26,9 +26,9 @@ class SignInFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(com.company.fishmarker_kotlin.R.layout.fragment_sign_in, container, false)
+        val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
 
-        val btnReg = view.findViewById<TextView>(com.company.fishmarker_kotlin.R.id.btn_registration)
+        val btnReg = view.findViewById<TextView>(R.id.btn_registration)
         val btnForgotPas = view.findViewById<TextView>(com.company.fishmarker_kotlin.R.id.btn_forgot_password)
         val btnSignIn = view.findViewById<Button>(com.company.fishmarker_kotlin.R.id.btn_sign_in)
 
