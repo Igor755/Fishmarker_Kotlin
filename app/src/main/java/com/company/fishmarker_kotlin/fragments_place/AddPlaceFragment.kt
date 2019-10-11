@@ -23,6 +23,7 @@ import com.company.fishmarker_kotlin.modelclass.Place
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlin.collections.ArrayList
 
 
 class AddPlaceFragment : Fragment() {
@@ -31,16 +32,17 @@ class AddPlaceFragment : Fragment() {
     private var txtnameplace: TextView? = null
     private var progressbar: ProgressBar? = null
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var allPlaceMap : MutableMap<String,ArrayList<Place>> = mutableMapOf()
-    val mAdapter = AdapterPlace(allplace)
+    //private var allPlaceMap : MutableMap<BigWater,MutableList<Place>> = mutableMapOf()
+
+    var list : ArrayList<Place>  =  ArrayList()
+
+
+    var mAdapter = AdapterPlace(emptyList())
+
 
 
     @SuppressLint("WrongConstant")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_add_place, container, false)
 
@@ -49,11 +51,10 @@ class AddPlaceFragment : Fragment() {
         progressbar = view.findViewById(R.id.progressbar) as ProgressBar
         val fab: FloatingActionButton? = view.findViewById(R.id.fab)
 
-
-        //val intent: Intent = activity!!.intent
-        //val nameBigWater: String = intent.getStringExtra("nameBigWater")
-
+        val intent: Intent = activity!!.intent
+        val nameBigWater: String = intent.getStringExtra("nameBigWater")
         //val list: MutableList<Place> = ArrayList()
+
 
         mListRecyclerView!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
 
@@ -70,14 +71,18 @@ class AddPlaceFragment : Fragment() {
                     allplace.add(place)
 
                 }
-                mListRecyclerView!!.adapter = mAdapter
+                setAdapter(nameBigWater)
             }
-
             override fun onCancelled(error: DatabaseError) {
-
                 Toast.makeText(context, "Maybe not internet (Failed to read value) :(" , Toast.LENGTH_SHORT).show()
             }
         })
+        //BigWater.values()
+       /*for (i in allplace.indices){
+       }*/
+
+
+
 
 
         /* val place  = Place("asas",0.0020,0.0002,0.45345)
@@ -89,9 +94,6 @@ class AddPlaceFragment : Fragment() {
              place.zoom = 0.434
              list.add(place)
          }
-
-
-
          if (list.size != 0){
              txtnameplace!!.visibility = INVISIBLE
              progressbar!!.visibility = INVISIBLE
@@ -134,6 +136,20 @@ class AddPlaceFragment : Fragment() {
 
         allplace.add(place)
         mListRecyclerView?.adapter?.notifyDataSetChanged()
+
+    }
+    fun setAdapter(nameBigWater : String){
+
+        when(nameBigWater){
+            in "OCEAN" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("OCEAN")) {
+                        list.add(place) }
+                }
+        }
+
+        val mAdapter = AdapterPlace(list)
+        mListRecyclerView!!.adapter = mAdapter
 
     }
 }

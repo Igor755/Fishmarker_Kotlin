@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.modelclass.Place
 
-class AdapterPlace(private val list: List<Place>) : RecyclerView.Adapter<AdapterPlace.RecyclerViewHolder>() {
+class AdapterPlace(var list: List<Place>) : RecyclerView.Adapter<AdapterPlace.RecyclerViewHolder>() {
 
 
     lateinit var mClickListener: ClickListener
