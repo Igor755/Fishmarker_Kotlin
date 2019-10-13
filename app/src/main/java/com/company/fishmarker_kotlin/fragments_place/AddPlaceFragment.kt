@@ -23,6 +23,7 @@ import com.company.fishmarker_kotlin.modelclass.Place
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_add_place.*
 import kotlin.collections.ArrayList
 
 
@@ -34,11 +35,6 @@ class AddPlaceFragment : Fragment() {
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     //private var allPlaceMap : MutableMap<BigWater,MutableList<Place>> = mutableMapOf()
 
-    var list : ArrayList<Place>  =  ArrayList()
-
-
-    var mAdapter = AdapterPlace(emptyList())
-
 
 
     @SuppressLint("WrongConstant")
@@ -49,18 +45,23 @@ class AddPlaceFragment : Fragment() {
         mListRecyclerView = view.findViewById(R.id.my_recycler_view) as RecyclerView
         txtnameplace = view.findViewById(R.id.txtnameplace) as TextView
         progressbar = view.findViewById(R.id.progressbar) as ProgressBar
-        val fab: FloatingActionButton? = view.findViewById(R.id.fab)
+       // val fab: FloatingActionButton? = view.findViewById(R.id.fab)
+
+
+        return view
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val intent: Intent = activity!!.intent
         val nameBigWater: String = intent.getStringExtra("nameBigWater")
-        //val list: MutableList<Place> = ArrayList()
-
-
-        mListRecyclerView!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-
 
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: Query = database.getReference("Place").orderByChild("uid").equalTo(mAuth.currentUser?.uid)
+        allplace.clear()
 
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
@@ -72,39 +73,38 @@ class AddPlaceFragment : Fragment() {
 
                 }
                 setAdapter(nameBigWater)
+
+
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Maybe not internet (Failed to read value) :(" , Toast.LENGTH_SHORT).show()
             }
         })
-        //BigWater.values()
-       /*for (i in allplace.indices){
-       }*/
 
 
+        fab!!.setOnClickListener {
+            fragmentManager
+                ?.beginTransaction()
+                ?.replace(R.id.fragment_container_place, MapPlaceFragment())
+                ?.addToBackStack(null)
+                ?.commit()
+        }
 
 
+    }
 
-        /* val place  = Place("asas",0.0020,0.0002,0.45345)
-         val range = 1..5
-         for(i in range){
-             place.name_place = "NamePlace"
-             place.latitude = 0.00056546
-             place.longitude = 0.00056546
-             place.zoom = 0.434
-             list.add(place)
-         }
-         if (list.size != 0){
-             txtnameplace!!.visibility = INVISIBLE
-             progressbar!!.visibility = INVISIBLE
-         } else{
-             txtnameplace!!.visibility = VISIBLE
-             progressbar!!.visibility = VISIBLE
+    @SuppressLint("WrongConstant")
+    fun setAdapter(name : String){
 
-         }*/
+       // getListPlace(name)
 
+        val mAdapter = AdapterPlace(getListPlace(name))
 
+        if(getListPlace(name) != emptyArray<Place>()){
 
+            txtnameplace!!.visibility = INVISIBLE
+            progressbar!!.visibility = INVISIBLE
+        }
 
         mAdapter.setOnItemClickListener(object : AdapterPlace.ClickListener {
             override fun onClick(pos: Int, aView: View) {
@@ -117,17 +117,8 @@ class AddPlaceFragment : Fragment() {
 
             }
         })
-
-        fab!!.setOnClickListener {
-            fragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragment_container_place, MapPlaceFragment())
-                ?.addToBackStack(null)
-                ?.commit()
-        }
-
-
-        return view
+        mListRecyclerView!!.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        mListRecyclerView!!.adapter = mAdapter
 
 
     }
@@ -138,18 +129,69 @@ class AddPlaceFragment : Fragment() {
         mListRecyclerView?.adapter?.notifyDataSetChanged()
 
     }
-    fun setAdapter(nameBigWater : String){
+    fun getListPlace(nameBigWater : String) : ArrayList<Place>{
+
+        val list : ArrayList<Place>  = ArrayList()
+
+        //list.clear()
 
         when(nameBigWater){
+            in "SEA" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("SEA")) {
+                        list.add(place) }
+                }
+
             in "OCEAN" ->
                 for (place : Place in allplace) {
                     if (place.bigwater.equals("OCEAN")) {
                         list.add(place) }
                 }
-        }
+            in "RIVER" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("RIVER")) {
+                        list.add(place) }
+                }
+            in "LAKE" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("LAKE")) {
+                        list.add(place) }
+                }
+            in "GULF" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("GULF")) {
+                        list.add(place) }
+                }
+            in "RESERVOIR" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("RESERVOIR")) {
+                        list.add(place) }
+                }
+            in "RATES" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("RATES")) {
+                        list.add(place) }
+                }
+            in "POND" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("POND")) {
+                        list.add(place) }
+                }
+            in "ANOTHER" ->
+                for (place : Place in allplace) {
+                    if (place.bigwater.equals("ANOTHER")) {
+                        list.add(place) }
+                }
+            else -> {
+                progressbar!!.visibility = INVISIBLE
+                Toast.makeText(context, "not place", Toast.LENGTH_SHORT).show()
+            }
 
-        val mAdapter = AdapterPlace(list)
-        mListRecyclerView!!.adapter = mAdapter
+        }
+        return list
+
+
+
 
     }
 }
