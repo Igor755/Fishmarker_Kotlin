@@ -109,9 +109,20 @@ class AddPlaceFragment : Fragment() {
         mAdapter.setOnItemClickListener(object : AdapterPlace.ClickListener {
             override fun onClick(pos: Int, aView: View) {
 
+                val bundle = Bundle()
+                val place: Place = getListPlace(name)[pos]
+
+                bundle.putDouble("latitude", place.latitude!!)
+                bundle.putDouble("longitude", place.longitude!!)
+                bundle.putFloat("zoom", place.zoom!!)
+
+                val mapMarkerFragment = MapMarkerFragment()
+                mapMarkerFragment.arguments = bundle
+
+
                 fragmentManager
                     ?.beginTransaction()
-                    ?.replace(R.id.fragment_container_place, MapMarkerFragment())
+                    ?.replace(R.id.fragment_container_place, mapMarkerFragment)
                     ?.addToBackStack(null)
                     ?.commit()
 

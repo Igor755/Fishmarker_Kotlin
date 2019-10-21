@@ -63,4 +63,45 @@
     Anchor to the right place.</string>
 
 
+    <string name="date">Date</string>
+    <string name="depth">0.00</string>
+    <string name="Depth">Depth(meter)</string>
+    <string name="Number">Amount of fish</string>
+    <string name="number">integer</string>
+    <string name="Note">Note</string>
+    <string name="note">note</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="longitude">longitude</string>
+    <string name="latitude">latitude</string>
+    <string name="selectdate">SELECT DATE</string>
+    <string name="titlemarker">Title marker</string>
+    <string name="titlemarker2">20 symbols</string>
+
+
+    ///////////////////////////////////////////////////////MENU
+
+    <string name="back">back</string>
+    <string name="add">add</string>
+    <string name="recycler">Recycler</string>
+    <string name="information">Information</string>
+
+    ///////////////////////////////////////////////////////
+
+    <string name="latlng">Latitude/Longitude</string>
+
+    <string name="base">Base empty</string>
+
+    ///////////////////////////////////////////////////////Сomplete marker information
+
+
+    <string name="complete_c">Detail marker information</string>
+    <string name="lat_c">Latitude: </string>
+    <string name="lon_c">Longitude: </string>
+    <string name="tit_c">Title marker: </string>
+    <string name="date_c">Date: </string>
+    <string name="depth_c">Depth: </string>
+    <string name="amount_c">Amount: </string>
+    <string name="note_c">Note: </string>
+
 </resources>
