@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.adapter.AdapterPlace
 import com.company.fishmarker_kotlin.fragments_marker.MapMarkerFragment
@@ -109,22 +110,16 @@ class AddPlaceFragment : Fragment() {
         mAdapter.setOnItemClickListener(object : AdapterPlace.ClickListener {
             override fun onClick(pos: Int, aView: View) {
 
-                val bundle = Bundle()
                 val place: Place = getListPlace(name)[pos]
 
-                bundle.putDouble("latitude", place.latitude!!)
-                bundle.putDouble("longitude", place.longitude!!)
-                bundle.putFloat("zoom", place.zoom!!)
 
-                val mapMarkerFragment = MapMarkerFragment()
-                mapMarkerFragment.arguments = bundle
+                val intent = Intent(activity, MarkerActivity::class.java)
+                intent.putExtra("latitude", place.latitude!!)
+                intent.putExtra("longitude", place.longitude!!)
+                intent.putExtra("zoom",  place.zoom!!)
+                startActivity(intent)
 
 
-                fragmentManager
-                    ?.beginTransaction()
-                    ?.replace(R.id.fragment_container_place, mapMarkerFragment)
-                    ?.addToBackStack(null)
-                    ?.commit()
 
             }
         })

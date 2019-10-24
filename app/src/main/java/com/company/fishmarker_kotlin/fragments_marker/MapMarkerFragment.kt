@@ -1,6 +1,7 @@
 package com.company.fishmarker_kotlin.fragments_marker
 
 import android.app.AlertDialog
+import android.content.Intent.getIntent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -42,10 +43,19 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         mUiSettings.isZoomControlsEnabled = true
         mUiSettings.isMapToolbarEnabled = false
 
-         val bundle : Bundle? = arguments
-         val latitude_place : Double = bundle?.getDouble("latitude")!!
-         val longitude_place : Double = bundle.getDouble("longitude")
-         val zoom_place : Float = bundle.getFloat("zoom")
+
+        val  extras : Bundle = activity!!.intent.extras
+
+        val latitude_place : Double = extras.getDouble("latitude")
+        val longitude_place : Double = extras.getDouble("longitude")
+        val zoom_place : Float = extras.getFloat("zoom")
+
+
+
+        /*  val bundle : Bundle? = arguments
+           val latitude_place : Double = bundle?.getDouble("latitude")!!
+           val longitude_place : Double = bundle.getDouble("longitude")
+           val zoom_place : Float = bundle.getFloat("zoom")*/
 
         val cameraPosition : CameraPosition? = CameraPosition.Builder()
             .target(LatLng(latitude_place,longitude_place))
@@ -75,14 +85,21 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
         builder.setPositiveButton("YES"){dialog, which ->
 
+            val fragment  =  CardMarkerFragment()
+            val bundle  =  Bundle()
+            bundle.putDouble("latitude", latitude)
+            bundle.putDouble("longitude", longitude)
+            fragment.arguments = bundle
+
+
             fragmentManager
                 ?.beginTransaction()
-                ?.replace(R.id.fragment_container_place, CardMarkerFragment())
+                ?.replace(R.id.fragment_container_marker, fragment)
                 ?.addToBackStack(null)
                 ?.commit()
 
 
-            Toast.makeText(context,"Ok, we change the app background.",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Go, go , go add marker.",Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton("No"){dialog,which ->
