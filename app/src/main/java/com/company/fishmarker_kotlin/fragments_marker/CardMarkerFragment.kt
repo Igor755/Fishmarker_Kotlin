@@ -8,11 +8,13 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.MarkerActivity
-import com.company.fishmarker_kotlin.PlaceActivity
 import com.company.fishmarker_kotlin.R
-import kotlinx.android.synthetic.main.fragment_add_place_dialog.*
+import com.company.fishmarker_kotlin.modelclass.Marker
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_latitude
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_longitude
 import kotlinx.android.synthetic.main.fragment_card_marker.*
@@ -92,6 +94,42 @@ class CardMarkerFragment : Fragment(){
 
     }
     fun addMarker(){
+
+        btnOk.setOnClickListener {
+
+            if(isEmpty()){
+                Toast.makeText(context, "Empty field", Toast.LENGTH_LONG).show()
+            }else{
+
+
+                val idUser : String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+                val idMarker : String = UUID.randomUUID().toString()
+                val latitude : Double = edit_latitude.text.toString().toDouble()
+                val longitude : Double = edit_longitude.text.toString().toDouble()
+                val titleMarker : String = edit_title_marker.text.toString()
+                val dateMarker : String = tvDate.display.toString()
+                val dept : Double = edit_dept.text.toString().toDouble()
+                val amountOfFish : Int = edit_number_of_fish.text.toString().toInt()
+                val note : String = edit_note.text.toString()
+
+                val newMarker  = Marker (idUser, idMarker, latitude, longitude, titleMarker, dateMarker, dept, amountOfFish, note)
+
+
+                FirebaseDatabase.getInstance().getReference("Marker").child(idMarker).setValue(newMarker)
+
+                val bundle  =  Bundle()
+                bundle.putString("idMarker", idMarker)
+                bundle.putString("titleMarker", titleMarker)
+                val intent = Intent()
+                intent.putExtras(bundle)
+
+                activity?.setResult(Activity.RESULT_OK, intent)
+
+            }
+        }
+
+
+
 
     }
     fun isEmpty() : Boolean{
