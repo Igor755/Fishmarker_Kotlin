@@ -10,3 +10,10 @@ data class Marker(
     var depth : Double,
     var amount : Int,
     var note: String)
+
+/*public fun  getCoordinates() : Double[] {
+
+    double[] cats = {latitude, longitude};
+
+    return cats;
+}*/

@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.modelclass.Marker
+import com.company.fishmarker_kotlin.singleton.Singleton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_latitude
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_card_marker.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CardMarkerFragment : Fragment(){
+class CardMarkerFragment : DialogFragment(){
 
     private lateinit var dateSetListener : DatePickerDialog.OnDateSetListener
 
@@ -61,10 +63,7 @@ class CardMarkerFragment : Fragment(){
 
         btnCancel.setOnClickListener {
 
-            fragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragment_container_marker, MapMarkerFragment())
-                ?.commit()
+            dialog?.dismiss()
 
         }
 
@@ -91,11 +90,18 @@ class CardMarkerFragment : Fragment(){
 
         }
 
+        btnOk.setOnClickListener {
+
+            addMarker()
+        }
+
+
+
 
     }
     fun addMarker(){
 
-        btnOk.setOnClickListener {
+
 
             if(isEmpty()){
                 Toast.makeText(context, "Empty field", Toast.LENGTH_LONG).show()
@@ -107,7 +113,7 @@ class CardMarkerFragment : Fragment(){
                 val latitude : Double = edit_latitude.text.toString().toDouble()
                 val longitude : Double = edit_longitude.text.toString().toDouble()
                 val titleMarker : String = edit_title_marker.text.toString()
-                val dateMarker : String = tvDate.display.toString()
+                val dateMarker : String = tvDate.text.toString()
                 val dept : Double = edit_dept.text.toString().toDouble()
                 val amountOfFish : Int = edit_number_of_fish.text.toString().toInt()
                 val note : String = edit_note.text.toString()
@@ -118,14 +124,23 @@ class CardMarkerFragment : Fragment(){
                 FirebaseDatabase.getInstance().getReference("Marker").child(idMarker).setValue(newMarker)
 
                 val bundle  =  Bundle()
+
                 bundle.putString("idMarker", idMarker)
                 bundle.putString("titleMarker", titleMarker)
-                val intent = Intent()
-                intent.putExtras(bundle)
+                bundle.putDouble("latitude", latitude)
+                bundle.putDouble("longitude", longitude)
 
-                activity?.setResult(Activity.RESULT_OK, intent)
+                val intent2 = Intent()
+                intent2.putExtras(bundle)
 
-            }
+
+                targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent2)
+
+                Singleton.addMarker(newMarker)
+
+
+                dialog?.dismiss()
+
         }
 
 

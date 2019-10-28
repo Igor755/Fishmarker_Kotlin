@@ -1,19 +1,32 @@
 package com.company.fishmarker_kotlin.fragments_marker
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.Intent.getIntent
+import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.load.engine.Resource
+import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
+import com.company.fishmarker_kotlin.singleton.Singleton
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.squareup.picasso.Picasso
+
+
 
 class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
@@ -85,18 +98,24 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
         builder.setPositiveButton("YES"){dialog, which ->
 
-            val fragment  =  CardMarkerFragment()
+            val fragment : DialogFragment  =  CardMarkerFragment()
             val bundle  =  Bundle()
             bundle.putDouble("latitude", latitude)
             bundle.putDouble("longitude", longitude)
             fragment.arguments = bundle
 
 
-            fragmentManager
+
+
+            fragment.setTargetFragment(this,1)
+
+            fragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
+
+            /*fragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_container_marker, fragment)
                 ?.addToBackStack(null)
-                ?.commit()
+                ?.commit()*/
 
 
             Toast.makeText(context,"Go, go , go add marker.",Toast.LENGTH_SHORT).show()
@@ -112,8 +131,31 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         dialog.show()
 
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
 
+        if (resultCode == Activity.RESULT_OK) {
+
+
+
+            val titleMarker = data?.getStringExtra("titleMarker")
+            val idMarker = data?.getStringExtra("idMarker")
+            val latitude: Double? = data?.getDoubleExtra("latitude",0.0)
+            val longitude: Double? = data?.getDoubleExtra("longitude", 0.0)
+
+            val resource : Resources = context?.resources!!
+
+            val myIconFish : Drawable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                resource.getDrawable(R.drawable.photo_user, context!!.theme)
+            } else {
+                resource.getDrawable(R.drawable.photo_user)            }
+
+            Singleton.createMarker(latitude, longitude, titleMarker, myIconFish)
+
+        }
     }
 
 }
