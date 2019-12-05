@@ -104,4 +104,9 @@
     <string name="amount_c">Amount: </string>
     <string name="note_c">Note: </string>
 
+    ///////facebook_api
+    <string name="facebook_app_id">570833563489623</string>
+    <string name="fb_login_protocol_scheme">fb570833563489623</string>
+
+
 </resources>

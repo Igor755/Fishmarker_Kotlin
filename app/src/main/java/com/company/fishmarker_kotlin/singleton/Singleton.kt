@@ -12,7 +12,7 @@ class Singleton {
 
         @JvmStatic
         var allmarkers: ArrayList<Marker> = arrayListOf()
-        
+
         private var googlemap: GoogleMap? = null
 
 
