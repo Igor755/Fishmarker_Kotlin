@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.company.fishmarker_kotlin.fragments_registration.SignInFragment
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.auth.FirebaseAuth
 
 class AuthActivity : AppCompatActivity() {
@@ -14,6 +16,9 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+
+
+
 
         mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth!!.currentUser

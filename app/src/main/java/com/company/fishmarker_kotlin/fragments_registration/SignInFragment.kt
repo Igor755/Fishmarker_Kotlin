@@ -2,6 +2,7 @@ package com.company.fishmarker_kotlin.fragments_registration
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +13,25 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import com.company.fishmarker_kotlin.AuthActivity
 import com.company.fishmarker_kotlin.R
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import kotlinx.android.synthetic.main.fragment_registration.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import com.facebook.FacebookSdk;
+import com.facebook.FacebookSdk.getApplicationContext
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.firebase.ui.auth.AuthUI
+import java.util.*
 
 
 class SignInFragment : Fragment() {
 
     private var mAuth: FirebaseAuth? = null
+
+    private var callbackManager: CallbackManager? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -63,7 +74,31 @@ class SignInFragment : Fragment() {
 
         withFacebook.setOnClickListener {
 
+            callbackManager = CallbackManager.Factory.create()
+
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile", "email"))
+            LoginManager.getInstance().registerCallback(callbackManager,
+                object : FacebookCallback<LoginResult> {
+                    override fun onSuccess(loginResult: LoginResult) {
+                        Log.d("MainActivity", "Facebook token: " + loginResult.accessToken.token)
+                            // startActivity(Intent(context, AuthenticatedActivity::class.java))
+                       // handleFa
+
+                    }
+
+                    override fun onCancel() {
+                        Log.d("MainActivity", "Facebook onCancel.")
+
+                    }
+
+                    override fun onError(error: FacebookException) {
+                        Log.d("MainActivity", "Facebook onError.")
+
+                    }
+                })
+
         }
+
 
         mAuth = FirebaseAuth.getInstance()
 
@@ -100,5 +135,9 @@ class SignInFragment : Fragment() {
                 ?.addToBackStack(null)
                 ?.commit()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
