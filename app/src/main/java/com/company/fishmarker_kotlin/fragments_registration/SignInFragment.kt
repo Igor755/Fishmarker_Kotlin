@@ -13,17 +13,18 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import com.company.fishmarker_kotlin.AuthActivity
 import com.company.fishmarker_kotlin.R
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.company.fishmarker_kotlin.modelclass.User
+import com.facebook.*
 import kotlinx.android.synthetic.main.fragment_registration.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import com.facebook.FacebookSdk;
 import com.facebook.FacebookSdk.getApplicationContext
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 
@@ -35,37 +36,39 @@ class SignInFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-
-
-        return  inflater.inflate(R.layout.fragment_sign_in, container, false)
-
+        return inflater.inflate(R.layout.fragment_sign_in, container, false)
     }
-    private fun signIn(email : String, password : String){
+
+    private fun signIn(email: String, password: String) {
         mAuth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener { task ->
-            if (task.isSuccessful){
+            if (task.isSuccessful) {
                 checkIfEmailVerified()
-
-
-            }else{
-                Toast.makeText(context, com.company.fishmarker_kotlin.R.string.autorithation, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    com.company.fishmarker_kotlin.R.string.autorithation,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
     }
-    private fun checkIfEmailVerified(){
 
-        val user : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-        if (user.isEmailVerified){
+    private fun checkIfEmailVerified() {
+
+        val user: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        if (user.isEmailVerified) {
+
             val intent = Intent(activity, ProfileActivity::class.java)
             startActivity(intent)
             AuthActivity().finish()
+
             fragmentManager?.beginTransaction()?.remove(SignInFragment())?.commit()
-        }else{
+        } else {
+
             Toast.makeText(context, R.string.verify, Toast.LENGTH_SHORT).show()
             FirebaseAuth.getInstance().signOut()
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,19 +83,27 @@ class SignInFragment : Fragment() {
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(loginResult: LoginResult) {
-                        Log.d("MainActivity", "Facebook token: " + loginResult.accessToken.token)
-                            // startActivity(Intent(context, AuthenticatedActivity::class.java))
-                       // handleFa
+                        Log.d("SignInFragment", "Facebook_token: " + loginResult)
+                        handleFacebookAccessToken(loginResult.accessToken)
+
+                        var profile : Profile  = Profile.getCurrentProfile()
+
+                        //var email : String = profile.
+
+                        val userID : String = FirebaseAuth.getInstance().currentUser!!.uid
+                        
+                            //val user : User =  User(userID,  )
+                        //FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user)
+
 
                     }
 
                     override fun onCancel() {
-                        Log.d("MainActivity", "Facebook onCancel.")
-
+                        Log.d("SignInFragment", "Facebook onCancel.")
                     }
 
                     override fun onError(error: FacebookException) {
-                        Log.d("MainActivity", "Facebook onError.")
+                        Log.d("SignInFragment", "Facebook onError.")
 
                     }
                 })
@@ -101,33 +112,23 @@ class SignInFragment : Fragment() {
 
 
         mAuth = FirebaseAuth.getInstance()
-
-
         btn_sign_in.setOnClickListener {
-
 
             val email = edit_text_email.text.toString().trim()
             val password = edit_text_password.text.toString().trim()
-
-            if (email.isEmpty() || password.isEmpty()){
-
-                Toast.makeText(context,R.string.empty_email_or_password, Toast.LENGTH_SHORT).show()
-
-            }else{
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(context, R.string.empty_email_or_password, Toast.LENGTH_SHORT).show()
+            } else {
                 signIn(email, password)
-
             }
-
         }
-
-        btn_registration.setOnClickListener{
+        btn_registration.setOnClickListener {
             fragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_container_auth, RegistrationFragment())
                 ?.addToBackStack(null)
                 ?.commit()
         }
-
         btn_forgot_password.setOnClickListener {
             fragmentManager
                 ?.beginTransaction()
@@ -139,5 +140,28 @@ class SignInFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        callbackManager?.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun handleFacebookAccessToken(token: AccessToken){
+
+        val credential : AuthCredential = FacebookAuthProvider.getCredential(token.token)
+        mAuth?.signInWithCredential(credential)?.addOnCompleteListener{ task ->
+            if (task.isSuccessful){
+
+                val intent = Intent(activity, ProfileActivity::class.java)
+                startActivity(intent)
+                AuthActivity().finish()
+
+            } else{
+
+                Toast.makeText(context, "exception" + task.exception, Toast.LENGTH_SHORT).show()
+
+
+            }
+
+        }
+
     }
 }

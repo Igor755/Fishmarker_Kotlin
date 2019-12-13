@@ -46,7 +46,7 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
     val adapter  = ArrayAdapter<String>(context,
         android.R.layout.simple_spinner_item,  StaticHelper.getValue())
 
-    adapter.setDropDownViewResource(com.company.fishmarker_kotlin.R.layout.support_simple_spinner_dropdown_item)
+    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
     spinner_location.adapter = adapter
 
 
@@ -151,7 +151,7 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
     }
     fun sendVerificationEmail(){
 
-        var user : FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        val user : FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
         user?.sendEmailVerification()?.addOnCompleteListener {task ->
             if (task.isSuccessful){
@@ -160,15 +160,16 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
 
                 fragmentManager
                     ?.beginTransaction()
-                    ?.replace(com.company.fishmarker_kotlin.R.id.fragment_container_auth, SignInFragment())
+                    ?.replace(R.id.fragment_container_auth, SignInFragment())
                     ?.commit()
 
-                Toast.makeText(context, com.company.fishmarker_kotlin.R.string.check, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.check, Toast.LENGTH_LONG).show()
 
 
             }else{
 
-                Toast.makeText(context, "DONT SENT NO INTERNET", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "DON'T SENT NO INTERNET", Toast.LENGTH_SHORT).show()
+
 
             }
 

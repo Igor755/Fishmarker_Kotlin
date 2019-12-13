@@ -14,4 +14,6 @@ data class User(var user_id: String = "",
             this(user_id,user_name, "",email, location, "", "", "", "")
 
 
+    constructor(user_id : String, email: String) :
+            this(user_id,"", "",email, "", "", "", "", "")
 }

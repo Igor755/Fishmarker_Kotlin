@@ -16,31 +16,28 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-
-
-
-
         mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth!!.currentUser
+
+
         //если уже авторизован
         if (currentUser != null) {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
-
         }
-
-
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_container_auth, SignInFragment())
                 .commit()
         }
-
-
-
-
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
     }
+
+
+
 }
