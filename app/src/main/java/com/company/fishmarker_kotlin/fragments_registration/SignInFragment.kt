@@ -17,26 +17,25 @@ import com.company.fishmarker_kotlin.modelclass.User
 import com.facebook.*
 import kotlinx.android.synthetic.main.fragment_registration.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import com.facebook.FacebookSdk.getApplicationContext
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.database.FirebaseDatabase
-import java.util.*
+import org.json.JSONObject
 
 
 class SignInFragment : Fragment() {
 
     private var mAuth: FirebaseAuth? = null
-
     private var callbackManager: CallbackManager? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sign_in, container, false)
+
+
+
     }
 
     private fun signIn(email: String, password: String) {
@@ -45,8 +44,7 @@ class SignInFragment : Fragment() {
                 checkIfEmailVerified()
             } else {
                 Toast.makeText(
-                    context,
-                    com.company.fishmarker_kotlin.R.string.autorithation,
+                    context,R.string.autorithation,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -75,10 +73,10 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
+
         withFacebook.setOnClickListener {
-
             callbackManager = CallbackManager.Factory.create()
-
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile", "email"))
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
@@ -86,16 +84,24 @@ class SignInFragment : Fragment() {
                         Log.d("SignInFragment", "Facebook_token: " + loginResult)
                         handleFacebookAccessToken(loginResult.accessToken)
 
-                        var profile : Profile  = Profile.getCurrentProfile()
+                        val accessToken : AccessToken = loginResult.accessToken
+                        var request : GraphRequest  = GraphRequest.newMeRequest(accessToken,object : GraphRequest.GraphJSONObjectCallback {
+                            override fun onCompleted(`object` : JSONObject?,response : GraphResponse) {
+                                Log.v("LoginActivity", response.toString())
 
-                        //var email : String = profile.
+                                try {
 
-                        val userID : String = FirebaseAuth.getInstance().currentUser!!.uid
-                        
-                            //val user : User =  User(userID,  )
-                        //FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user)
+                                    val  email : String  = response.jsonObject.getString("email")
+                                    val userID : String = FirebaseAuth.getInstance().currentUser!!.uid
 
+                                    val user : User =  User(userID,email)
+                                    FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user)
 
+                                }catch(e : Exception){
+                                    e.printStackTrace()
+                                }
+                            }
+                        })
                     }
 
                     override fun onCancel() {
@@ -140,7 +146,6 @@ class SignInFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         callbackManager?.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -149,7 +154,6 @@ class SignInFragment : Fragment() {
         val credential : AuthCredential = FacebookAuthProvider.getCredential(token.token)
         mAuth?.signInWithCredential(credential)?.addOnCompleteListener{ task ->
             if (task.isSuccessful){
-
                 val intent = Intent(activity, ProfileActivity::class.java)
                 startActivity(intent)
                 AuthActivity().finish()
