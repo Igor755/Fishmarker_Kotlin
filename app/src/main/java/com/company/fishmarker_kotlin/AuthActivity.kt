@@ -16,8 +16,9 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+
         mAuth = FirebaseAuth.getInstance()
-        val currentUser = mAuth!!.currentUser
+        val currentUser = mAuth?.currentUser
 
 
         //если уже авторизован
@@ -25,7 +26,9 @@ class AuthActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
+
         }
+
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()

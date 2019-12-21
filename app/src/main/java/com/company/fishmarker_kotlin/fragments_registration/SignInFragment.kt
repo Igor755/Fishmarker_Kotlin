@@ -1,5 +1,6 @@
 package com.company.fishmarker_kotlin.fragments_registration
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,18 +24,18 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONObject
+import java.util.*
 
 
 class SignInFragment : Fragment() {
 
     private var mAuth: FirebaseAuth? = null
-    private var callbackManager: CallbackManager? = null
-
+    private var callbackManager: CallbackManager? = CallbackManager.Factory.create()
+    val EMAIL = "email"
+    val PUBLIC_PROFILE = "public_profile"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sign_in, container, false)
-
-
 
     }
 
@@ -73,35 +74,51 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         withFacebook.setOnClickListener {
-            callbackManager = CallbackManager.Factory.create()
-            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile", "email"))
+            withFacebook.setReadPermissions(Arrays.asList(EMAIL, PUBLIC_PROFILE))
+        }
+
+
+        withFacebook.registerCallback(callbackManager,  object : FacebookCallback<LoginResult>{
+            override fun onSuccess(result: LoginResult) {
+
+                handleFacebookAccessToken(result.accessToken)            }
+
+            override fun onCancel() {
+                Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(error: FacebookException?) {
+                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+       /* withFacebook.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(activity, listOf("public_profile", "email"))
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(loginResult: LoginResult) {
-                        Log.d("SignInFragment", "Facebook_token: " + loginResult)
-                        handleFacebookAccessToken(loginResult.accessToken)
 
+                        Log.d("SignInFragment", "Facebook_token: " + loginResult)
+
+                        handleFacebookAccessToken(loginResult.accessToken)
+*//*
                         val accessToken : AccessToken = loginResult.accessToken
-                        var request : GraphRequest  = GraphRequest.newMeRequest(accessToken,object : GraphRequest.GraphJSONObjectCallback {
+
+                        var request : GraphRequest  = GraphRequest.newMeRequest(accessToken, object : GraphRequest.GraphJSONObjectCallback {
                             override fun onCompleted(`object` : JSONObject?,response : GraphResponse) {
                                 Log.v("LoginActivity", response.toString())
-
                                 try {
-
-                                    val  email : String  = response.jsonObject.getString("email")
+                                    val email : String  = response.jsonObject.getString("email")
                                     val userID : String = FirebaseAuth.getInstance().currentUser!!.uid
-
-                                    val user : User =  User(userID,email)
+                                    val user  =  User(userID,email)
                                     FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user)
-
                                 }catch(e : Exception){
                                     e.printStackTrace()
                                 }
                             }
-                        })
+                        })*//*
                     }
 
                     override fun onCancel() {
@@ -115,7 +132,7 @@ class SignInFragment : Fragment() {
                 })
 
         }
-
+*/
 
         mAuth = FirebaseAuth.getInstance()
         btn_sign_in.setOnClickListener {
@@ -151,21 +168,35 @@ class SignInFragment : Fragment() {
 
     private fun handleFacebookAccessToken(token: AccessToken){
 
+        mAuth = FirebaseAuth.getInstance()
+
         val credential : AuthCredential = FacebookAuthProvider.getCredential(token.token)
         mAuth?.signInWithCredential(credential)?.addOnCompleteListener{ task ->
-            if (task.isSuccessful){
-                val intent = Intent(activity, ProfileActivity::class.java)
-                startActivity(intent)
-                AuthActivity().finish()
+            if (task.isComplete){
+
+                if (!task.isSuccessful){
+                    Toast.makeText(context, "FAIL" + task.exception, Toast.LENGTH_SHORT).show()
+                }
+
+                else{
+                    val userID : String = FirebaseAuth.getInstance().currentUser!!.uid
+                    val email : String? = task.result?.user?.email
+                    val user  = email?.let { User(userID, it) }
+                    FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user)
+                    updateUI()
+                }
 
             } else{
 
                 Toast.makeText(context, "exception" + task.exception, Toast.LENGTH_SHORT).show()
-
-
             }
-
         }
+    }
+    private fun updateUI(){
+
+        val intent = Intent(activity, ProfileActivity::class.java)
+        startActivity(intent)
+        AuthActivity().finish()
 
     }
 }
