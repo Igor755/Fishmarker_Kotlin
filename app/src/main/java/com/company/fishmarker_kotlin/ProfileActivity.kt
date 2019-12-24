@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.fragments_profile.ProfileFragment
+import com.facebook.login.LoginManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -71,6 +72,8 @@ class ProfileActivity : AppCompatActivity() {
             builder.setPositiveButton(android.R.string.yes) { dialog, which ->
 
                 FirebaseAuth.getInstance().signOut()
+                LoginManager.getInstance().logOut()
+
                 val intent = Intent(this, AuthActivity::class.java)
                 startActivity(intent)
                 finish()

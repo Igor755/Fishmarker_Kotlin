@@ -10,14 +10,13 @@ import com.google.firebase.auth.FirebaseAuth
 
 class AuthActivity : AppCompatActivity() {
 
-    private var mAuth: FirebaseAuth? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
-        mAuth = FirebaseAuth.getInstance()
+        val mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth?.currentUser
 
 
