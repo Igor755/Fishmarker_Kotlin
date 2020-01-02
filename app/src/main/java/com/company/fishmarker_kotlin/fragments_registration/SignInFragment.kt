@@ -74,8 +74,14 @@ class SignInFragment : Fragment() {
 
 
 
+
+
         withFacebook.setOnClickListener {
-            facebooklogin()
+
+
+                facebooklogin()
+
+
         }
 
         btn_sign_in.setOnClickListener {
@@ -140,7 +146,7 @@ class SignInFragment : Fragment() {
                 else{
                     val userID : String = FirebaseAuth.getInstance().currentUser!!.uid
                     val email : String? = task.result?.user?.email
-                    val user  = email?.let { User(userID, it) }
+                    val user  = User(userID,email.toString())
                     FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user)
                     updateUI()
                 }
