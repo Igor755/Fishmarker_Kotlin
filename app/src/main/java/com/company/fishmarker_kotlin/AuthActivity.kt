@@ -17,7 +17,7 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.activity_auth)
 
         val mAuth = FirebaseAuth.getInstance()
-        val currentUser = mAuth?.currentUser
+        val currentUser = mAuth.currentUser
 
 
         //если уже авторизован

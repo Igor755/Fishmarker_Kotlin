@@ -27,11 +27,7 @@ class SignInFragment : Fragment() {
     private var mAuth: FirebaseAuth? = null
     private var callbackManager: CallbackManager? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sign_in, container, false)
     }
 
@@ -41,7 +37,7 @@ class SignInFragment : Fragment() {
                 checkIfEmailVerified()
             } else {
                 Toast.makeText(
-                    context, R.string.autorithation,
+                    context,R.string.autorithation,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -77,7 +73,7 @@ class SignInFragment : Fragment() {
 
         btn_sign_in.setOnClickListener {
 
-            val email: String = et_email.text.toString().trim()
+            val email : String = et_email.text.toString().trim()
             val password = et_password.text.toString().trim()
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(context, R.string.empty_email_or_password, Toast.LENGTH_SHORT).show()
