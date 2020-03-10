@@ -109,7 +109,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
             fragment.setTargetFragment(this,1)
 
-            fragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
+            activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
 
             /*fragmentManager
                 ?.beginTransaction()

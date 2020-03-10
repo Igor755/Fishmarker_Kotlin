@@ -84,7 +84,7 @@ class AddPlaceFragment : Fragment() {
 
 
         fab!!.setOnClickListener {
-            fragmentManager
+            activity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_container_place, MapPlaceFragment())
                 ?.addToBackStack(null)

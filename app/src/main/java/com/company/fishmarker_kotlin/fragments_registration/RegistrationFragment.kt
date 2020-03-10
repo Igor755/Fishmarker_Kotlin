@@ -158,7 +158,7 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
 
                 FirebaseAuth.getInstance().signOut()
 
-                fragmentManager
+                activity?.supportFragmentManager
                     ?.beginTransaction()
                     ?.replace(R.id.fragment_container_auth, SignInFragment())
                     ?.commit()

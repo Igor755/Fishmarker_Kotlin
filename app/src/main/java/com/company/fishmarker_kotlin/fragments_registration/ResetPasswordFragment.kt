@@ -53,7 +53,7 @@ class ResetPasswordFragment : Fragment() {
                 if (task.isSuccessful){
                     Toast.makeText(context, R.string.sent, Toast.LENGTH_SHORT).show()
 
-                    fragmentManager
+                    activity?.supportFragmentManager
                         ?.beginTransaction()
                         ?.replace(com.company.fishmarker_kotlin.R.id.fragment_container_auth, SignInFragment())
                         ?.commit()
