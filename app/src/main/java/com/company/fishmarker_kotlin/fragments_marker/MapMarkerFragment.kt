@@ -67,11 +67,9 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         googlemap?.setOnMapLongClickListener {point ->
             onMapLongClick(point.latitude, point.longitude)
         }
-
         googlemap?.setOnMarkerClickListener{marker ->
             onMarkerClick(marker)
         }
-
         googlemap?.setOnMapClickListener{ _ ->
             onMapClick()
         }
@@ -118,7 +116,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                 }
             }
             if (isMyMarker) {
-               // DatabaseLoad.getInstance().UpdateMarkerOfMapActivity(marker)
+                Singleton.UpdateMarker(marker)
             } else {
                 Toast.makeText(context, R.string.foreign_markers, Toast.LENGTH_SHORT)
                     .show()

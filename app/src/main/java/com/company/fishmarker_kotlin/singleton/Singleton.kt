@@ -4,17 +4,23 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.fragments_marker.CardMarkerFragment
+import com.company.fishmarker_kotlin.fragments_marker.MapMarkerFragment
 import com.company.fishmarker_kotlin.modelclass.MarkerDetail
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -39,7 +45,7 @@ class Singleton {
 
         private var googlemap: GoogleMap? = null
         private var markers: ArrayList<Marker>? = null
-        private lateinit  var context: Context
+        private lateinit var context: Context
         private var cardMarkerActivity: CardMarkerFragment? = null
         private var alert_detail: AlertDialog.Builder? = null
 
@@ -185,6 +191,46 @@ class Singleton {
                     break
                 }
             }
+        }
+        fun UpdateMarker(updatemarker : Marker){
+
+            for (modelClass in allmarkers) {
+                if (modelClass.latitude == updatemarker.position.latitude && modelClass.longitude == updatemarker.position.longitude) {
+                    val fragment : DialogFragment =  CardMarkerFragment()
+                    val bundle  =  Bundle()
+                    bundle.putString("1", modelClass.uid)
+                    bundle.putString("2", modelClass.id_marker_key)
+                    bundle.putString("3", java.lang.String.valueOf(modelClass.latitude))
+                    bundle.putString("4", java.lang.String.valueOf(modelClass.longitude))
+                    bundle.putString("5", modelClass.title)
+                    bundle.putString("6", modelClass.date)
+                    bundle.putString("7", java.lang.String.valueOf(modelClass.depth))
+                    bundle.putString("8", java.lang.String.valueOf(modelClass.amount))
+                    bundle.putString("9", modelClass.note)
+
+                    val activity : MarkerActivity? = MarkerActivity()
+                    fragment.arguments = bundle
+                    fragment.setTargetFragment(MapMarkerFragment(),1)
+                    activity?.supportFragmentManager?.let{fragment.show(it, "CardMarkerFragment")}
+
+                    /*val intent = Intent(context, CardMarkerFragment::class.java)
+                    println(bundle)
+                    intent.putExtras(bundle)
+                    context.startActivity(intent)*/
+
+                    /*val fragment : DialogFragment =  CardMarkerFragment()
+                    val bundle  =  Bundle()
+                    bundle.putDouble("latitude", latitude)
+                    bundle.putDouble("longitude", longitude)
+                    fragment.arguments = bundle
+
+                    fragment.setTargetFragment(this,1)
+                    activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
+                    Toast.makeText(context,"Go, go , go add marker.", Toast.LENGTH_SHORT).show()*/
+
+                }
+            }
+
         }
 
 
