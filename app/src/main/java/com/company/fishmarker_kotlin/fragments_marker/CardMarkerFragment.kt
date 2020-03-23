@@ -10,10 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
-import com.company.fishmarker_kotlin.modelclass.Marker
+import com.company.fishmarker_kotlin.modelclass.MarkerDetail
 import com.company.fishmarker_kotlin.singleton.Singleton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -118,7 +116,7 @@ class CardMarkerFragment : DialogFragment(){
                 val amountOfFish : Int = edit_number_of_fish.text.toString().toInt()
                 val note : String = edit_note.text.toString()
 
-                val newMarker  = Marker (idUser, idMarker, latitude, longitude, titleMarker, dateMarker, dept, amountOfFish, note)
+                val newMarker  = MarkerDetail (idUser, idMarker, latitude, longitude, titleMarker, dateMarker, dept, amountOfFish, note)
 
 
                 FirebaseDatabase.getInstance().getReference("Marker").child(idMarker).setValue(newMarker)

@@ -2,47 +2,44 @@ package com.company.fishmarker_kotlin.fragments_marker
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.content.res.Resources
-import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.load.engine.Resource
-import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.singleton.Singleton
+import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.squareup.picasso.Picasso
-
+import com.google.android.gms.maps.model.Marker
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.fragment_add_marker_map.*
 
 
 class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
-
     private var googlemap: GoogleMap? = null
     private lateinit var  mUiSettings : UiSettings
-
+    private lateinit var context_fargment : Context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-
         val view = inflater.inflate(R.layout.fragment_add_marker_map, container, false)
-
         val mapFragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
+        context_fargment = activity!!.baseContext
+        Singleton.setContext(context_fargment)
         return view
     }
 
@@ -50,25 +47,15 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
         googlemap = mMap
         googlemap?.mapType = GoogleMap.MAP_TYPE_HYBRID
-
-
         mUiSettings = googlemap!!.uiSettings
         mUiSettings.isZoomControlsEnabled = true
         mUiSettings.isMapToolbarEnabled = false
-
+        bottom_sheet.visibility = View.GONE
 
         val  extras : Bundle = activity!!.intent.extras
-
         val latitude_place : Double = extras.getDouble("latitude")
         val longitude_place : Double = extras.getDouble("longitude")
         val zoom_place : Float = extras.getFloat("zoom")
-
-
-
-        /*  val bundle : Bundle? = arguments
-           val latitude_place : Double = bundle?.getDouble("latitude")!!
-           val longitude_place : Double = bundle.getDouble("longitude")
-           val zoom_place : Float = bundle.getFloat("zoom")*/
 
         val cameraPosition : CameraPosition? = CameraPosition.Builder()
             .target(LatLng(latitude_place,longitude_place))
@@ -78,56 +65,91 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         googlemap?.animateCamera(cameraUpdate)
 
         googlemap?.setOnMapLongClickListener {point ->
-
             onMapLongClick(point.latitude, point.longitude)
         }
 
+        googlemap?.setOnMarkerClickListener{marker ->
+            onMarkerClick(marker)
+        }
 
+        googlemap?.setOnMapClickListener{ _ ->
+            onMapClick()
+        }
+        Singleton.LoaderData(mMap)
+
+    }
+    fun onMapClick(){
+        if (bottom_sheet.visibility == View.VISIBLE) {
+            val hide = AnimationUtils.loadAnimation(
+                getApplicationContext(),
+                R.anim.hide_detail_marker
+            )
+            bottom_sheet.startAnimation(hide)
+            bottom_sheet.visibility = View.GONE
+            mUiSettings.isZoomControlsEnabled = true
+        } else {
+            bottom_sheet.visibility = View.GONE
+            mUiSettings.isZoomControlsEnabled = true
+        }
+    }
+
+    fun onMarkerClick(marker : Marker): Boolean {
+
+        marker.showInfoWindow()
+        mUiSettings.isZoomControlsEnabled = false
+        val show = AnimationUtils.loadAnimation(
+            getApplicationContext(),
+            R.anim.show_detail_marker
+        )
+        bottom_sheet.startAnimation(show)
+        bottom_sheet.visibility = View.VISIBLE
+        button_detail.setOnClickListener(View.OnClickListener {
+            Singleton.DetailMarker(marker)
+        })
+        button_edit.setOnClickListener(View.OnClickListener {
+            var isMyMarker = false
+            val userId = FirebaseAuth.getInstance().currentUser!!.uid
+            for (item in Singleton.allmarkers) {
+                if (item.longitude == marker.position.longitude && item.latitude == marker.position.latitude &&
+                    item.title == marker.title && userId == item.uid
+                ) {
+                    isMyMarker = true
+                    break
+                }
+            }
+            if (isMyMarker) {
+               // DatabaseLoad.getInstance().UpdateMarkerOfMapActivity(marker)
+            } else {
+                Toast.makeText(context, R.string.foreign_markers, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
+        return true
 
     }
     fun onMapLongClick(latitude : Double, longitude : Double){
 
         val builder = AlertDialog.Builder(context)
-
         builder.setTitle("Add marker on map?")
-
         builder.setMessage(
                 "Are you seriosly want add marker?" + "\n" +
                 "Latitude: " + latitude + "\n" +
                 "Longitude: " + longitude)
-
         builder.setPositiveButton("YES"){dialog, which ->
-
             val fragment : DialogFragment  =  CardMarkerFragment()
             val bundle  =  Bundle()
             bundle.putDouble("latitude", latitude)
             bundle.putDouble("longitude", longitude)
             fragment.arguments = bundle
 
-
-
-
             fragment.setTargetFragment(this,1)
-
             activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
-
-            /*fragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragment_container_marker, fragment)
-                ?.addToBackStack(null)
-                ?.commit()*/
-
-
             Toast.makeText(context,"Go, go , go add marker.",Toast.LENGTH_SHORT).show()
         }
-
         builder.setNegativeButton("No"){dialog,which ->
             Toast.makeText(context,"You are not agree.",Toast.LENGTH_SHORT).show()
         }
-
-
         val dialog: AlertDialog = builder.create()
-
         dialog.show()
 
 
@@ -136,24 +158,18 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-
         if (resultCode == Activity.RESULT_OK) {
-
-
-
             val titleMarker = data?.getStringExtra("titleMarker")
             val idMarker = data?.getStringExtra("idMarker")
             val latitude: Double? = data?.getDoubleExtra("latitude",0.0)
             val longitude: Double? = data?.getDoubleExtra("longitude", 0.0)
-
             val resource : Resources = context?.resources!!
-
-            val myIconFish : Drawable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                resource.getDrawable(R.drawable.photo_user, context!!.theme)
+            val myIconFish : Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                resource.getDrawable(R.drawable.fishmy30, context!!.theme)
             } else {
-                resource.getDrawable(R.drawable.photo_user)            }
-
-            Singleton.createMarker(latitude, longitude, titleMarker, myIconFish)
+                resource.getDrawable(R.drawable.fishmy30)            }
+            val bitmap_my = (myIconFish as BitmapDrawable).bitmap
+            Singleton.createMarker(latitude, longitude, titleMarker, bitmap_my)
 
         }
     }

@@ -1,6 +1,6 @@
 package com.company.fishmarker_kotlin.modelclass
 
-data class Marker(
+data class MarkerDetail(
     var uid : String,
     var id_marker_key : String,
     var latitude : Double,
@@ -9,7 +9,17 @@ data class Marker(
     var date : String,
     var depth : Double,
     var amount : Int,
-    var note: String)
+    var note: String){
+
+
+    constructor() :
+            this("", "", 0.0, 0.0, "","", 0.0, 0, "")
+
+
+
+
+
+}
 
 /*public fun  getCoordinates() : Double[] {
 
