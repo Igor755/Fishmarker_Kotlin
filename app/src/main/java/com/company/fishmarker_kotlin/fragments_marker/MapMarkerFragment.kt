@@ -116,7 +116,30 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                 }
             }
             if (isMyMarker) {
-                Singleton.UpdateMarker(marker)
+                for (modelClass in Singleton.allmarkers) {
+                    if (modelClass.latitude == marker.position.latitude && modelClass.longitude == marker.position.longitude) {
+
+                        val fragment : DialogFragment =  CardMarkerFragment()
+                        val bundle  =  Bundle()
+                        bundle.putString("1", modelClass.uid)
+                        bundle.putString("2", modelClass.id_marker_key)
+                        bundle.putString("3", java.lang.String.valueOf(modelClass.latitude))
+                        bundle.putString("4", java.lang.String.valueOf(modelClass.longitude))
+                        bundle.putString("5", modelClass.title)
+                        bundle.putString("6", modelClass.date)
+                        bundle.putString("7", java.lang.String.valueOf(modelClass.depth))
+                        bundle.putString("8", java.lang.String.valueOf(modelClass.amount))
+                        bundle.putString("9", modelClass.note)
+
+                        fragment.arguments = bundle
+                        fragment.setTargetFragment(this,1)
+                        activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
+
+                    }
+                    }
+
+
+                //Singleton.UpdateMarker(marker)
             } else {
                 Toast.makeText(context, R.string.foreign_markers, Toast.LENGTH_SHORT)
                     .show()

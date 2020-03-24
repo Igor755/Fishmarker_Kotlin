@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Typeface
@@ -15,8 +14,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.fragments_marker.CardMarkerFragment
@@ -61,7 +61,7 @@ class Singleton {
         private var title_alert: TextView? = null
 
 
-        fun setContext(context: Context){
+        fun setContext(context: Context) {
 
             this.context = context
 
@@ -87,6 +87,7 @@ class Singleton {
 
 
         }
+
         fun LoaderData(_googlemap: GoogleMap?) {
 
             this.allmarkers = ArrayList<MarkerDetail>()
@@ -95,20 +96,28 @@ class Singleton {
             this.cardMarkerActivity = cardMarkerActivity
             //val res: Resources = context!!.resources
 
-            val resource : Resources = context.resources!!
+            val resource: Resources = context.resources!!
 
-            val myIconFish : Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                resource.getDrawable(com.company.fishmarker_kotlin.R.drawable.fishmy30, context.theme)
+            val myIconFish: Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                resource.getDrawable(
+                    com.company.fishmarker_kotlin.R.drawable.fishmy30,
+                    context.theme
+                )
             } else {
-                resource.getDrawable(com.company.fishmarker_kotlin.R.drawable.fishmy30)            }
+                resource.getDrawable(com.company.fishmarker_kotlin.R.drawable.fishmy30)
+            }
             val bitmap_my = (myIconFish as BitmapDrawable).bitmap
 
-            val anotherIconFish : Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                resource.getDrawable(com.company.fishmarker_kotlin.R.drawable.fishanother30, context.theme)
-            } else {
-                resource.getDrawable(com.company.fishmarker_kotlin.R.drawable.fishanother30)            }
+            val anotherIconFish: Drawable? =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    resource.getDrawable(
+                        com.company.fishmarker_kotlin.R.drawable.fishanother30,
+                        context.theme
+                    )
+                } else {
+                    resource.getDrawable(com.company.fishmarker_kotlin.R.drawable.fishanother30)
+                }
             val bitmap_another = (anotherIconFish as BitmapDrawable).bitmap
-
 
 
             val database = FirebaseDatabase.getInstance()
@@ -117,11 +126,12 @@ class Singleton {
             myRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                    for (dataSnapshot1 : DataSnapshot in dataSnapshot.children) {
+                    for (dataSnapshot1: DataSnapshot in dataSnapshot.children) {
 
-                        val markerInformation: MarkerDetail = dataSnapshot1.getValue(MarkerDetail::class.java)!!
+                        val markerInformation: MarkerDetail =
+                            dataSnapshot1.getValue(MarkerDetail::class.java)!!
 
-                            allmarkers.add(markerInformation)
+                        allmarkers.add(markerInformation)
 
                         System.out.println(markerInformation)
                     }
@@ -178,8 +188,9 @@ class Singleton {
                     note?.text = note?.text.toString() + " " + modelClass.note
 
 
-                    alert_detail?.setPositiveButton(context.resources.getString(R.string.ok), DialogInterface.OnClickListener { _, _ -> })
-
+                    alert_detail?.setPositiveButton(
+                        context.resources.getString(R.string.ok),
+                        DialogInterface.OnClickListener { _, _ -> })
 
 
                     val alert11: AlertDialog = alert_detail!!.create()
@@ -192,7 +203,8 @@ class Singleton {
                 }
             }
         }
-        fun UpdateMarker(updatemarker : Marker){
+/*
+        fun UpdateMarker(updatemarker: Marker) {
 
             for (modelClass in allmarkers) {
                 if (modelClass.latitude == updatemarker.position.latitude && modelClass.longitude == updatemarker.position.longitude) {
@@ -208,35 +220,23 @@ class Singleton {
                     bundle.putString("8", java.lang.String.valueOf(modelClass.amount))
                     bundle.putString("9", modelClass.note)
 
-                    val activity : MarkerActivity? = MarkerActivity()
+                    val activity = MarkerActivity()
                     fragment.arguments = bundle
+
                     fragment.setTargetFragment(MapMarkerFragment(),1)
-                    activity?.supportFragmentManager?.let{fragment.show(it, "CardMarkerFragment")}
+                   // MapMarkerFragment().childFragmentManager.let { fragment.show(it, "CardMarkerFragment") }
 
-                    /*val intent = Intent(context, CardMarkerFragment::class.java)
-                    println(bundle)
-                    intent.putExtras(bundle)
-                    context.startActivity(intent)*/
-
-                    /*val fragment : DialogFragment =  CardMarkerFragment()
-                    val bundle  =  Bundle()
-                    bundle.putDouble("latitude", latitude)
-                    bundle.putDouble("longitude", longitude)
-                    fragment.arguments = bundle
-
-                    fragment.setTargetFragment(this,1)
-                    activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
-                    Toast.makeText(context,"Go, go , go add marker.", Toast.LENGTH_SHORT).show()*/
+                    activity.supportFragmentManager.beginTransaction().add(R.id.fragment_container_marker, fragment).commit();
 
                 }
-            }
+                }
+
+            }*/
+
 
         }
 
-
     }
-
-}
 
 
 

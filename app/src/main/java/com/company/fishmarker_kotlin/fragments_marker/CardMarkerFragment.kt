@@ -3,6 +3,7 @@ package com.company.fishmarker_kotlin.fragments_marker
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -35,25 +36,19 @@ class CardMarkerFragment : DialogFragment() {
 
         val calendar: Calendar = Calendar.getInstance()
 
-        /*   edit_latitude
-           edit_longitude
-           edit_title_marker
-           tvDate
-           edit_dept
-           edit_number_of_fish
-           edit_note
-           btnOk
-           btnCancel*/
-
-
         val bundle: Bundle? = arguments
         val latitude: Double = bundle?.getDouble("latitude")!!
         val longitude: Double = bundle.getDouble("longitude")
 
+        if (latitude == 0.0 && longitude == 0.0){
+            updateMarker()
+        }else{
+            addMarker()
+
+        }
 
 
-        edit_latitude.setText(latitude.toString())
-        edit_longitude.setText(longitude.toString())
+
 
         edit_latitude.isEnabled = false
         edit_longitude.isEnabled = false
@@ -103,6 +98,12 @@ class CardMarkerFragment : DialogFragment() {
 
     fun addMarker() {
 
+        val bundle: Bundle? = arguments
+        val latitude: Double = bundle?.getDouble("latitude")!!
+        val longitude: Double = bundle.getDouble("longitude")
+
+        edit_latitude.setText(latitude.toString())
+        edit_longitude.setText(longitude.toString())
 
         if (isEmpty()) {
             Toast.makeText(context, "Empty field", Toast.LENGTH_LONG).show()
@@ -147,6 +148,35 @@ class CardMarkerFragment : DialogFragment() {
             dialog?.dismiss()
 
         }
+
+
+    }
+    fun updateMarker(){
+
+        val bundle: Bundle? = arguments
+
+        val uidUpdate = bundle?.getString("1")
+        val idMarkerUpdate = bundle?.getString("2")
+        val latitudeUpdate = bundle?.getString("3")
+        val longitudeUpdate = bundle?.getString("4")
+        val titleUpdate = bundle?.getString("5")
+        val dateUpdate = bundle?.getString("6")
+        val depthUpdate = bundle?.getString("7")
+        val amountUpdate = bundle?.getString("8")
+        val noteUpdate = bundle?.getString("9")
+
+        edit_latitude.setText(latitudeUpdate)
+        edit_longitude.setText(longitudeUpdate)
+        edit_title_marker.setText(titleUpdate)
+        tvDate.text = dateUpdate
+        edit_dept.setText(depthUpdate)
+        edit_number_of_fish.setText(amountUpdate)
+        edit_note.setText(noteUpdate)
+
+
+
+
+
 
 
     }
