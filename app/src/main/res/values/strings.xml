@@ -71,6 +71,7 @@
     <string name="Note">Note</string>
     <string name="note">note</string>
     <string name="ok">OK</string>
+    <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="longitude">longitude</string>
     <string name="latitude">latitude</string>
@@ -102,6 +103,7 @@
     <string name="depth_c">Depth: </string>
     <string name="amount_c">Amount: </string>
     <string name="note_c">Note: </string>
+    <string name="fill">Fill in all the fields</string>
 
     ///////facebook_api
     <string name="facebook_app_id">570833563489623</string>
@@ -109,5 +111,12 @@
 
     <string name="foreign_markers">You can not edit or delete foreign markers</string>
     <string name="detail_marker_title_alert">Markers details</string>
+
+
+    ///////////////////////////////////////////////////////
+
+    <string name="you">You really want to delete the marker?</string>
+    <string name="the">The marker will be removed </string>
+    <string name="from">"from the database and from the map"</string>
 
 </resources>

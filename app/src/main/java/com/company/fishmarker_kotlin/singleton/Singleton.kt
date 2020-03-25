@@ -10,17 +10,11 @@ import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.fragments_marker.CardMarkerFragment
-import com.company.fishmarker_kotlin.fragments_marker.MapMarkerFragment
 import com.company.fishmarker_kotlin.modelclass.MarkerDetail
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -140,7 +134,7 @@ class Singleton {
                         val latitude: Double = allmarkers[i].latitude
                         val longitude: Double = allmarkers[i].longitude
                         val tittle: String = allmarkers[i].title
-                        val uid: String = allmarkers[i].uid
+                        val uid: String? = allmarkers[i].uid
                         if (uid == FirebaseAuth.getInstance().currentUser!!.uid) {
                             createMarker(latitude, longitude, tittle, bitmap_my)
                         } else if (uid != FirebaseAuth.getInstance().currentUser!!.uid) {
@@ -188,10 +182,7 @@ class Singleton {
                     note?.text = note?.text.toString() + " " + modelClass.note
 
 
-                    alert_detail?.setPositiveButton(
-                        context.resources.getString(R.string.ok),
-                        DialogInterface.OnClickListener { _, _ -> })
-
+                    alert_detail?.setPositiveButton(context.resources.getString(R.string.ok), DialogInterface.OnClickListener { _, _ -> })
 
                     val alert11: AlertDialog = alert_detail!!.create()
                     alert11.window.setBackgroundDrawableResource(R.color.orange)
@@ -203,40 +194,95 @@ class Singleton {
                 }
             }
         }
-/*
-        fun UpdateMarker(updatemarker: Marker) {
 
-            for (modelClass in allmarkers) {
-                if (modelClass.latitude == updatemarker.position.latitude && modelClass.longitude == updatemarker.position.longitude) {
-                    val fragment : DialogFragment =  CardMarkerFragment()
-                    val bundle  =  Bundle()
-                    bundle.putString("1", modelClass.uid)
-                    bundle.putString("2", modelClass.id_marker_key)
-                    bundle.putString("3", java.lang.String.valueOf(modelClass.latitude))
-                    bundle.putString("4", java.lang.String.valueOf(modelClass.longitude))
-                    bundle.putString("5", modelClass.title)
-                    bundle.putString("6", modelClass.date)
-                    bundle.putString("7", java.lang.String.valueOf(modelClass.depth))
-                    bundle.putString("8", java.lang.String.valueOf(modelClass.amount))
-                    bundle.putString("9", modelClass.note)
+        fun UpdateMarker(updatemarker: MarkerDetail) {
 
-                    val activity = MarkerActivity()
-                    fragment.arguments = bundle
+            googlemap!!.clear()
 
-                    fragment.setTargetFragment(MapMarkerFragment(),1)
-                   // MapMarkerFragment().childFragmentManager.let { fragment.show(it, "CardMarkerFragment") }
+            var my_ic: Int = R.drawable.fishmy30
+            val markers_array = java.util.ArrayList<Marker>()
 
-                    activity.supportFragmentManager.beginTransaction().add(R.id.fragment_container_marker, fragment).commit();
+            val iterator: MutableListIterator<MarkerDetail> =
+                allmarkers.listIterator()
 
+            while (iterator.hasNext()) {
+                val next: MarkerDetail = iterator.next()
+                if (!next.uid.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
+                    my_ic = R.drawable.fishanother30
+                } else {
+                    my_ic = R.drawable.fishmy30
                 }
+                if (next.latitude.equals(updatemarker.latitude) &&
+                    next.longitude.equals(updatemarker.longitude)
+                ) {
+                    iterator.set(updatemarker)
+                    val marker_update = googlemap!!.addMarker(
+                        MarkerOptions()
+                            .position(
+                                LatLng(
+                                    updatemarker.latitude,
+                                    updatemarker.longitude
+                                )
+                            )
+                            .title(updatemarker.title)
+                            .icon(BitmapDescriptorFactory.fromResource(my_ic))
+                    )
+                    markers_array.add(marker_update)
+                } else {
+                    val marker_update = googlemap!!.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(next.latitude, next.longitude))
+                            .title(next.title)
+                            .icon(BitmapDescriptorFactory.fromResource(my_ic))
+                    )
+                    markers_array.add(marker_update)
                 }
+            }
 
-            }*/
+            markers = java.util.ArrayList(markers_array)
 
+
+        }
+        fun deleteMarker(deletemarker : MarkerDetail){
+
+            googlemap!!.clear()
+
+            var my_ic: Int = R.drawable.fishmy30
+
+            val markers_array = java.util.ArrayList<Marker>()
+            val iterator: MutableListIterator<MarkerDetail> =
+                allmarkers.listIterator()
+            while (iterator.hasNext()) {
+                val next: MarkerDetail = iterator.next()
+                if (!next.uid.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
+                    my_ic = R.drawable.fishanother30
+                } else {
+                    my_ic = R.drawable.fishmy30
+                }
+                if (next.latitude.equals(deletemarker.latitude) &&
+                    next.longitude.equals(deletemarker.longitude)
+                ) {
+                    iterator.remove()
+                } else {
+                    val marker_delete = googlemap!!.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(next.latitude, next.longitude))
+                            .title(next.title)
+                            .icon(BitmapDescriptorFactory.fromResource(my_ic))
+                    )
+                    markers_array.add(marker_delete)
+                }
+            }
+            markers = java.util.ArrayList(markers_array)
 
         }
 
     }
+
+
+}
+
+
 
 
 

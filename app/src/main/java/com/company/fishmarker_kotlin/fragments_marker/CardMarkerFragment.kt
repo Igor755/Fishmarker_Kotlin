@@ -1,9 +1,9 @@
 package com.company.fishmarker_kotlin.fragments_marker
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -40,11 +40,14 @@ class CardMarkerFragment : DialogFragment() {
         val latitude: Double = bundle?.getDouble("latitude")!!
         val longitude: Double = bundle.getDouble("longitude")
 
-        if (latitude == 0.0 && longitude == 0.0){
+
+        btnDelete.visibility =View.INVISIBLE
+
+
+            if (latitude == 0.0 && longitude == 0.0){
             updateMarker()
         }else{
             addMarker()
-
         }
 
 
@@ -90,13 +93,10 @@ class CardMarkerFragment : DialogFragment() {
 
         }
 
-        btnOk.setOnClickListener {
-
-            addMarker()
-        }
     }
 
     fun addMarker() {
+
 
         val bundle: Bundle? = arguments
         val latitude: Double = bundle?.getDouble("latitude")!!
@@ -105,49 +105,58 @@ class CardMarkerFragment : DialogFragment() {
         edit_latitude.setText(latitude.toString())
         edit_longitude.setText(longitude.toString())
 
-        if (isEmpty()) {
-            Toast.makeText(context, "Empty field", Toast.LENGTH_LONG).show()
-        } else {
-            val idUser: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
-            val idMarker: String = UUID.randomUUID().toString()
-            val latitude: Double = edit_latitude.text.toString().toDouble()
-            val longitude: Double = edit_longitude.text.toString().toDouble()
-            val titleMarker: String = edit_title_marker.text.toString()
-            val dateMarker: String = tvDate.text.toString()
-            val dept: Double = edit_dept.text.toString().toDouble()
-            val amountOfFish: Int = edit_number_of_fish.text.toString().toInt()
-            val note: String = edit_note.text.toString()
+        btnOk.setOnClickListener {
 
-            val newMarker = MarkerDetail(
-                idUser,
-                idMarker,
-                latitude,
-                longitude,
-                titleMarker,
-                dateMarker,
-                dept,
-                amountOfFish,
-                note
-            )
-            FirebaseDatabase.getInstance().getReference("Marker").child(idMarker)
-                .setValue(newMarker)
-            val bundle = Bundle()
-            bundle.putString("idMarker", idMarker)
-            bundle.putString("titleMarker", titleMarker)
-            bundle.putDouble("latitude", latitude)
-            bundle.putDouble("longitude", longitude)
-            val intent2 = Intent()
-            intent2.putExtras(bundle)
+            if (isEmpty()) {
+
+                Toast.makeText(context, "Empty field", Toast.LENGTH_LONG).show()
+
+            } else {
+                val idUser: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+                val idMarker: String = UUID.randomUUID().toString()
+                val latitude: Double = edit_latitude.text.toString().toDouble()
+                val longitude: Double = edit_longitude.text.toString().toDouble()
+                val titleMarker: String = edit_title_marker.text.toString()
+                val dateMarker: String = tvDate.text.toString()
+                val dept: Double = edit_dept.text.toString().toDouble()
+                val amountOfFish: Int = edit_number_of_fish.text.toString().toInt()
+                val note: String = edit_note.text.toString()
+
+                val newMarker = MarkerDetail(
+                    idUser,
+                    idMarker,
+                    latitude,
+                    longitude,
+                    titleMarker,
+                    dateMarker,
+                    dept,
+                    amountOfFish,
+                    note
+                )
+                FirebaseDatabase.getInstance().getReference("Marker").child(idMarker)
+                    .setValue(newMarker)
+                val bundle = Bundle()
+                bundle.putString("idMarker", idMarker)
+                bundle.putString("titleMarker", titleMarker)
+                bundle.putDouble("latitude", latitude)
+                bundle.putDouble("longitude", longitude)
+                val intent2 = Intent()
+                intent2.putExtras(bundle)
 
 
-            targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent2)
+                targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent2)
 
-            Singleton.addMarker(newMarker)
+                Singleton.addMarker(newMarker)
 
 
-            dialog?.dismiss()
+                dialog?.dismiss()
+
+            }
 
         }
+
+
+
 
 
     }
@@ -174,9 +183,101 @@ class CardMarkerFragment : DialogFragment() {
         edit_note.setText(noteUpdate)
 
 
+        btnDelete.visibility =View.VISIBLE
+
+        btnDelete.setOnClickListener {
+
+            deleteMarker(uidUpdate,idMarkerUpdate,latitudeUpdate,longitudeUpdate, titleUpdate,dateUpdate,depthUpdate,amountUpdate,noteUpdate)
+
+        }
 
 
+        btnOk.setOnClickListener {
 
+            if (isEmpty()) {
+
+                Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show()
+
+            } else {
+
+                val latitude: String = edit_latitude.text.toString()
+                val longitude: String = edit_longitude.text.toString()
+                val title: String = edit_title_marker.text.toString()
+                val displayDate: String = tvDate.text.toString()
+                val depth: String = edit_dept.text.toString()
+                val amountoffish: String = edit_number_of_fish.text.toString()
+                val note: String = edit_note.text.toString()
+
+                val markerInformation = MarkerDetail(
+                    uidUpdate,
+                    idMarkerUpdate,
+                    java.lang.Double.valueOf(latitude),
+                    java.lang.Double.valueOf(longitude),
+                    title,
+                    displayDate,
+                    java.lang.Double.valueOf(depth), amountoffish.toInt(),
+                    note)
+
+                if (idMarkerUpdate != null) {
+                    FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate)
+                        .setValue(markerInformation)
+                }
+
+
+                Toast.makeText(context, "update success", Toast.LENGTH_SHORT).show()
+                Singleton.UpdateMarker(markerInformation)
+
+                dialog?.dismiss()
+
+            }
+
+
+        }
+    }
+    fun deleteMarker(uidUpdate: String?,
+                     idMarkerUpdate: String?,
+                     latitudeUpdate: String?,
+                     longitudeUpdate: String?,
+                     titleUpdate: String?,
+                     dateUpdate: String?,
+                     depthUpdate: String?,
+                     amountUpdate: String?,
+                     noteUpdate: String?) {
+
+        val alertDialog = AlertDialog.Builder(context)
+
+        alertDialog.setTitle(R.string.you)
+        alertDialog.setMessage(context?.resources?.getString(R.string.the) + "\n" +
+                context?.resources?.getString(R.string.from))
+
+        alertDialog.setPositiveButton(android.R.string.yes) { _, _ ->
+
+
+           val modelClassDelete : MarkerDetail  = MarkerDetail(uidUpdate,
+               idMarkerUpdate,
+               latitudeUpdate!!.toDouble(),
+               longitudeUpdate!!.toDouble(),
+               titleUpdate.toString(),
+               dateUpdate.toString(),
+               depthUpdate!!.toDouble(),
+               Integer.parseInt(amountUpdate),
+               noteUpdate.toString());
+
+            val delmark =
+                FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate.toString())
+            delmark.removeValue()
+            Singleton.deleteMarker(modelClassDelete)
+
+            Toast.makeText(context, android.R.string.yes, Toast.LENGTH_SHORT).show()
+            dialog?.dismiss()
+
+        }
+
+        alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
+            Toast.makeText(context, android.R.string.no, Toast.LENGTH_SHORT).show()
+        }
+
+        alertDialog.show()
 
 
     }

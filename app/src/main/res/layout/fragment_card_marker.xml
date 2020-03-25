@@ -220,6 +220,16 @@
                 android:text="@string/cancel"/>
 
             <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="100dp"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorRed"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:text="@string/delete"/>
+
+            <Button
                 android:id="@+id/btnOk"
                 android:layout_width="100dp"
                 android:background="@color/colorPrimary"
