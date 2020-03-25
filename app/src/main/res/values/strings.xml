@@ -119,4 +119,9 @@
     <string name="the">The marker will be removed </string>
     <string name="from">"from the database and from the map"</string>
 
+
+    <string name="gps_enable">GPS is not enabled. Please turn ON GPS.</string>
+    <string name="gps_settings">GPS settings</string>
+    <string name="settings">Settings</string>
+
 </resources>

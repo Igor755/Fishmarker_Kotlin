@@ -234,15 +234,7 @@ class CardMarkerFragment : DialogFragment() {
 
         }
     }
-    fun deleteMarker(uidUpdate: String?,
-                     idMarkerUpdate: String?,
-                     latitudeUpdate: String?,
-                     longitudeUpdate: String?,
-                     titleUpdate: String?,
-                     dateUpdate: String?,
-                     depthUpdate: String?,
-                     amountUpdate: String?,
-                     noteUpdate: String?) {
+    fun deleteMarker(uidUpdate: String?, idMarkerUpdate: String?, latitudeUpdate: String?, longitudeUpdate: String?, titleUpdate: String?, dateUpdate: String?, depthUpdate: String?, amountUpdate: String?, noteUpdate: String?) {
 
         val alertDialog = AlertDialog.Builder(context)
 
