@@ -104,6 +104,8 @@
     <string name="amount_c">Amount: </string>
     <string name="note_c">Note: </string>
     <string name="fill">Fill in all the fields</string>
+    <string name="unique">Marker exist</string>
+
 
     ///////facebook_api
     <string name="facebook_app_id">570833563489623</string>

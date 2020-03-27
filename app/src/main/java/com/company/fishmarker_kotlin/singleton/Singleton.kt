@@ -276,6 +276,16 @@ class Singleton {
             markers = java.util.ArrayList(markers_array)
 
         }
+        fun searchMarker(lat: Double, lon: Double): Boolean {
+            for (marker in markers!!) {
+                if (marker.position.latitude == lat &&
+                    marker.position.longitude == lon
+                ) {
+                    return true
+                }
+            }
+            return false
+        }
 
     }
 

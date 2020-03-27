@@ -1,26 +1,28 @@
 package com.company.fishmarker_kotlin.fragments_marker
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.R
+import com.company.fishmarker_kotlin.gpstracker.GpsTracker
 import com.company.fishmarker_kotlin.singleton.Singleton
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -33,6 +35,70 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
     private var googlemap: GoogleMap? = null
     private lateinit var  mUiSettings : UiSettings
     private lateinit var context_fargment : Context
+
+    private var latitude : Double = 0.0
+    private var longitude : Double = 0.0
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_marker, menu);
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return (when(item.itemId) {
+            R.id.add_marker_on_gps -> {
+                addMarkerOnGPSCoordinate()
+                true
+            }
+            R.id.back_to_place_activity -> {
+                activity?.finish()
+                true
+            }
+            else ->
+                super.onOptionsItemSelected(item)
+        })
+    }
+    fun addMarkerOnGPSCoordinate(){
+
+        if (ContextCompat.checkSelfPermission(context_fargment, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            val gps = context?.let { GpsTracker(it) }
+
+            latitude = gps!!.getLatitude()
+            longitude = gps.getLongitude()
+            if (latitude == 0.0 && longitude == 0.0) {
+                gps.showSettingsAlert()
+            } else {
+                val cameraPosition = CameraPosition.Builder()
+                    .target(LatLng(latitude, longitude))
+                    .zoom(15f)
+                    .build()
+                val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+                googlemap!!.animateCamera(cameraUpdate)
+                val ismarkerExist: Boolean = Singleton.searchMarker(latitude, longitude)
+                if (!ismarkerExist) {
+                    onMapLongClick(latitude, longitude)
+                } else {
+                    Toast.makeText(context, R.string.unique, Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            activity?.let {
+                ActivityCompat.requestPermissions(
+                    it, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    2
+                )
+            }
+        }
+    }
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_add_marker_map, container, false)

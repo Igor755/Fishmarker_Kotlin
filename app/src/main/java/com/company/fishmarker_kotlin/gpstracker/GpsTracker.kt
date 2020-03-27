@@ -12,16 +12,19 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.company.fishmarker_kotlin.R
 
-class GpsTracker : Service(), LocationListener {
 
-    private var mContext: Context? = null
+class GpsTracker(context: Context) : Service(), LocationListener {
+
+    private var mContext: Context? = context
 
     private var alertDialog: AlertDialog? = null
 
@@ -58,8 +61,7 @@ class GpsTracker : Service(), LocationListener {
     // Declaring a Location Manager
     protected var locationManager: LocationManager? = null
 
-    fun GPSTracker(context: Context?) {
-        mContext = context
+    init {
         getLocation()
     }
 
@@ -150,7 +152,7 @@ class GpsTracker : Service(), LocationListener {
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app
      */
-    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.M)
     fun stopUsingGPS() {
         if (locationManager != null) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -165,7 +167,7 @@ class GpsTracker : Service(), LocationListener {
                 // for Activity#requestPermissions for more details.
                 return
             }
-            locationManager!!.removeUpdates(GpsTracker())
+            locationManager!!.removeUpdates(mContext?.let { GpsTracker(it) })
         }
     }
 
