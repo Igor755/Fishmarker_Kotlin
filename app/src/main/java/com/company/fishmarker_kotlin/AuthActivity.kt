@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.company.fishmarker_kotlin.fragments_registration.SignInFragment
-import com.facebook.FacebookSdk
-import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.auth.FirebaseAuth
 
 class AuthActivity : AppCompatActivity() {

@@ -1,6 +1,5 @@
 package com.company.fishmarker_kotlin
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.company.fishmarker_kotlin.fragments_place.AddPlaceFragment

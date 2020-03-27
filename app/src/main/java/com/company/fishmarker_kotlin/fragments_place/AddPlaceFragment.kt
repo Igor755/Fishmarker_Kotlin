@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -18,10 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.company.fishmarker_kotlin.MarkerActivity
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.adapter.AdapterPlace
-import com.company.fishmarker_kotlin.fragments_marker.MapMarkerFragment
 import com.company.fishmarker_kotlin.helper_class.StaticHelper.Companion.allplace
 import com.company.fishmarker_kotlin.modelclass.Place
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_place.*
@@ -97,7 +94,6 @@ class AddPlaceFragment : Fragment() {
     @SuppressLint("WrongConstant")
     fun setAdapter(name : String){
 
-       // getListPlace(name)
 
         val mAdapter = AdapterPlace(getListPlace(name))
 

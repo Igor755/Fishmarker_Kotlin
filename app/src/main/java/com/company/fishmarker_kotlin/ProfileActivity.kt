@@ -16,15 +16,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import androidx.fragment.app.Fragment
-import com.company.fishmarker_kotlin.fragments_profile.ProfileFragment
 import com.facebook.login.LoginManager
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class ProfileActivity : AppCompatActivity() {

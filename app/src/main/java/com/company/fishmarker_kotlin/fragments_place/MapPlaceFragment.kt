@@ -5,14 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.R
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_place.view.*
 
 class MapPlaceFragment : Fragment(), OnMapReadyCallback {
 
