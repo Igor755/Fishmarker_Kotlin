@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:background="#cce6ff"
-    android:orientation="vertical"
-    android:id="@+id/relative">
-
-    <ImageView
-        android:id="@+id/imageViewWater"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center" />
-
-
-    <TextView
-        android:id="@+id/textViewWaterName"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/height_one_item"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name_place"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/imageViewWater"
+            android:layout_width="170dp"
+            android:layout_height="125dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/fon_navigation"/>
+
+        <TextView
+            android:id="@+id/textViewWaterName"
+            android:layout_width="wrap_content"
+            android:text="Name_place"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="@dimen/layout_margin_start_text"
+            android:gravity="center"
+            android:textColor="@color/colorBlack" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

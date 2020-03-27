@@ -222,7 +222,7 @@ class GpsTracker(context: Context) : Service(), LocationListener {
         alertDialog.setButton(
             Dialog.BUTTON_POSITIVE,
             mContext!!.resources.getString(R.string.settings),
-            DialogInterface.OnClickListener { dialog, which ->
+            DialogInterface.OnClickListener { _, _ ->
                 val intent =
                     Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 mContext!!.startActivity(intent)
@@ -230,7 +230,7 @@ class GpsTracker(context: Context) : Service(), LocationListener {
         alertDialog.setButton(
             Dialog.BUTTON_NEGATIVE,
             mContext!!.resources.getString(R.string.cancel),
-            DialogInterface.OnClickListener { dialog, which ->
+            DialogInterface.OnClickListener { _, _ ->
                 Toast.makeText(
                     mContext,
                     mContext!!.resources.getString(R.string.cancel),

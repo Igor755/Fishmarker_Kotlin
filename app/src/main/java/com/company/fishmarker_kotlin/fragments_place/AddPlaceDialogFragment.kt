@@ -42,6 +42,7 @@ class AddPlaceDialogFragment : DialogFragment() {
             val name: String = view?.edit_name?.text.toString().trim()
             infoPlace = Place(idPlace, uid, name, latitude, longitude, zoom, nameBigWater)
             addPlaceDatabase(infoPlace!!)
+
         }
 
 
@@ -51,12 +52,10 @@ class AddPlaceDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         latitude = this.arguments?.getDouble("latitude")
         longitude = this.arguments?.getDouble("longitude")
         zoom = this.arguments?.getFloat("zoom")
         nameBigWater = this.arguments?.getString("nameBigWater")
-
 
         edit_latitude.text = Editable.Factory.getInstance().newEditable("Latitude: " + latitude.toString())
         edit_longitude.text = Editable.Factory.getInstance().newEditable("Longitude: " + longitude.toString())

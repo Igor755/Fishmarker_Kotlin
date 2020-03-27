@@ -12,20 +12,15 @@ import com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID
 
 class MapPlaceFragment : Fragment(), OnMapReadyCallback {
 
-
     private var googlemap: GoogleMap? = null
-
     private var mUiSettings: UiSettings? = null
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
 
         val view = inflater.inflate(R.layout.fragment_add_place_map, container, false)
-
         val mapFragment : SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
         return view
 
 
@@ -37,11 +32,7 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
         mUiSettings = googlemap?.uiSettings
         mUiSettings?.isZoomControlsEnabled = true
 
-
-
-
         googlemap?.setOnMapLongClickListener { point ->
-
             val latitude : Double = point.latitude
             val longitude : Double = point.longitude
             val zoom : Float = googlemap!!.cameraPosition.zoom
@@ -53,9 +44,6 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
             bundle.putDouble("longitude", longitude)
             bundle.putFloat("zoom", zoom)
             bundle.putString("nameBigWater", nameBigWater)
-
-
-
 
             val dialog_fragment = AddPlaceDialogFragment()
             dialog_fragment.arguments = bundle

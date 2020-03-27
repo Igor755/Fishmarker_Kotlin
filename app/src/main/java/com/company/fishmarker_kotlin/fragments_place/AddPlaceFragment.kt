@@ -31,21 +31,15 @@ class AddPlaceFragment : Fragment() {
     private var txtnameplace: TextView? = null
     private var progressbar: ProgressBar? = null
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    //private var allPlaceMap : MutableMap<BigWater,MutableList<Place>> = mutableMapOf()
-
 
 
     @SuppressLint("WrongConstant")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_add_place, container, false)
-
         mListRecyclerView = view.findViewById(R.id.my_recycler_view) as RecyclerView
         txtnameplace = view.findViewById(R.id.txtnameplace) as TextView
         progressbar = view.findViewById(R.id.progressbar) as ProgressBar
-       // val fab: FloatingActionButton? = view.findViewById(R.id.fab)
-
-
         return view
 
 
@@ -98,11 +92,9 @@ class AddPlaceFragment : Fragment() {
         val mAdapter = AdapterPlace(getListPlace(name))
 
         if(getListPlace(name) != emptyArray<Place>()){
-
             txtnameplace!!.visibility = INVISIBLE
             progressbar!!.visibility = INVISIBLE
         }
-
         mAdapter.setOnItemClickListener(object : AdapterPlace.ClickListener {
             override fun onClick(pos: Int, aView: View) {
 
@@ -169,9 +161,9 @@ class AddPlaceFragment : Fragment() {
                     if (place.bigwater.equals("RESERVOIR")) {
                         list.add(place) }
                 }
-            in "RATES" ->
+            in "LADE" ->
                 for (place : Place in allplace) {
-                    if (place.bigwater.equals("RATES")) {
+                    if (place.bigwater.equals("LADE")) {
                         list.add(place) }
                 }
             in "POND" ->

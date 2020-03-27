@@ -61,7 +61,7 @@ class ProfileActivity : AppCompatActivity() {
             builder.setTitle("You seriosly want exit?")
             builder.setMessage("Now you exit the application and you will need to login to the new")
 
-            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+            builder.setPositiveButton(android.R.string.yes) { _, _ ->
 
                 FirebaseAuth.getInstance().signOut()
                 LoginManager.getInstance().logOut()
@@ -72,7 +72,7 @@ class ProfileActivity : AppCompatActivity() {
 
             }
 
-            builder.setNegativeButton(android.R.string.no) { dialog, which ->
+            builder.setNegativeButton(android.R.string.no) { _, _ ->
                 Toast.makeText(applicationContext,
                     android.R.string.no, Toast.LENGTH_SHORT).show()
             }

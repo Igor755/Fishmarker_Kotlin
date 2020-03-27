@@ -23,26 +23,20 @@ class  BigWaterFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_big_water, container, false)
         gridView = view.findViewById(R.id.gridView) as GridView
+        gridView!!.isVerticalScrollBarEnabled = false
         adapterGrid = context?.let { AdapterPlaceBigWater(it) }
         gridView!!.adapter = adapterGrid
+
         gridView!!.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-
-
                 val bigWater = BigWater.values()[position]
                 bigWaterName(bigWater.nameWater)
-
-
             }
                 return view
-
             }
         fun bigWaterName(nameBigWater: String) {
-
             val intent = Intent(activity, PlaceActivity::class.java)
             intent.putExtra("nameBigWater", nameBigWater)
             startActivity(intent)
-
-
         }
     }

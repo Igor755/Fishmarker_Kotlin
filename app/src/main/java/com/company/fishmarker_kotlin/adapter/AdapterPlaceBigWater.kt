@@ -13,10 +13,10 @@ import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.modelclass.BigWater
 
 
-class AdapterPlaceBigWater(context: Context) : ArrayAdapter<BigWater>(context, 0, BigWater.values()) {
+class AdapterPlaceBigWater(context: Context) :
+    ArrayAdapter<BigWater>(context, 0, BigWater.values()) {
 
-    var layoutInflater : LayoutInflater? = null
-
+    var layoutInflater: LayoutInflater? = null
 
 
     init {
@@ -28,19 +28,15 @@ class AdapterPlaceBigWater(context: Context) : ArrayAdapter<BigWater>(context, 0
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
 
-             val convertView = layoutInflater?.inflate(R.layout.one_item_big_water, null)
+        val convertView = layoutInflater?.inflate(R.layout.one_item_big_water, null)
+        val imagePhoto = convertView?.findViewById(R.id.imageViewWater) as ImageView
+        val nameWaterName = convertView.findViewById(R.id.textViewWaterName) as TextView
 
-
-            val imagePhoto = convertView?.findViewById(R.id.imageViewWater) as ImageView
-            val nameWaterName = convertView.findViewById(R.id.textViewWaterName) as TextView
-
-            nameWaterName.text = BigWater.values()[position].nameWater
-            //imagePhoto.setImageResource(BigWater.values()[position].photoWater)
+        nameWaterName.text = BigWater.values()[position].nameWater
         Glide.with(context).load(BigWater.values()[position].photoWater).into(imagePhoto)
 
         return convertView
     }
-
 
 
 }
