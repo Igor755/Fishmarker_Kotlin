@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/exit"
-        android:icon="@drawable/esc"
+        android:icon="@drawable/exit50"
         android:title="@string/action_settings"
         app:showAsAction="always" />
 </menu>
