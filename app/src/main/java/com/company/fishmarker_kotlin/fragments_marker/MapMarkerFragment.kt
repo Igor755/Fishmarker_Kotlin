@@ -222,7 +222,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                 "Are you seriosly want add marker?" + "\n" +
                 "Latitude: " + latitude + "\n" +
                 "Longitude: " + longitude)
-        builder.setPositiveButton("YES"){dialog, which ->
+        builder.setPositiveButton("YES"){ _, which ->
             val fragment : DialogFragment  =  CardMarkerFragment()
             val bundle  =  Bundle()
             bundle.putDouble("latitude", latitude)
@@ -233,7 +233,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
             activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
             Toast.makeText(context,"Go, go , go add marker.",Toast.LENGTH_SHORT).show()
         }
-        builder.setNegativeButton("No"){dialog,which ->
+        builder.setNegativeButton("No"){ _, _ ->
             Toast.makeText(context,"You are not agree.",Toast.LENGTH_SHORT).show()
         }
         val dialog: AlertDialog = builder.create()

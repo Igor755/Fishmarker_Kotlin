@@ -3,14 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MarkerActivity">
 
-
-
     <item
         android:id="@+id/add_marker_on_gps"
         android:icon="@drawable/add"
         app:showAsAction="always"
         android:title="@string/add" />
-
 
     <item
         android:id="@+id/back_to_place_activity"

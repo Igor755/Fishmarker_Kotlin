@@ -3,10 +3,8 @@ package com.company.fishmarker_kotlin.fragments_place
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.INVISIBLE
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -22,15 +20,17 @@ import com.company.fishmarker_kotlin.modelclass.Place
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_place.*
-import kotlin.collections.ArrayList
 
 
 class AddPlaceFragment : Fragment() {
+
+
 
     private var mListRecyclerView: RecyclerView? = null
     private var txtnameplace: TextView? = null
     private var progressbar: ProgressBar? = null
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+
 
 
     @SuppressLint("WrongConstant")
@@ -43,6 +43,22 @@ class AddPlaceFragment : Fragment() {
         return view
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_place, menu);
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return (when(item.itemId) {
+            R.id.back_to_place_activity -> {
+                activity?.finish()
+                true
+            }
+            else ->
+                super.onOptionsItemSelected(item)
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

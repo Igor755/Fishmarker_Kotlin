@@ -1,14 +1,22 @@
 package com.company.fishmarker_kotlin.adapter
 
+import android.app.AlertDialog
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.company.fishmarker_kotlin.R
+import com.company.fishmarker_kotlin.helper_class.StaticHelper
 import com.company.fishmarker_kotlin.modelclass.Place
+import com.google.firebase.database.*
+import java.lang.String
 
-class AdapterPlace(var list: List<Place>) : RecyclerView.Adapter<AdapterPlace.RecyclerViewHolder>() {
+class AdapterPlace(var list: MutableList<Place>) : RecyclerView.Adapter<AdapterPlace.RecyclerViewHolder>() {
 
 
     lateinit var mClickListener: ClickListener
@@ -25,7 +33,10 @@ class AdapterPlace(var list: List<Place>) : RecyclerView.Adapter<AdapterPlace.Re
         val inflater = LayoutInflater.from(parent.context)
         return RecyclerViewHolder(inflater, parent)
     }
-
+    fun refreshPlaceList(list: MutableList<Place>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val place: Place = list[position]
@@ -33,9 +44,6 @@ class AdapterPlace(var list: List<Place>) : RecyclerView.Adapter<AdapterPlace.Re
     }
 
     override fun getItemCount(): Int = list.size
-
-
-
 
     inner class RecyclerViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.one_item_place, parent, false)), View.OnClickListener{
@@ -48,15 +56,15 @@ class AdapterPlace(var list: List<Place>) : RecyclerView.Adapter<AdapterPlace.Re
         private var txtlatitude: TextView? = null
         private var txtlongitude: TextView? = null
         private var txtzoom: TextView? = null
+        private var btnDelete: ImageButton? = null
 
         init {
             txtnameplace = itemView.findViewById(R.id.txtnameplace)
             txtlatitude = itemView.findViewById(R.id.txtlatitude)
             txtlongitude = itemView.findViewById(R.id.txtlongitude)
             txtzoom = itemView.findViewById(R.id.txtzoom)
-
+            btnDelete = itemView.findViewById(R.id.btnDelete)
             itemView.setOnClickListener(this)
-
         }
 
         fun bind(place: Place) {
@@ -65,6 +73,55 @@ class AdapterPlace(var list: List<Place>) : RecyclerView.Adapter<AdapterPlace.Re
             txtlatitude?.text = place.latitude.toString()
             txtlongitude?.text = place.longitude.toString()
             txtzoom?.text = place.zoom.toString()
+
+            btnDelete?.setOnClickListener {
+                val builder = AlertDialog.Builder(itemView.context)
+                builder.setTitle("Delete place")
+                builder.setMessage("Are you seriosly want add place?")
+
+                builder.setPositiveButton("YES"){ _, _ ->
+
+                    val ref = FirebaseDatabase.getInstance().reference
+                    val delmark: Query = ref.child("Place").orderByChild("id").equalTo(place.id)
+
+                    val iterator: MutableListIterator<Place> = StaticHelper.allplace.listIterator()
+
+                    while (iterator.hasNext()) {
+                        val next: Place = iterator.next()
+                        if (next.id == place.id) {
+                            iterator.remove()
+                            break
+                        }
+                    }
+
+
+                    delmark.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            for (appleSnapshot in dataSnapshot.children) {
+                                appleSnapshot.ref.removeValue()
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            Log.e(TAG, String.valueOf(R.string.cancel), databaseError.toException())
+                        }
+                    })
+
+
+                    list.removeAt(position)
+                    refreshPlaceList(list)
+                    Toast.makeText(itemView.context, R.string.delete, Toast.LENGTH_LONG).show()
+
+
+                }
+                builder.setNegativeButton("No"){ _, _ ->
+                    Toast.makeText(itemView.context,"You are not agree.", Toast.LENGTH_SHORT).show()
+                }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+            }
+
+
         }
 
 
