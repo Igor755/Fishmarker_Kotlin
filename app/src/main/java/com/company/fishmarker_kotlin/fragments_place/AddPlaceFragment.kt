@@ -37,9 +37,13 @@ class AddPlaceFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_add_place, container, false)
+
         mListRecyclerView = view.findViewById(R.id.my_recycler_view) as RecyclerView
         txtnameplace = view.findViewById(R.id.txtnameplace) as TextView
         progressbar = view.findViewById(R.id.progressbar) as ProgressBar
+        setHasOptionsMenu(true)
+
+
         return view
 
 
@@ -52,7 +56,7 @@ class AddPlaceFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return (when(item.itemId) {
-            R.id.back_to_place_activity -> {
+            R.id.back_to_profile -> {
                 activity?.finish()
                 true
             }

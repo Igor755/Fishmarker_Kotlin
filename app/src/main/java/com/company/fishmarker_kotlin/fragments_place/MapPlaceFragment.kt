@@ -2,9 +2,7 @@ package com.company.fishmarker_kotlin.fragments_place
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import com.company.fishmarker_kotlin.R
 import com.google.android.gms.maps.*
@@ -17,14 +15,38 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-
         val view = inflater.inflate(R.layout.fragment_add_place_map, container, false)
-        val mapFragment : SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment: SupportMapFragment =
+            childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        setHasOptionsMenu(true)
         return view
 
 
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_place, menu);
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return (when (item.itemId) {
+            R.id.back_to_profile -> {
+
+                activity?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.fragment_container_place, AddPlaceFragment())
+                    ?.commit()
+
+                true
+            }
+            else ->
+                super.onOptionsItemSelected(item)
+        })
+    }
+
     override fun onMapReady(mMap: GoogleMap?) {
 
         googlemap = mMap
@@ -33,14 +55,14 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
         mUiSettings?.isZoomControlsEnabled = true
 
         googlemap?.setOnMapLongClickListener { point ->
-            val latitude : Double = point.latitude
-            val longitude : Double = point.longitude
-            val zoom : Float = googlemap!!.cameraPosition.zoom
-            val intent : Intent = activity!!.intent
-            val nameBigWater : String = intent.getStringExtra("nameBigWater")
+            val latitude: Double = point.latitude
+            val longitude: Double = point.longitude
+            val zoom: Float = googlemap!!.cameraPosition.zoom
+            val intent: Intent = activity!!.intent
+            val nameBigWater: String = intent.getStringExtra("nameBigWater")
 
             var bundle = Bundle()
-            bundle.putDouble("latitude",latitude)
+            bundle.putDouble("latitude", latitude)
             bundle.putDouble("longitude", longitude)
             bundle.putFloat("zoom", zoom)
             bundle.putString("nameBigWater", nameBigWater)
