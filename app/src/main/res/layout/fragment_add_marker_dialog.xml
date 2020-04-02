@@ -200,15 +200,12 @@
             </RelativeLayout>
         </LinearLayout>
 
-
-        <!---BLOCK 7-->
-
+        <!---BLOCK 7 BUTTONS-->
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp">
-
             <Button
                 android:id="@+id/btnCancel"
                 android:layout_width="100dp"
@@ -218,7 +215,6 @@
                 android:textStyle="bold"
                 android:layout_gravity="start"
                 android:text="@string/cancel"/>
-
             <Button
                 android:id="@+id/btnDelete"
                 android:layout_width="100dp"
@@ -228,7 +224,6 @@
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:text="@string/delete"/>
-
             <Button
                 android:id="@+id/btnOk"
                 android:layout_width="100dp"
@@ -238,7 +233,6 @@
                 android:textStyle="bold"
                 android:layout_gravity="end"
                 android:text="@string/ok"/>
-
         </FrameLayout>
 
 

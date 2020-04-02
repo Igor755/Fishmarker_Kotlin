@@ -33,13 +33,12 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return (when (item.itemId) {
-            R.id.back_to_profile -> {
 
+            R.id.back_to_profile -> {
                 activity?.supportFragmentManager
                     ?.beginTransaction()
                     ?.replace(R.id.fragment_container_place, AddPlaceFragment())
                     ?.commit()
-
                 true
             }
             else ->

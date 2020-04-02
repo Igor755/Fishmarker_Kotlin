@@ -5,7 +5,6 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.company.fishmarker_kotlin.R
@@ -29,38 +28,31 @@ class AddPlaceDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_add_place_dialog, container, false)
-
-        val ok = view.findViewById<TextView>(R.id.ok)
-        val cancel = view.findViewById<TextView>(R.id.cancel)
-
-
-        cancel.setOnClickListener {
-            dialog?.dismiss()
-        }
-        ok.setOnClickListener {
-
-            val name: String = view?.edit_name?.text.toString().trim()
-            infoPlace = Place(idPlace, uid, name, latitude, longitude, zoom, nameBigWater)
-            addPlaceDatabase(infoPlace!!)
-
-        }
-
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        btnCancel.setOnClickListener {
+            dialog?.dismiss()
+        }
+        btnOk.setOnClickListener {
+            val name: String = view.edit_name?.text.toString().trim()
+            infoPlace = Place(idPlace, uid, name, latitude, longitude, zoom, nameBigWater)
+            addPlaceDatabase(infoPlace!!)
+        }
+
         latitude = this.arguments?.getDouble("latitude")
         longitude = this.arguments?.getDouble("longitude")
         zoom = this.arguments?.getFloat("zoom")
         nameBigWater = this.arguments?.getString("nameBigWater")
 
-        edit_latitude.text = Editable.Factory.getInstance().newEditable("Latitude: " + latitude.toString())
-        edit_longitude.text = Editable.Factory.getInstance().newEditable("Longitude: " + longitude.toString())
-        edit_zoom.text = Editable.Factory.getInstance().newEditable("Zoom: " + zoom.toString())
-        edit_big_water.text = Editable.Factory.getInstance().newEditable("Big water: " + nameBigWater.toString())
+        edit_latitude.text = Editable.Factory.getInstance().newEditable(latitude.toString())
+        edit_longitude.text = Editable.Factory.getInstance().newEditable(longitude.toString())
+        edit_zoom.text = Editable.Factory.getInstance().newEditable(zoom.toString())
+        edit_big_water.text = Editable.Factory.getInstance().newEditable(nameBigWater.toString())
 
 
     }

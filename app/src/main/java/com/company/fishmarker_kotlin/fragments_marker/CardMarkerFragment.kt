@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_latitude
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_longitude
-import kotlinx.android.synthetic.main.fragment_card_marker.*
+import kotlinx.android.synthetic.main.fragment_add_marker_dialog.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,7 +28,7 @@ class CardMarkerFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_card_marker, container, false)
+        return inflater.inflate(R.layout.fragment_add_marker_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

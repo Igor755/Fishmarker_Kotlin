@@ -69,10 +69,10 @@ class AdapterPlace(var list: MutableList<Place>) : RecyclerView.Adapter<AdapterP
 
         fun bind(place: Place) {
 
-            txtnameplace?.text = place.name
-            txtlatitude?.text = place.latitude.toString()
-            txtlongitude?.text = place.longitude.toString()
-            txtzoom?.text = place.zoom.toString()
+            txtnameplace?.text = "Name place: "  + place.name
+            txtlatitude?.text = "Latitude: " + place.latitude.toString()
+            txtlongitude?.text = "Longitude: " + place.longitude.toString()
+            txtzoom?.text = "Zoom: " + place.zoom.toString()
 
             btnDelete?.setOnClickListener {
                 val builder = AlertDialog.Builder(itemView.context)

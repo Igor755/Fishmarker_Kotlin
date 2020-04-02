@@ -203,9 +203,6 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
                     }
                     }
-
-
-                //Singleton.UpdateMarker(marker)
             } else {
                 Toast.makeText(context, R.string.foreign_markers, Toast.LENGTH_SHORT)
                     .show()
