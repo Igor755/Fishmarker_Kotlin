@@ -13,18 +13,18 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
     private var googlemap: GoogleMap? = null
     private var mUiSettings: UiSettings? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_add_place_map, container, false)
         val mapFragment: SupportMapFragment =
             childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setHasOptionsMenu(true)
         return view
-
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_place, menu);
@@ -33,7 +33,6 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return (when (item.itemId) {
-
             R.id.back_to_profile -> {
                 activity?.supportFragmentManager
                     ?.beginTransaction()
@@ -54,23 +53,23 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
         mUiSettings?.isZoomControlsEnabled = true
 
         googlemap?.setOnMapLongClickListener { point ->
+
             val latitude: Double = point.latitude
             val longitude: Double = point.longitude
             val zoom: Float = googlemap!!.cameraPosition.zoom
             val intent: Intent = activity!!.intent
             val nameBigWater: String = intent.getStringExtra("nameBigWater")
 
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putDouble("latitude", latitude)
             bundle.putDouble("longitude", longitude)
             bundle.putFloat("zoom", zoom)
             bundle.putString("nameBigWater", nameBigWater)
 
-            val dialog_fragment = AddPlaceDialogFragment()
-            dialog_fragment.arguments = bundle
-            dialog_fragment.show(childFragmentManager, "AddPlaceDialogFragment")
-
+            val addPlaceDialogFragment = AddPlaceDialogFragment()
+            addPlaceDialogFragment.arguments = bundle
+            addPlaceDialogFragment.show(childFragmentManager, "AddPlaceDialogFragment")
         }
-
     }
+
 }

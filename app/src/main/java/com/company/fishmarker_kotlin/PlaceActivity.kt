@@ -7,6 +7,7 @@ import com.company.fishmarker_kotlin.fragments_place.AddPlaceFragment
 class PlaceActivity : AppCompatActivity() {
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place)
@@ -18,4 +19,5 @@ class PlaceActivity : AppCompatActivity() {
                 .commit()
         }
     }
+
 }

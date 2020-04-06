@@ -36,13 +36,15 @@ class AddPlaceFragment : Fragment() {
         txtnameplace = view.findViewById(R.id.txtnameplace) as TextView
         progressbar = view.findViewById(R.id.progressbar) as ProgressBar
         setHasOptionsMenu(true)
+
+
         return view
 
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_place, menu);
+        inflater.inflate(R.menu.menu_place, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -66,7 +68,6 @@ class AddPlaceFragment : Fragment() {
         allplace.clear()
 
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
-
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapshot1: DataSnapshot in dataSnapshot.children) {
                     val place: Place = dataSnapshot1.getValue(Place::class.java)!!
@@ -82,11 +83,8 @@ class AddPlaceFragment : Fragment() {
             activity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_container_place, MapPlaceFragment())
-                ?.addToBackStack(null)
                 ?.commit()
         }
-
-
     }
 
     @SuppressLint("WrongConstant")

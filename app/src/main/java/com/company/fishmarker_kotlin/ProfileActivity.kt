@@ -54,34 +54,24 @@ class ProfileActivity : AppCompatActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-
         if (id == R.id.exit){
-
             val builder = AlertDialog.Builder(this)
             builder.setTitle("You seriosly want exit?")
             builder.setMessage("Now you exit the application and you will need to login to the new")
 
             builder.setPositiveButton(android.R.string.yes) { _, _ ->
-
                 FirebaseAuth.getInstance().signOut()
                 LoginManager.getInstance().logOut()
-
                 val intent = Intent(this, AuthActivity::class.java)
                 startActivity(intent)
                 finish()
-
             }
-
             builder.setNegativeButton(android.R.string.no) { _, _ ->
                 Toast.makeText(applicationContext,
                     android.R.string.no, Toast.LENGTH_SHORT).show()
             }
-
-
             builder.show()
         }
-
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -92,10 +82,6 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-
         println("WTF")
     }
-
-
 }

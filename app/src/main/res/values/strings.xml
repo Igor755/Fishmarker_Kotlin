@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Fishmarker_Kotlin</string>
 
-    //////////////////////////////////REGISRATION
+    //////////////////////////////////REGISTRATION
+
     <string name="name">name</string>
     <string name="Name">Name</string>
     <string name="email">email</string>
@@ -56,12 +57,10 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
-
     <string name="text_user_place">Here could be your water features.
     To add an object, click on the drop and select an object.
     Specify the middle of the water body using and set the zoom.
     Anchor to the right place.</string>
-
 
     <string name="date">Date</string>
     <string name="depth">0.00</string>
@@ -79,7 +78,6 @@
     <string name="titlemarker">Title marker</string>
     <string name="titlemarker2">20 symbols</string>
 
-
     ///////////////////////////////////////////////////////MENU
 
     <string name="back">back</string>
@@ -93,7 +91,6 @@
     <string name="base">Base empty</string>
 
     ///////////////////////////////////////////////////////Сomplete marker information
-
 
     <string name="complete_c">Detail marker information</string>
     <string name="lat_c">Latitude: </string>
@@ -110,18 +107,14 @@
     ///////facebook_api
     <string name="facebook_app_id">570833563489623</string>
     <string name="fb_login_protocol_scheme">fb570833563489623</string>
-
     <string name="foreign_markers">You can not edit or delete foreign markers</string>
     <string name="detail_marker_title_alert">Markers details</string>
-
 
     ///////////////////////////////////////////////////////
 
     <string name="you">You really want to delete the marker?</string>
     <string name="the">The marker will be removed </string>
     <string name="from">"from the database and from the map"</string>
-
-
     <string name="gps_enable">GPS is not enabled. Please turn ON GPS.</string>
     <string name="gps_settings">GPS settings</string>
     <string name="settings">Settings</string>

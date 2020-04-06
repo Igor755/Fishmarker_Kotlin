@@ -16,7 +16,6 @@ class MarkerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_marker)
 
 
-
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()

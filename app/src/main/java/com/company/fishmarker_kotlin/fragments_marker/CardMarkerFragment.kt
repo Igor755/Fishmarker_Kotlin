@@ -26,41 +26,34 @@ class CardMarkerFragment : DialogFragment() {
 
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         return inflater.inflate(R.layout.fragment_add_marker_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val calendar: Calendar = Calendar.getInstance()
-
         val bundle: Bundle? = arguments
         val latitude: Double = bundle?.getDouble("latitude")!!
         val longitude: Double = bundle.getDouble("longitude")
+        btnDelete.visibility = View.INVISIBLE
 
 
-        btnDelete.visibility =View.INVISIBLE
-
-
-            if (latitude == 0.0 && longitude == 0.0){
+        if (latitude == 0.0 && longitude == 0.0) {
             updateMarker()
-        }else{
+        } else {
             addMarker()
         }
 
-
-
-
         edit_latitude.isEnabled = false
         edit_longitude.isEnabled = false
-
-
         btnCancel.setOnClickListener {
-
             dialog?.dismiss()
-
         }
 
         tvDate.setOnClickListener {
@@ -156,11 +149,9 @@ class CardMarkerFragment : DialogFragment() {
         }
 
 
-
-
-
     }
-    fun updateMarker(){
+
+    fun updateMarker() {
 
         val bundle: Bundle? = arguments
 
@@ -183,11 +174,21 @@ class CardMarkerFragment : DialogFragment() {
         edit_note.setText(noteUpdate)
 
 
-        btnDelete.visibility =View.VISIBLE
+        btnDelete.visibility = View.VISIBLE
 
         btnDelete.setOnClickListener {
 
-            deleteMarker(uidUpdate,idMarkerUpdate,latitudeUpdate,longitudeUpdate, titleUpdate,dateUpdate,depthUpdate,amountUpdate,noteUpdate)
+            deleteMarker(
+                uidUpdate,
+                idMarkerUpdate,
+                latitudeUpdate,
+                longitudeUpdate,
+                titleUpdate,
+                dateUpdate,
+                depthUpdate,
+                amountUpdate,
+                noteUpdate
+            )
 
         }
 
@@ -216,7 +217,8 @@ class CardMarkerFragment : DialogFragment() {
                     title,
                     displayDate,
                     java.lang.Double.valueOf(depth), amountoffish.toInt(),
-                    note)
+                    note
+                )
 
                 if (idMarkerUpdate != null) {
                     FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate)
@@ -234,29 +236,45 @@ class CardMarkerFragment : DialogFragment() {
 
         }
     }
-    fun deleteMarker(uidUpdate: String?, idMarkerUpdate: String?, latitudeUpdate: String?, longitudeUpdate: String?, titleUpdate: String?, dateUpdate: String?, depthUpdate: String?, amountUpdate: String?, noteUpdate: String?) {
+
+    fun deleteMarker(
+        uidUpdate: String?,
+        idMarkerUpdate: String?,
+        latitudeUpdate: String?,
+        longitudeUpdate: String?,
+        titleUpdate: String?,
+        dateUpdate: String?,
+        depthUpdate: String?,
+        amountUpdate: String?,
+        noteUpdate: String?
+    ) {
 
         val alertDialog = AlertDialog.Builder(context)
 
         alertDialog.setTitle(R.string.you)
-        alertDialog.setMessage(context?.resources?.getString(R.string.the) + "\n" +
-                context?.resources?.getString(R.string.from))
+        alertDialog.setMessage(
+            context?.resources?.getString(R.string.the) + "\n" +
+                    context?.resources?.getString(R.string.from)
+        )
 
         alertDialog.setPositiveButton(android.R.string.yes) { _, _ ->
 
 
-           val modelClassDelete : MarkerDetail  = MarkerDetail(uidUpdate,
-               idMarkerUpdate,
-               latitudeUpdate!!.toDouble(),
-               longitudeUpdate!!.toDouble(),
-               titleUpdate.toString(),
-               dateUpdate.toString(),
-               depthUpdate!!.toDouble(),
-               Integer.parseInt(amountUpdate),
-               noteUpdate.toString());
+            val modelClassDelete: MarkerDetail = MarkerDetail(
+                uidUpdate,
+                idMarkerUpdate,
+                latitudeUpdate!!.toDouble(),
+                longitudeUpdate!!.toDouble(),
+                titleUpdate.toString(),
+                dateUpdate.toString(),
+                depthUpdate!!.toDouble(),
+                Integer.parseInt(amountUpdate),
+                noteUpdate.toString()
+            );
 
             val delmark =
-                FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate.toString())
+                FirebaseDatabase.getInstance().getReference("Marker")
+                    .child(idMarkerUpdate.toString())
             delmark.removeValue()
             Singleton.deleteMarker(modelClassDelete)
 
