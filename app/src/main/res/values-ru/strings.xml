@@ -108,8 +108,8 @@
     ///////facebook_api
     <string name="facebook_app_id">570833563489623</string>
     <string name="fb_login_protocol_scheme">fb570833563489623</string>
-    <string name="foreign_markers">You can not edit or delete foreign markers</string>
-    <string name="detail_marker_title_alert">Markers details</string>
+    <string name="foreign_markers">Вы не можете удалять или изменять чужие маркера</string>
+    <string name="detail_marker_title_alert">Подробная информация о маркере</string>
 
     ///////////////////////////////////////////////////////
 
