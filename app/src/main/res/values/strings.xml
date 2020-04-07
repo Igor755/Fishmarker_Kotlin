@@ -119,4 +119,36 @@
     <string name="gps_settings">GPS settings</string>
     <string name="settings">Settings</string>
 
+    //////////////////////////big water
+    <string name="sea">SEA</string>
+    <string name="ocean">OCEAN</string>
+    <string name="river">RIVER</string>
+    <string name="lake">LAKE</string>
+    <string name="gulf">GULF</string>
+    <string name="reservoir">RESERVOIR</string>
+    <string name="lade">LADE</string>
+    <string name="pond">POND</string>
+    <string name="another">ANOTHER</string>
+
+    //////////////////////////profile
+    <string name="telephone">Telephone</string>
+    <string name="last_name">Last Name</string>
+    <string name="type_of_fishing">Type of fishing</string>
+    <string name="trophies">Trophies</string>
+    <string name="change_data">Change data</string>
+    <string name="SAVE">SAVE</string>
+    <string name="change_photo">change photo</string>
+    <string name="fishmarker">Fishmarker</string>
+    <string name="add_marker">Add marker</string>
+    <string name="profile">Profile</string>
+    <string name="navigation">Navigation</string>
+    <string name="name_place">Name place:</string>
+    <string name="zoom">Zoom:</string>
+    <string name="my_places">My Places</string>
+    <string name="marker">Markers</string>
+    <string name="edit">Edit</string>
+    <string name="detail">Detail</string>
+
+
+
 </resources>

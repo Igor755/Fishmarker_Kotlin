@@ -2,11 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".PlaceActivity">
-
     <item
         android:id="@+id/back_to_profile"
         android:icon="@drawable/back"
         app:showAsAction="always"
         android:title="@string/back"/>
-
 </menu>

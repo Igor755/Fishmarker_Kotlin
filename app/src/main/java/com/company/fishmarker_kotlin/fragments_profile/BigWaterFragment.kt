@@ -28,7 +28,7 @@ class  BigWaterFragment : Fragment() {
         gridView!!.adapter = adapterGrid
 
         gridView!!.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
+            AdapterView.OnItemClickListener { _, _, position, _ ->
                 val bigWater = BigWater.values()[position]
                 bigWaterName(bigWater.nameWater)
             }

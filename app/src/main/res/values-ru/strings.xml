@@ -120,4 +120,34 @@
     <string name="gps_settings">GPS settings</string>
     <string name="settings">Settings</string>
 
+
+    //////////////////////////big water
+    <string name="sea">МОРЕ</string>
+    <string name="ocean">ОКЕАН</string>
+    <string name="river">РЕКА</string>
+    <string name="lake">ОЗЕРО</string>
+    <string name="gulf">ЗАЛИВ</string>
+    <string name="reservoir">ВОДОХРАНИЛИЩЕ</string>
+    <string name="lade">КАНАЛ</string>
+    <string name="pond">ПРУД</string>
+    <string name="another">ДРУГОЕ</string>
+
+    //////////////////////////profile
+    <string name="telephone">Телефон</string>
+    <string name="last_name">Фамилия</string>
+    <string name="type_of_fishing">Тип ловли</string>
+    <string name="trophies">Трофеи</string>
+    <string name="change_data">Изменить данные</string>
+    <string name="SAVE">Сохранить</string>
+    <string name="change_photo">Изменить фото</string>
+    <string name="fishmarker">Fishmarker</string>
+    <string name="add_marker">Добавить маркер</string>
+    <string name="profile">Профиль</string>
+    <string name="navigation">Навигация</string>
+    <string name="name_place">Имя места:</string>
+    <string name="zoom">Zoom:</string>
+    <string name="my_places">Мои места</string>
+    <string name="marker">Маркера</string>
+    <string name="edit">изменить</string>
+    <string name="detail">подробно</string>
 </resources>

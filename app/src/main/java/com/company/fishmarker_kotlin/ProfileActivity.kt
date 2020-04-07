@@ -26,28 +26,21 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
 
 
-        appBarConfiguration = AppBarConfiguration(
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_place_fragment, R.id.nav_profile_fragment), drawerLayout)
 
-            setOf(
-                R.id.nav_place_fragment, R.id.nav_profile_fragment/*, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send*/
 
-            ), drawerLayout
-        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.profile, menu)
         return true
