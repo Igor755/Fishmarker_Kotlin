@@ -214,12 +214,12 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
     fun onMapLongClick(latitude : Double, longitude : Double){
 
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Add marker on map?")
+        builder.setTitle(getString(R.string.add_marker_on_map))
         builder.setMessage(
-                "Are you seriosly want add marker?" + "\n" +
-                "Latitude: " + latitude + "\n" +
-                "Longitude: " + longitude)
-        builder.setPositiveButton("YES"){ _, which ->
+                context?.resources?.getString(R.string.add_marker_s) + "\n" +
+                        getString(R.string.lat_c) + " " + latitude + "\n" +
+                        getString(R.string.lon_c) + " " + longitude)
+        builder.setPositiveButton(R.string.yes){ _, _ ->
             val fragment : DialogFragment  =  CardMarkerFragment()
             val bundle  =  Bundle()
             bundle.putDouble("latitude", latitude)
@@ -228,10 +228,10 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
             fragment.setTargetFragment(this,1)
             activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
-            Toast.makeText(context,"Go, go , go add marker.",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,R.string.go_go,Toast.LENGTH_SHORT).show()
         }
-        builder.setNegativeButton("No"){ _, _ ->
-            Toast.makeText(context,"You are not agree.",Toast.LENGTH_SHORT).show()
+        builder.setNegativeButton(R.string.no){ _, _ ->
+            Toast.makeText(context,R.string.agree,Toast.LENGTH_SHORT).show()
         }
         val dialog: AlertDialog = builder.create()
         dialog.show()

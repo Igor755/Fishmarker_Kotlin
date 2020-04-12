@@ -150,5 +150,22 @@
     <string name="detail">Detail</string>
 
 
+    //////////////////////////add place dialog
+    <string name="add_place">Add place? The point center you select will be added with lat and lon coordinates, with the name you specify</string>
+    <string name="nameplace">Name place</string>
+    <string name="nameplacel">name place</string>
+    <string name="zoom_add">Zoom</string>
+    <string name="big_water">Big water</string>
+    <string name="big_water_l">big water</string>
+
+
+    //////////////////////////add marker dialog
+    <string name="add_marker_on_map">Add marker on map</string>
+    <string name="add_marker_s">Are you seriosly want add marker?</string>
+    <string name="go_go">Go, go , go add marker</string>
+    <string name="agree">You are not agree</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+
 
 </resources>

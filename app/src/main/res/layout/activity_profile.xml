@@ -11,7 +11,7 @@
     <include
         layout="@layout/activity_profile_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -20,6 +20,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/activity_profile_navigation_header"
-        app:menu="@menu/activity_profile_drawer" />
+        app:menu="@menu/activity_profile_drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -150,4 +150,26 @@
     <string name="marker">Маркера</string>
     <string name="edit">изменить</string>
     <string name="detail">подробно</string>
+
+
+    //////////////////////////add place dialog
+    <string name="add_place">Добавить место? Выбирите точку водоема и укажите имя</string>
+    <string name="nameplace">Название водоема</string>
+    <string name="nameplacel">название водоема</string>
+    <string name="zoom_add">Zoom</string>
+    <string name="big_water">Водный объект</string>
+    <string name="big_water_l">водный объект</string>
+
+
+    //////////////////////////add marker dialog
+    <string name="add_marker_on_map">Добавление маркера на карту</string>
+    <string name="add_marker_s">Вы действительно хотите добавить маркер?</string>
+    <string name="go_go">Вы собираетесь добавить маркер</string>
+    <string name="agree">Передумали</string>
+    <string name="yes">да</string>
+    <string name="no">нет</string>
+
+
+
+
 </resources>
