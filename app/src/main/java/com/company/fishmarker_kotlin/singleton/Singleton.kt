@@ -124,7 +124,6 @@ class Singleton {
 
                         val markerInformation: MarkerDetail =
                             dataSnapshot1.getValue(MarkerDetail::class.java)!!
-
                         allmarkers.add(markerInformation)
 
                         System.out.println(markerInformation)

@@ -6,11 +6,26 @@
     android:scrollbarThumbVertical="@android:color/transparent"
     android:padding="@dimen/activity_horizontal_margin">
 
+
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="30dp"
+            android:background="@color/colorTransparent"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/delete_marker_30"/>
+    </RelativeLayout>
 
         <!---BLOCK 1-->
         <LinearLayout
@@ -215,15 +230,7 @@
                 android:textStyle="bold"
                 android:layout_gravity="start"
                 android:text="@string/cancel"/>
-            <Button
-                android:id="@+id/btnDelete"
-                android:layout_width="100dp"
-                android:textColor="@color/colorWhite"
-                android:background="@color/colorRed"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:text="@string/delete"/>
+
             <Button
                 android:id="@+id/btnOk"
                 android:layout_width="100dp"

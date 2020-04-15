@@ -14,16 +14,4 @@ data class MarkerDetail(
 
     constructor() :
             this("", "", 0.0, 0.0, "","", 0.0, 0, "")
-
-
-
-
-
 }
-
-/*public fun  getCoordinates() : Double[] {
-
-    double[] cats = {latitude, longitude};
-
-    return cats;
-}*/
