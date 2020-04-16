@@ -2,6 +2,7 @@ package com.company.fishmarker_kotlin.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.modelclass.BigWater
+import com.facebook.FacebookSdk.getApplicationContext
 
 
 class AdapterPlaceBigWater(context: Context) :
@@ -32,7 +34,7 @@ class AdapterPlaceBigWater(context: Context) :
         val imagePhoto = convertView?.findViewById(R.id.imageViewWater) as ImageView
         val nameWaterName = convertView.findViewById(R.id.textViewWaterName) as TextView
 
-        nameWaterName.text = BigWater.values()[position].nameWater
+        nameWaterName.text = getApplicationContext().getString(BigWater.values()[position].nameStringResource)
         Glide.with(context).load(BigWater.values()[position].photoWater).into(imagePhoto)
 
         return convertView

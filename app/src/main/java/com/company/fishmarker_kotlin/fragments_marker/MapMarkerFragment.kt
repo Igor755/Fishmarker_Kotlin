@@ -249,9 +249,9 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
             val longitude: Double? = data?.getDoubleExtra("longitude", 0.0)
             val resource : Resources = context?.resources!!
             val myIconFish : Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                resource.getDrawable(R.drawable.fishmy30, context!!.theme)
+                resource.getDrawable(R.drawable.fishmy30_old, context!!.theme)
             } else {
-                resource.getDrawable(R.drawable.fishmy30)            }
+                resource.getDrawable(R.drawable.fishmy30_old)            }
             val bitmap_my = (myIconFish as BitmapDrawable).bitmap
             Singleton.createMarker(latitude, longitude, titleMarker, bitmap_my)
 

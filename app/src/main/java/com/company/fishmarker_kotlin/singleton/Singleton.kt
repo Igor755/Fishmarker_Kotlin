@@ -94,11 +94,11 @@ class Singleton {
 
             val myIconFish: Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 resource.getDrawable(
-                    com.company.fishmarker_kotlin.R.drawable.fishmy30,
+                    com.company.fishmarker_kotlin.R.drawable.fishmy30_old,
                     context.theme
                 )
             } else {
-                resource.getDrawable(com.company.fishmarker_kotlin.R.drawable.fishmy30)
+                resource.getDrawable(com.company.fishmarker_kotlin.R.drawable.fishmy30_old)
             }
             val bitmap_my = (myIconFish as BitmapDrawable).bitmap
 
@@ -198,7 +198,7 @@ class Singleton {
 
             googlemap!!.clear()
 
-            var my_ic: Int = R.drawable.fishmy30
+            var my_ic: Int = R.drawable.fishmy30_old
             val markers_array = java.util.ArrayList<Marker>()
 
             val iterator: MutableListIterator<MarkerDetail> =
@@ -209,7 +209,7 @@ class Singleton {
                 if (!next.uid.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
                     my_ic = R.drawable.fishanother30
                 } else {
-                    my_ic = R.drawable.fishmy30
+                    my_ic = R.drawable.fishmy30_old
                 }
                 if (next.latitude.equals(updatemarker.latitude) &&
                     next.longitude.equals(updatemarker.longitude)
@@ -246,7 +246,7 @@ class Singleton {
 
             googlemap!!.clear()
 
-            var my_ic: Int = R.drawable.fishmy30
+            var my_ic: Int = R.drawable.fishmy30_old
 
             val markers_array = java.util.ArrayList<Marker>()
             val iterator: MutableListIterator<MarkerDetail> =
@@ -256,7 +256,7 @@ class Singleton {
                 if (!next.uid.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
                     my_ic = R.drawable.fishanother30
                 } else {
-                    my_ic = R.drawable.fishmy30
+                    my_ic = R.drawable.fishmy30_old
                 }
                 if (next.latitude.equals(deletemarker.latitude) &&
                     next.longitude.equals(deletemarker.longitude)
