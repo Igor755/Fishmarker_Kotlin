@@ -49,12 +49,12 @@ class ProfileActivity : AppCompatActivity() {
         val id = item.itemId
         if (id == R.id.exit){
             val builder = AlertDialog.Builder(this)
-            builder.setTitle("You seriosly want exit?")
-            builder.setMessage("Now you exit the application and you will need to login to the new")
+            builder.setTitle(R.string.exit_title)
+            builder.setMessage(R.string.exit_text)
 
             builder.setPositiveButton(android.R.string.yes) { _, _ ->
                 FirebaseAuth.getInstance().signOut()
-                LoginManager.getInstance().logOut()
+                //metLoginManager.getInstance().logOut()
                 val intent = Intent(this, AuthActivity::class.java)
                 startActivity(intent)
                 finish()

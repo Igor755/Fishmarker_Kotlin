@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_latitude
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_longitude
 import kotlinx.android.synthetic.main.fragment_add_marker_dialog.*
+import kotlinx.android.synthetic.main.fragment_add_marker_map.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -272,15 +273,12 @@ class CardMarkerFragment : DialogFragment() {
                 noteUpdate.toString()
             );
 
-            val delmark =
-                FirebaseDatabase.getInstance().getReference("Marker")
-                    .child(idMarkerUpdate.toString())
+            val delmark = FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate.toString())
             delmark.removeValue()
             Singleton.deleteMarker(modelClassDelete)
 
             Toast.makeText(context, android.R.string.yes, Toast.LENGTH_SHORT).show()
             dialog?.dismiss()
-
         }
 
         alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->

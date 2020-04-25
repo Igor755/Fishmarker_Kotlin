@@ -144,10 +144,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
     }
     fun onMapClick(){
         if (bottom_sheet.visibility == View.VISIBLE) {
-            val hide = AnimationUtils.loadAnimation(
-                getApplicationContext(),
-                R.anim.hide_detail_marker
-            )
+            val hide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide_detail_marker)
             bottom_sheet.startAnimation(hide)
             bottom_sheet.visibility = View.GONE
             mUiSettings.isZoomControlsEnabled = true
@@ -167,8 +164,9 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         )
         bottom_sheet.startAnimation(show)
         bottom_sheet.visibility = View.VISIBLE
-        button_detail.setOnClickListener(View.OnClickListener {
-            Singleton.DetailMarker(marker)
+        button_detail.setOnClickListener(View.OnClickListener { Singleton.DetailMarker(marker)
+            hideButtonSheet()
+
         })
         button_edit.setOnClickListener(View.OnClickListener {
             var isMyMarker = false
@@ -200,12 +198,13 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                         fragment.arguments = bundle
                         fragment.setTargetFragment(this,1)
                         activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
-
+                        hideButtonSheet()
                     }
                     }
             } else {
-                Toast.makeText(context, R.string.foreign_markers, Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(context, R.string.foreign_markers, Toast.LENGTH_SHORT).show()
+                hideButtonSheet()
+
             }
         })
         return true
@@ -255,6 +254,14 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
             val bitmap_my = (myIconFish as BitmapDrawable).bitmap
             Singleton.createMarker(latitude, longitude, titleMarker, bitmap_my)
 
+        }
+    }
+    fun hideButtonSheet() {
+
+        if (bottom_sheet.visibility == View.VISIBLE) {
+            val hide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide_detail_marker)
+            bottom_sheet.startAnimation(hide)
+            bottom_sheet.visibility = View.GONE
         }
     }
 

@@ -67,10 +67,10 @@ class SignInFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
         callbackManager = CallbackManager.Factory.create()
 
-        withFacebook.setOnClickListener {
+    /*    withFacebook.setOnClickListener {
             facebooklogin()
         }
-
+*/
         btn_sign_in.setOnClickListener {
 
             val email : String = et_email.text.toString().trim()

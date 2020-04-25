@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.TextView
 import com.company.fishmarker_kotlin.R
 import com.company.fishmarker_kotlin.fragments_marker.CardMarkerFragment
+import com.company.fishmarker_kotlin.fragments_marker.MapMarkerFragment
 import com.company.fishmarker_kotlin.modelclass.MarkerDetail
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory

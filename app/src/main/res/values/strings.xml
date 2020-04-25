@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fishmarker_Kotlin</string>
+    <string name="app_name">Fishmarker</string>
 
     //////////////////////////////////REGISTRATION
 
@@ -167,5 +167,10 @@
     <string name="yes">yes</string>
     <string name="no">no</string>
 
+
+
+    ///////////////exit app
+    <string name="exit_title">You seriosly want exit?</string>
+    <string name="exit_text"> Now you exit the application and you will need to login to the new</string>
 
 </resources>
