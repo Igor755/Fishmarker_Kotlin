@@ -28,8 +28,6 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            multiDexKeepFile file('multidex-config.txt')
-            multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
