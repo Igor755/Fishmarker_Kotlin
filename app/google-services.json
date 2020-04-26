@@ -50,6 +50,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36261826390:android:11f262d158d8abf42090f7",
+        "android_client_info": {
+          "package_name": "com.company.imetlin.fishmarker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36261826390-q394lgiqo8djjoq40l92j1ri1e7btpdq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCncC0J1XVn6kCzSfEhGQXAgtJZFFf51bQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36261826390-q394lgiqo8djjoq40l92j1ri1e7btpdq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

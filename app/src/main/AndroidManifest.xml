@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.company.fishmarker_kotlin">
+    package="com.company.imetlin.fishmarker">
     <uses-feature
         android:glEsVersion="0x0020000"
         android:required="true"/>
@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -27,7 +28,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".AuthActivity"
+            android:name="com.company.imetlin.fishmarker.AuthActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             tools:ignore="LockedOrientationActivity">
@@ -37,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name="com.company.imetlin.fishmarker.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
@@ -45,13 +46,13 @@
             android:windowSoftInputMode="adjustPan"
             tools:ignore="LockedOrientationActivity"/>
         <activity
-            android:name=".PlaceActivity"
+            android:name="com.company.imetlin.fishmarker.PlaceActivity"
             android:label="@string/my_places"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             tools:ignore="LockedOrientationActivity"/>
         <activity
-            android:name=".MarkerActivity"
+            android:name="com.company.imetlin.fishmarker.MarkerActivity"
             android:label="@string/marker"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"

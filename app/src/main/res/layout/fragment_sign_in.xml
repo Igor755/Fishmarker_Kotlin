@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".fragments_registration.SignInFragment">
+    tools:context="com.company.imetlin.fishmarker.fragments_registration.SignInFragment">
 
 
     <ImageView

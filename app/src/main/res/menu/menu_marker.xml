@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MarkerActivity">
+    tools:context="com.company.imetlin.fishmarker.MarkerActivity">
 
     <item
         android:id="@+id/add_marker_on_gps"

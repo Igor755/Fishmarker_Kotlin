@@ -8,13 +8,13 @@
 
     <fragment
         android:id="@+id/nav_place_fragment"
-        android:name="com.company.fishmarker_kotlin.fragments_profile.BigWaterFragment"
+        android:name="com.company.imetlin.fishmarker.fragments_profile.BigWaterFragment"
         android:label="@string/big_water"
         tools:layout="@layout/fragment_big_water" />
 
     <fragment
         android:id="@+id/nav_profile_fragment"
-        android:name="com.company.fishmarker_kotlin.fragments_profile.ProfileFragment"
+        android:name="com.company.imetlin.fishmarker.fragments_profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 

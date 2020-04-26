@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".AuthActivity">
+    tools:context="com.company.imetlin.fishmarker.AuthActivity">
 
     <FrameLayout
         android:id="@+id/fragment_container_place"

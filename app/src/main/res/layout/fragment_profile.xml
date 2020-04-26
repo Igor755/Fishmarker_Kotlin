@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".fragments_profile.ProfileFragment"
+    tools:context="com.company.imetlin.fishmarker.fragments_profile.ProfileFragment"
     tools:ignore="ExtraText"
     android:scrollbarThumbVertical="@android:color/transparent"
     android:padding="@dimen/activity_horizontal_margin">
