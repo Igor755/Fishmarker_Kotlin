@@ -1,6 +1,5 @@
 package com.company.imetlin.fishmarker.fragments_profile
 
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.ContentResolver
 import android.content.Intent
@@ -31,7 +30,6 @@ import kotlinx.android.synthetic.main.fragment_profile.view.*
 import java.lang.IllegalArgumentException
 import java.util.UUID.randomUUID
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class ProfileFragment : Fragment() {
 
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -43,108 +41,64 @@ class ProfileFragment : Fragment() {
     val uid: String = mAuth.currentUser?.uid.toString()
     private val PICK_IMAGE_REQUEST: Int = 1
     lateinit var filePath: Uri
-    lateinit var photoUserImageView: ImageView
-    lateinit var changePhotoBtn: Button
-    lateinit var changeAccount: Button
     lateinit var firebaseStorage: StorageReference
-    lateinit var editname: EditText
-    lateinit var editlastname: EditText
-    lateinit var editemail: EditText
-    lateinit var edittelephone: EditText
-    lateinit var edittype: EditText
-    lateinit var edittrophies: EditText
-    lateinit var spinnerLocation: Spinner
-    lateinit var save: Button
-    lateinit var cancelChangePhotoBtn: Button
-    lateinit var okChangePhotoBtn: Button
 
 
-    @SuppressLint("ResourceAsColor")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_profile, container, false)
+    }
 
-        spinnerLocation = view.findViewById(R.id.spinner_location)
-        changeAccount = view.findViewById(R.id.change_account)
-        val cancel = view.findViewById<Button>(R.id.cancel)
-        save = view.findViewById(R.id.save)
-        changePhotoBtn = view.findViewById(R.id.change_photo_button)
-        photoUserImageView = view.findViewById(R.id.photo_user_image_view)
-        cancelChangePhotoBtn = view.findViewById(R.id.cancelBtn)
-        okChangePhotoBtn = view.findViewById(R.id.okBtn)
-        val loader = view.findViewById<ProgressBar>(R.id.loader)
-        editname = view.findViewById(R.id.edit_name)
-        editlastname = view.findViewById(R.id.edit_last_name)
-        editemail = view.findViewById(R.id.edit_email)
-        edittelephone = view.findViewById(R.id.edit_telephone)
-        edittype = view.findViewById(R.id.edit_preferred_type_of_fishing)
-        edittrophies = view.findViewById(R.id.edit_trophies)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
         cancel.isVisible = false
-        spinnerLocation.isEnabled = false
-        spinnerLocation.isClickable = false
+        spinner_location.isEnabled = false
+        spinner_location.isClickable = false
         save.isVisible = false
-        cancelChangePhotoBtn.isVisible = false
-        okChangePhotoBtn.isVisible = false
+        cancelBtn.isVisible = false
+        okBtn.isVisible = false
         loader.isVisible = false
 
 
         firebaseStorage = FirebaseStorage.getInstance().getReference("images")
-
-
-
         pref = PreferenceManager.getDefaultSharedPreferences(context)
-        adapter =
-            ArrayAdapter(context, android.R.layout.simple_spinner_item, StaticHelper.getValue())
+        adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, StaticHelper.getValue())
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-        spinnerLocation.adapter = adapter
+        spinner_location.adapter = adapter
 
 
-        if (!StaticHelper.isNetworkAvailable(context!!)) {
+        if (!StaticHelper.isNetworkAvailable(requireContext())) {
             localLoadUser()
         } else {
             loadFirebaseUser()
         }
 
-        changePhotoBtn.setOnClickListener {
-
+        change_photo_button.setOnClickListener {
             chooseImage()
         }
 
-        cancelChangePhotoBtn.setOnClickListener {
-
+        cancelBtn.setOnClickListener {
             diactivateView()
         }
-        okChangePhotoBtn.setOnClickListener {
-
+        okBtn.setOnClickListener {
             savePictureCloudFirebaseAndDatabase()
         }
 
-        changeAccount.setOnClickListener {
-
-            changePhotoBtn.isVisible = false
+        change_account.setOnClickListener {
+            change_photo_button.isVisible = false
             activateView()
         }
-
         cancel.setOnClickListener {
-
             diactivateView()
         }
         save.setOnClickListener {
-
             changeUserInFirebase()
             loadFirebaseUser()
             diactivateView()
         }
 
-
-
-        return view
     }
 
     fun activateView() {
@@ -175,8 +129,6 @@ class ProfileFragment : Fragment() {
         edit_name.isFocusableInTouchMode = true
         edit_last_name.isFocusable = true
         edit_last_name.isFocusableInTouchMode = true
-        // edit_email.isFocusable = true
-        // edit_email.isFocusableInTouchMode = true
         edit_telephone.isFocusable = true
         edit_telephone.isFocusableInTouchMode = true
         edit_trophies.isFocusable = true
@@ -192,9 +144,9 @@ class ProfileFragment : Fragment() {
         cancel.isVisible = false
         change_account.isVisible = true
         save.isVisible = false
-        cancelChangePhotoBtn.isVisible = false
-        okChangePhotoBtn.isVisible = false
-        changePhotoBtn.isVisible = true
+        cancelBtn.isVisible = false
+        okBtn.isVisible = false
+        change_photo_button.isVisible = true
 
 
         ////////клик по view
@@ -234,8 +186,6 @@ class ProfileFragment : Fragment() {
     }
 
     fun localSaveUser(userlocal: User) {
-
-
         val editor = pref.edit()
         editor.clear()
         editor.putString("user_name", userlocal.user_name)
@@ -247,11 +197,9 @@ class ProfileFragment : Fragment() {
         editor.putString("user_location", userlocal.location)
         editor.putString("user_photo", userlocal.url_photo)
         editor.apply()
-
     }
 
     fun localLoadUser() {
-
 
         val user_name: String = pref.getString("user_name", "")
         val user_last_name: String = pref.getString("user_last_name", "")
@@ -261,33 +209,29 @@ class ProfileFragment : Fragment() {
         val user_preferred: String = pref.getString("user_prefered", "")
         val user_location: String = pref.getString("user_location", "")
         val user_photo: String = pref.getString("user_photo", "")
-
         val position: Int = adapter.getPosition(user_location)
 
-        spinnerLocation.setSelection(position)
-        editname.setText(user_name)
-        editlastname.setText(user_last_name)
-        editemail.setText(user_email)
-        edittelephone.setText(user_telephone)
-        edittrophies.setText(user_trophies)
-        edittype.setText(user_preferred)
+        spinner_location.setSelection(position)
+        edit_name.setText(user_name)
+        edit_last_name.setText(user_last_name)
+        edit_email.setText(user_email)
+        edit_telephone.setText(user_telephone)
+        edit_trophies.setText(user_trophies)
+        edit_preferred_type_of_fishing.setText(user_preferred)
 
         if (user_email == "") {
             Toast.makeText(context, "local data empty too, enable internet", Toast.LENGTH_SHORT)
                 .show()
         }
-
-
-
         try {
             if (user_photo == "") {
-                photoUserImageView.setImageResource(R.drawable.photo_user)
+                photo_user_image_view.setImageResource(R.drawable.photo_user)
             } else {
                 val myUri: Uri = Uri.parse(user_photo)
                 Picasso.get().load(myUri).into(photo_user_image_view)
-            }// some code
+            }
         } catch (e: IllegalArgumentException) {
-            photoUserImageView.setImageResource(R.drawable.photo_user)
+            photo_user_image_view.setImageResource(R.drawable.photo_user)
             Toast.makeText(context, "not internet, not photo", Toast.LENGTH_SHORT).show()
         }
 
@@ -297,7 +241,6 @@ class ProfileFragment : Fragment() {
     fun loadFirebaseUser() {
 
         val myRef: Query = firebaseDatabase.getReference("Users").orderByKey().equalTo(uid)
-
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -305,12 +248,9 @@ class ProfileFragment : Fragment() {
                 for (dataSnapshot1: DataSnapshot in dataSnapshot.children) {
                     user = dataSnapshot1.getValue(User::class.java)!!
                     println(user)
-
                 }
 
                 val position: Int = adapter.getPosition(user.location)
-
-
                 view?.edit_name?.setText(user.user_name)
                 view?.edit_last_name?.setText(user.last_name)
                 view?.spinner_location?.setSelection(position)
@@ -318,8 +258,6 @@ class ProfileFragment : Fragment() {
                 view?.edit_telephone?.setText(user.telephone)
                 view?.edit_trophies?.setText(user.trophies)
                 view?.edit_preferred_type_of_fishing?.setText(user.type_of_fishing)
-                //view?.photo_user_image_view?.setImageURI(myUri)
-
 
                 if (user.url_photo == "") {
                     photo_user_image_view.setImageResource(R.drawable.photo_user)
@@ -327,23 +265,16 @@ class ProfileFragment : Fragment() {
                     val myUri: Uri = Uri.parse(user.url_photo)
                     Picasso.get().load(myUri).into(photo_user_image_view)
                 }
-
-
                 localSaveUser(user)
-                //localLoadUser()
-
             }
 
             override fun onCancelled(error: DatabaseError) {
-
-
                 // Failed to read value
             }
         })
     }
 
     fun changeUserInFirebase() {
-
 
         val name: String = view?.edit_name?.text.toString()
         val last_name: String = view?.edit_last_name?.text.toString()
@@ -353,31 +284,13 @@ class ProfileFragment : Fragment() {
         val trophies: String = view?.edit_trophies?.text.toString()
         val type_fishing: String = view?.edit_preferred_type_of_fishing?.text.toString()
 
-
-        if (filepathimage == "") {
-            photo_user_image_view.setImageResource(R.drawable.photo_user)
-        } else {
+        if (filepathimage == "") { photo_user_image_view.setImageResource(R.drawable.photo_user) } else {
             val myUri: Uri = Uri.parse(filepathimage)
-            Picasso.get().load(myUri).into(photoUserImageView)
+            Picasso.get().load(myUri).into(photo_user_image_view)
         }
-
-
-        var user_update: User = User(
-            user.user_id,
-            name,
-            last_name,
-            email,
-            location,
-            telephone,
-            type_fishing,
-            trophies,
-            filepathimage
-        )
-
+        val user_update = User(user.user_id, name, last_name, email, location, telephone, type_fishing, trophies, filepathimage)
         FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user_update)
-
         localSaveUser(user_update)
-
 
     }
 
@@ -390,8 +303,8 @@ class ProfileFragment : Fragment() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
         cancelBtn.isVisible = true
         okBtn.isVisible = true
-        changePhotoBtn.isVisible = false
-        changeAccount.isVisible = false
+        change_photo_button.isVisible = false
+        change_photo_button.isVisible = false
 
     }
 
@@ -401,9 +314,9 @@ class ProfileFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
 
             filePath = data.data
-            photoUserImageView.setImageDrawable(null)
-            Picasso.get().load(filePath).fit().into(photoUserImageView)
-            photoUserImageView.setImageURI(filePath)
+            photo_user_image_view.setImageDrawable(null)
+            Picasso.get().load(filePath).fit().into(photo_user_image_view)
+            photo_user_image_view.setImageURI(filePath)
 
 
         }
@@ -411,7 +324,7 @@ class ProfileFragment : Fragment() {
 
     fun getFileExtension(uri: Uri): String {
 
-        val contentResolverUri: ContentResolver = context!!.contentResolver
+        val contentResolverUri: ContentResolver = requireContext().contentResolver
         val mimeTypeMap: MimeTypeMap = MimeTypeMap.getSingleton()
         return mimeTypeMap.getExtensionFromMimeType(contentResolverUri.getType(uri))
 
@@ -452,30 +365,13 @@ class ProfileFragment : Fragment() {
 
     fun addUploadRecordToDb(uri: String) {
 
-
-        var user_update_photo: User = User(
-            user.user_id,
-            user.user_name,
-            user.last_name,
-            user.email,
-            user.location,
-            user.telephone,
-            user.type_of_fishing,
-            user.trophies,
-            uri
-        )
-
+        val user_update_photo = User(user.user_id, user.user_name, user.last_name, user.email, user.location, user.telephone, user.type_of_fishing, user.trophies, uri)
         val myUri: Uri = Uri.parse(uri)
-        Picasso.get().load(myUri).into(photoUserImageView)
+        Picasso.get().load(myUri).into(photo_user_image_view)
         loader.isVisible = false
-
         deleteInFirebaseStorageImage()
-
         filepathimage = uri
-        FirebaseDatabase.getInstance().getReference("Users").child(uid)
-            .setValue(user_update_photo)
-
-
+        FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user_update_photo)
         localSaveUser(user_update_photo)
         diactivateView()
         Toast.makeText(context, " AHHAHAHHA EASY", Toast.LENGTH_SHORT).show()
@@ -486,19 +382,13 @@ class ProfileFragment : Fragment() {
 
         if (user.url_photo != "") {
 
-            val imagereference: StorageReference =
-                FirebaseStorage.getInstance().getReferenceFromUrl(user.url_photo)
+            val imagereference: StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(user.url_photo)
             imagereference.delete().addOnSuccessListener {
-
                 Log.d("storage", "complete")
-
             }.addOnFailureListener {
-
                 Log.d("storage", "error")
-
             }
         } else {
-
             Log.d("storage", "empty")
 
 

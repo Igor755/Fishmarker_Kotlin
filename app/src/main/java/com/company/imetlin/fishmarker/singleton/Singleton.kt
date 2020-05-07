@@ -43,7 +43,6 @@ class Singleton {
         private var cardMarkerActivity: CardMarkerFragment? = null
         private var alert_detail: AlertDialog.Builder? = null
 
-
         /////////////////////////////////////////////////ALERT DIALOG
         private var latitude: TextView? = null
         private var longitude: TextView? = null
@@ -56,9 +55,7 @@ class Singleton {
 
 
         fun setContext(context: Context) {
-
             this.context = context
-
         }
 
         fun addMarker(marker: MarkerDetail) {
