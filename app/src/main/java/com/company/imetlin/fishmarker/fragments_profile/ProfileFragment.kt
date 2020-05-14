@@ -264,10 +264,10 @@ class ProfileFragment : Fragment() {
                 } else {
                     val myUri: Uri = Uri.parse(user.url_photo)
                     Picasso.get().load(myUri).into(photo_user_image_view)
+                    filepathimage = user.url_photo
                 }
                 localSaveUser(user)
             }
-
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
             }
@@ -284,11 +284,19 @@ class ProfileFragment : Fragment() {
         val trophies: String = view?.edit_trophies?.text.toString()
         val type_fishing: String = view?.edit_preferred_type_of_fishing?.text.toString()
 
-        if (filepathimage == "") { photo_user_image_view.setImageResource(R.drawable.photo_user) } else {
-            val myUri: Uri = Uri.parse(filepathimage)
+        println(filepathimage)
+
+        if (filepathimage == "")
+        {
+            photo_user_image_view.setImageResource(R.drawable.photo_user)
+        }
+        else
+        {
+            val myUri: Uri = Uri.parse(user.url_photo)
             Picasso.get().load(myUri).into(photo_user_image_view)
         }
-        val user_update = User(user.user_id, name, last_name, email, location, telephone, type_fishing, trophies, filepathimage)
+
+        val user_update = User(uid, name, last_name, email, location, telephone, type_fishing, trophies, filepathimage)
         FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user_update)
         localSaveUser(user_update)
 
@@ -332,9 +340,10 @@ class ProfileFragment : Fragment() {
 
     fun savePictureCloudFirebaseAndDatabase() {
 
-        if (filePath != null) {
+
 
             loader.isVisible = true
+
 
             val storageReference: StorageReference =
                 firebaseStorage.child(randomUUID().toString() + "." + getFileExtension(filePath))
@@ -358,18 +367,15 @@ class ProfileFragment : Fragment() {
                 }.addOnFailureListener {
 
                 }
-        } else {
-            Toast.makeText(context, "Please Upload an Image", Toast.LENGTH_SHORT).show()
-        }
-    }
 
+    }
     fun addUploadRecordToDb(uri: String) {
 
         val user_update_photo = User(user.user_id, user.user_name, user.last_name, user.email, user.location, user.telephone, user.type_of_fishing, user.trophies, uri)
         val myUri: Uri = Uri.parse(uri)
         Picasso.get().load(myUri).into(photo_user_image_view)
         loader.isVisible = false
-        deleteInFirebaseStorageImage()
+       // deleteInFirebaseStorageImage()
         filepathimage = uri
         FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user_update_photo)
         localSaveUser(user_update_photo)

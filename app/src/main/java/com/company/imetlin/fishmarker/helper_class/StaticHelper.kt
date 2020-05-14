@@ -11,13 +11,9 @@ class StaticHelper {
 
 
     companion object {
-
         var filepathimage = ""
-
         @JvmStatic
         var allplace: ArrayList<Place> = ArrayList()
-
-
         fun getValue(): ArrayList<String> {
 
             val allCountry: ArrayList<String> = ArrayList()
