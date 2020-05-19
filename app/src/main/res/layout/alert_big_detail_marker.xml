@@ -1,0 +1,227 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbarThumbVertical="@android:color/transparent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+     <!--<include layout="@layout/toolbar_big_detail_fragment"
+            android:id="@+id/tools"/>-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/photo_user"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/photo_user"/>
+
+        </LinearLayout>
+        <!---BLOCK 1-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/latlng" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp">
+
+                <EditText
+                    android:id="@+id/edit_latitude"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/latitude"
+                    android:inputType="textCapWords"
+                    android:autofillHints="" />
+
+                <EditText
+                    android:id="@+id/edit_longitude"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/longitude"
+                    android:inputType="textCapWords"
+                    android:autofillHints="" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <!---BLOCK 2-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/titlemarker" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp">
+
+                <EditText
+                    android:id="@+id/edit_title_marker"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/titlemarker"
+                    android:autofillHints="" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <!---BLOCK 3-->
+        <LinearLayout
+            android:id="@+id/container_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/date" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp">
+
+                <EditText
+                    android:id="@+id/edit_date"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/date"
+                    android:autofillHints=""/>
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!---BLOCK 4-->
+        <LinearLayout
+            android:id="@+id/container_dept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/Depth" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:paddingLeft="4dp">
+
+                <EditText
+                    android:id="@+id/edit_dept"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/Depth"
+                    android:autofillHints=""/>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <!---BLOCK 5-->
+
+        <LinearLayout
+            android:id="@+id/container_number_of_fish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/Number" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:paddingLeft="4dp">
+
+                <EditText
+                    android:id="@+id/edit_number_of_fish"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/number"
+                    android:autofillHints="" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <!---BLOCK 6-->
+        <LinearLayout
+            android:id="@+id/container_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/Note"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:paddingLeft="4dp">
+
+                <EditText
+                    android:id="@+id/edit_note"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/note"
+                    android:autofillHints=""/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!---BLOCK 7 BUTTONS-->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
+
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="100dp"
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:layout_gravity="end"
+                android:text="@string/ok"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

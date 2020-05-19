@@ -1,5 +1,7 @@
 package com.company.imetlin.fishmarker.modelclass
 
+import java.io.Serializable
+
 data class MarkerDetail(
     var uid: String?,
     var id_marker_key: String?,
@@ -9,7 +11,7 @@ data class MarkerDetail(
     var date: String,
     var depth: Double,
     var amount: Int,
-    var note: String){
+    var note: String) : Serializable{
 
 
     constructor() :

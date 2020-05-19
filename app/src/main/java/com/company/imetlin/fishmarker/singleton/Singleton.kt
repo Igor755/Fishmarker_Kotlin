@@ -1,18 +1,11 @@
 package com.company.imetlin.fishmarker.singleton
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.TextView
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.fragments_marker.CardMarkerFragment
 import com.company.imetlin.fishmarker.modelclass.MarkerDetail
@@ -41,17 +34,6 @@ class Singleton {
         private var markers: ArrayList<Marker>? = null
         private lateinit var context: Context
         private var cardMarkerActivity: CardMarkerFragment? = null
-        private var alert_detail: AlertDialog.Builder? = null
-
-        /////////////////////////////////////////////////ALERT DIALOG
-        private var latitude: TextView? = null
-        private var longitude: TextView? = null
-        private var title_marker: TextView? = null
-        private var date: TextView? = null
-        private var depth: TextView? = null
-        private var amount: TextView? = null
-        private var note: TextView? = null
-        private var title_alert: TextView? = null
 
 
         fun setContext(context: Context) {
@@ -145,50 +127,17 @@ class Singleton {
             })
         }
 
-        @SuppressLint("SetTextI18n")
+       /* @SuppressLint("SetTextI18n")
         fun DetailMarker(detailmarker: Marker) {
 
             for (modelClass in allmarkers) {
                 if (modelClass.latitude == detailmarker.position.latitude && modelClass.longitude == detailmarker.position.longitude) {
 
-                    val li = LayoutInflater.from(context)
-                    val promptsView: View = li.inflate(R.layout.alert_detail_marker, null)
-
-                    alert_detail = AlertDialog.Builder(promptsView.context)
-                    alert_detail!!.setView(promptsView)
-
-                    title_alert = promptsView.findViewById<View>(R.id.title_alert) as TextView
-                    latitude = promptsView.findViewById<View>(R.id.latitude_alert) as TextView
-                    longitude = promptsView.findViewById<View>(R.id.longitude_alert) as TextView
-                    title_marker = promptsView.findViewById<View>(R.id.title) as TextView
-                    date = promptsView.findViewById<View>(R.id.date) as TextView
-                    depth = promptsView.findViewById<View>(R.id.depth) as TextView
-                    amount = promptsView.findViewById<View>(R.id.amount) as TextView
-                    note = promptsView.findViewById<View>(R.id.note) as TextView
-
-                    val tf = Typeface.createFromAsset(context.assets, "alert_font_title.ttf")
-                    title_alert?.typeface = tf
-                    latitude?.text = latitude?.text.toString() + " " + modelClass.latitude
-                    longitude?.text = longitude?.text.toString() + " " + modelClass.longitude
-                    title_marker?.text = title_marker?.text.toString() + " " + modelClass.title
-                    date?.text = date?.text.toString() + " " + modelClass.date
-                    depth?.text = depth?.text.toString() + " " + modelClass.depth
-                    amount?.text = amount?.text.toString() + " " + modelClass.amount
-                    note?.text = note?.text.toString() + " " + modelClass.note
-
-
-                    alert_detail?.setPositiveButton(context.resources.getString(R.string.ok), DialogInterface.OnClickListener { _, _ -> })
-
-                    val alert11: AlertDialog = alert_detail!!.create()
-                    alert11.window.setBackgroundDrawableResource(R.color.orange)
-                    alert11.show()
-                    val buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE)
-
-                    buttonbackground.setTextColor(context.resources.getColor(R.color.colorWhite))
+                     //   MapMarkerFragment().bigDetailMarker(modelClass, context)
                     break
                 }
             }
-        }
+        }*/
 
         fun UpdateMarker(updatemarker: MarkerDetail) {
 

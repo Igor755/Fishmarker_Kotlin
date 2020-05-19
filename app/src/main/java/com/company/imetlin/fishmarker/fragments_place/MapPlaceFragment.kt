@@ -57,7 +57,7 @@ class MapPlaceFragment : Fragment(), OnMapReadyCallback {
             val latitude: Double = point.latitude
             val longitude: Double = point.longitude
             val zoom: Float = googlemap!!.cameraPosition.zoom
-            val intent: Intent = activity!!.intent
+            val intent: Intent = requireActivity().intent
             val nameBigWater: String = intent.getStringExtra("nameBigWater")
 
             val bundle = Bundle()

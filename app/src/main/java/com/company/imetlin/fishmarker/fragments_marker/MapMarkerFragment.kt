@@ -4,21 +4,25 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import com.company.imetlin.fishmarker.R
 import android.view.animation.AnimationUtils
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.gpstracker.GpsTracker
 import com.company.imetlin.fishmarker.singleton.Singleton
 import com.facebook.FacebookSdk.getApplicationContext
@@ -38,6 +42,20 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
 
     private var latitude : Double = 0.0
     private var longitude : Double = 0.0
+
+
+    private var alert_detail: AlertDialog.Builder? = null
+
+    /////////////////////////////////////////////////ALERT DIALOG
+    private var latitude_a: TextView? = null
+    private var longitude_b: TextView? = null
+    private var title_marker: TextView? = null
+    private var date: TextView? = null
+    private var depth: TextView? = null
+    private var amount: TextView? = null
+    private var note: TextView? = null
+    private var title_alert: TextView? = null
+    private var big_detail: ImageButton? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,7 +122,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         val view = inflater.inflate(R.layout.fragment_add_marker_map, container, false)
         val mapFragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        context_fargment = activity!!.baseContext
+        context_fargment = requireActivity().baseContext
         Singleton.setContext(context_fargment)
         return view
     }
@@ -118,7 +136,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         mUiSettings.isMapToolbarEnabled = false
         bottom_sheet.visibility = View.GONE
 
-        val  extras : Bundle = activity!!.intent.extras
+        val  extras : Bundle = requireActivity().intent.extras
         val latitude_place : Double = extras.getDouble("latitude")
         val longitude_place : Double = extras.getDouble("longitude")
         val zoom_place : Float = extras.getFloat("zoom")
@@ -164,7 +182,9 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         )
         bottom_sheet.startAnimation(show)
         bottom_sheet.visibility = View.VISIBLE
-        button_detail.setOnClickListener(View.OnClickListener { Singleton.DetailMarker(marker)
+        button_detail.setOnClickListener(View.OnClickListener
+        {
+            bigDetailMarker(marker)
             hideButtonSheet()
 
         })
@@ -248,7 +268,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
             val longitude: Double? = data?.getDoubleExtra("longitude", 0.0)
             val resource : Resources = context?.resources!!
             val myIconFish : Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                resource.getDrawable(R.drawable.fishmy30_old, context!!.theme)
+                resource.getDrawable(R.drawable.fishmy30_old, requireContext().theme)
             } else {
                 resource.getDrawable(R.drawable.fishmy30_old)            }
             val bitmap_my = (myIconFish as BitmapDrawable).bitmap
@@ -264,5 +284,62 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
             bottom_sheet.visibility = View.GONE
         }
     }
+    fun bigDetailMarker(bigdetailmarker : Marker) {
 
+
+        for (modelClass in Singleton.allmarkers) {
+            if (modelClass.latitude == bigdetailmarker.position.latitude && modelClass.longitude == bigdetailmarker.position.longitude) {
+                val li = LayoutInflater.from(context)
+                val promptsView: View = li.inflate(R.layout.alert_detail_marker, null)
+
+                alert_detail = AlertDialog.Builder(promptsView.context)
+                alert_detail!!.setView(promptsView)
+
+                title_alert = promptsView.findViewById<View>(R.id.title_alert) as TextView
+                latitude_a = promptsView.findViewById<View>(R.id.latitude_alert) as TextView
+                longitude_b = promptsView.findViewById<View>(R.id.longitude_alert) as TextView
+                title_marker = promptsView.findViewById<View>(R.id.title) as TextView
+                date = promptsView.findViewById<View>(R.id.date) as TextView
+                depth = promptsView.findViewById<View>(R.id.depth) as TextView
+                amount = promptsView.findViewById<View>(R.id.amount) as TextView
+                note = promptsView.findViewById<View>(R.id.note) as TextView
+                big_detail = promptsView.findViewById<View>(R.id.big_detail) as ImageButton
+
+                val tf = Typeface.createFromAsset(context?.assets, "alert_font_title.ttf")
+                title_alert?.typeface = tf
+                latitude_a!!.text = latitude_a!!.text.toString() + " " + modelClass.latitude
+                longitude_b!!.text = longitude_b!!.text.toString() + " " + modelClass.longitude
+                title_marker?.text = title_marker?.text.toString() + " " + modelClass.title
+                date?.text = date?.text.toString() + " " + modelClass.date
+                depth?.text = depth?.text.toString() + " " + modelClass.depth
+                amount?.text = amount?.text.toString() + " " + modelClass.amount
+                note?.text = note?.text.toString() + " " + modelClass.note
+
+                alert_detail?.setPositiveButton(
+                    context?.resources?.getString(R.string.ok),
+                    DialogInterface.OnClickListener { _, _ -> })
+                val alert11: AlertDialog = alert_detail!!.create()
+                alert11.window.setBackgroundDrawableResource(R.color.orange)
+                alert11.show()
+                val buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE)
+                buttonbackground.setTextColor(context?.resources?.getColor(R.color.colorWhite)!!)
+
+
+                big_detail?.setOnClickListener {
+                    val fragment: Fragment = BigDetailMarkerFragment()
+                    alert11.cancel()
+
+                    val bundle = Bundle()
+                    bundle.putSerializable("serializedObject",modelClass)
+                    fragment.arguments = bundle
+
+                    activity?.supportFragmentManager
+                        ?.beginTransaction()
+                        ?.replace(R.id.fragment_container_marker, fragment)
+                        ?.commit()
+                }
+                break
+            }
+        }
+    }
 }
