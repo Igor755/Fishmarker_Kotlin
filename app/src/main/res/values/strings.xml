@@ -173,4 +173,8 @@
     <string name="exit_title">You seriosly want exit?</string>
     <string name="exit_text"> Now you exit the application and you will need to login to the new</string>
 
+
+    <string name="owner">Owner</string>
+
+
 </resources>

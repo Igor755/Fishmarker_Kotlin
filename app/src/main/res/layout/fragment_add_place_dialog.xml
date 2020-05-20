@@ -172,7 +172,7 @@
                 android:layout_width="100dp"
                 android:textColor="@color/colorWhite"
                 android:background="@color/colorPrimary"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:textStyle="bold"
                 android:layout_gravity="start"
                 android:text="@string/cancel"/>
@@ -180,7 +180,7 @@
                 android:id="@+id/btnOk"
                 android:layout_width="100dp"
                 android:background="@color/colorPrimary"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
                 android:layout_gravity="end"

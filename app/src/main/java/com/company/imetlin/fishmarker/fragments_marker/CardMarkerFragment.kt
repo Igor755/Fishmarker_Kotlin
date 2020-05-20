@@ -26,8 +26,7 @@ class CardMarkerFragment : DialogFragment() {
 
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
+    override fun onCreateView(inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -41,6 +40,7 @@ class CardMarkerFragment : DialogFragment() {
         val bundle: Bundle? = arguments
         val latitude: Double = bundle?.getDouble("latitude")!!
         val longitude: Double = bundle.getDouble("longitude")
+
         btnDelete.visibility = View.INVISIBLE
 
 
@@ -94,6 +94,7 @@ class CardMarkerFragment : DialogFragment() {
         val bundle: Bundle? = arguments
         val latitude: Double = bundle?.getDouble("latitude")!!
         val longitude: Double = bundle.getDouble("longitude")
+        val idplace: String = bundle.getString("idplace")
 
         edit_latitude.setText(latitude.toString())
         edit_longitude.setText(longitude.toString())
@@ -124,7 +125,7 @@ class CardMarkerFragment : DialogFragment() {
                     dateMarker,
                     dept,
                     amountOfFish,
-                    note
+                    note,idplace
                 )
                 FirebaseDatabase.getInstance().getReference("Marker").child(idMarker)
                     .setValue(newMarker)
@@ -136,14 +137,9 @@ class CardMarkerFragment : DialogFragment() {
                 val intent2 = Intent()
                 intent2.putExtras(bundle)
 
-
                 targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent2)
-
                 Singleton.addMarker(newMarker)
-
-
                 dialog?.dismiss()
-
             }
 
         }
@@ -164,6 +160,7 @@ class CardMarkerFragment : DialogFragment() {
         val depthUpdate = bundle?.getString("7")
         val amountUpdate = bundle?.getString("8")
         val noteUpdate = bundle?.getString("9")
+        val idplaceUpdate = bundle?.getString("10")
 
         edit_latitude.setText(latitudeUpdate)
         edit_longitude.setText(longitudeUpdate)
@@ -187,7 +184,7 @@ class CardMarkerFragment : DialogFragment() {
                 dateUpdate,
                 depthUpdate,
                 amountUpdate,
-                noteUpdate
+                noteUpdate,idplaceUpdate
             )
 
         }
@@ -217,7 +214,7 @@ class CardMarkerFragment : DialogFragment() {
                     title,
                     displayDate,
                     java.lang.Double.valueOf(depth), amountoffish.toInt(),
-                    note
+                    note,idplaceUpdate
                 )
 
                 if (idMarkerUpdate != null) {
@@ -246,7 +243,8 @@ class CardMarkerFragment : DialogFragment() {
         dateUpdate: String?,
         depthUpdate: String?,
         amountUpdate: String?,
-        noteUpdate: String?
+        noteUpdate: String?,
+        idplaceUpdate:String?
     ) {
 
         val alertDialog = AlertDialog.Builder(context)
@@ -269,7 +267,8 @@ class CardMarkerFragment : DialogFragment() {
                 dateUpdate.toString(),
                 depthUpdate!!.toDouble(),
                 Integer.parseInt(amountUpdate),
-                noteUpdate.toString()
+                noteUpdate.toString(),
+                idplaceUpdate
             );
 
             val delmark = FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate.toString())

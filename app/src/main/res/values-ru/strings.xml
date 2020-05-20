@@ -173,5 +173,6 @@
     <string name="exit_title">Вы действительно хотите выйти?</string>
     <string name="exit_text">Сейчас вы выйдите из приложения и вам необходимо будет зайти снова</string>
 
+    <string name="owner">Владелец</string>
 
 </resources>

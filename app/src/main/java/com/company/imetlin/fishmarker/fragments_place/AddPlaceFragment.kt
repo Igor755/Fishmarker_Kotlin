@@ -106,6 +106,7 @@ class AddPlaceFragment : Fragment() {
                 intent.putExtra("latitude", place.latitude!!)
                 intent.putExtra("longitude", place.longitude!!)
                 intent.putExtra("zoom",  place.zoom!!)
+                intent.putExtra("idplace",  place.id)
                 startActivity(intent)
             }
         })

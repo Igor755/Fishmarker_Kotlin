@@ -31,6 +31,58 @@
                 android:src="@drawable/photo_user"/>
 
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/owner" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp">
+
+                <EditText
+                    android:id="@+id/edit_owner"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/owner"
+                    android:autofillHints="" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/name_place" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp">
+
+                <EditText
+                    android:id="@+id/edit_name_place"
+                    style="@style/BigDetailEditText"
+                    android:hint="@string/name_place"
+                    android:autofillHints="" />
+            </LinearLayout>
+        </LinearLayout>
+
+
         <!---BLOCK 1-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,7 +265,7 @@
                 android:id="@+id/btnOk"
                 android:layout_width="100dp"
                 android:background="@color/colorPrimary"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
                 android:layout_gravity="end"

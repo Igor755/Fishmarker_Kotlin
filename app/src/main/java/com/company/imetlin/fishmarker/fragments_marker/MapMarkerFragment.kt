@@ -56,6 +56,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
     private var note: TextView? = null
     private var title_alert: TextView? = null
     private var big_detail: ImageButton? = null
+    private var idplace : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,6 +141,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         val latitude_place : Double = extras.getDouble("latitude")
         val longitude_place : Double = extras.getDouble("longitude")
         val zoom_place : Float = extras.getFloat("zoom")
+        idplace = extras.getString("idplace")
 
         val cameraPosition : CameraPosition? = CameraPosition.Builder()
             .target(LatLng(latitude_place,longitude_place))
@@ -214,6 +216,8 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                         bundle.putString("7", java.lang.String.valueOf(modelClass.depth))
                         bundle.putString("8", java.lang.String.valueOf(modelClass.amount))
                         bundle.putString("9", modelClass.note)
+                        bundle.putString("10", modelClass.idplace)
+
 
                         fragment.arguments = bundle
                         fragment.setTargetFragment(this,1)
@@ -243,6 +247,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
             val bundle  =  Bundle()
             bundle.putDouble("latitude", latitude)
             bundle.putDouble("longitude", longitude)
+            bundle.putString("idplace",idplace)
             fragment.arguments = bundle
 
             fragment.setTargetFragment(this,1)

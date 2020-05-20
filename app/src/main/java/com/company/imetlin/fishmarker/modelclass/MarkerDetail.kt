@@ -11,9 +11,10 @@ data class MarkerDetail(
     var date: String,
     var depth: Double,
     var amount: Int,
-    var note: String) : Serializable{
+    var note: String,
+    var idplace : String?) : Serializable{
 
 
     constructor() :
-            this("", "", 0.0, 0.0, "","", 0.0, 0, "")
+            this("", "", 0.0, 0.0, "","", 0.0, 0, "", "")
 }

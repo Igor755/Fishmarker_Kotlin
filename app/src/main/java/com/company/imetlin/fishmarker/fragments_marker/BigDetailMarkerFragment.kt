@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.modelclass.MarkerDetail
+import com.company.imetlin.fishmarker.modelclass.Place
 import com.company.imetlin.fishmarker.modelclass.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -13,15 +14,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.alert_big_detail_marker.*
-import kotlinx.android.synthetic.main.alert_big_detail_marker.btnOk
-import kotlinx.android.synthetic.main.alert_big_detail_marker.edit_dept
-import kotlinx.android.synthetic.main.alert_big_detail_marker.edit_latitude
-import kotlinx.android.synthetic.main.alert_big_detail_marker.edit_longitude
-import kotlinx.android.synthetic.main.alert_big_detail_marker.edit_note
-import kotlinx.android.synthetic.main.alert_big_detail_marker.edit_number_of_fish
-import kotlinx.android.synthetic.main.alert_big_detail_marker.edit_title_marker
 
 class BigDetailMarkerFragment : Fragment() {
+
+
+    var user = User ()
+    var place = Place ()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -55,18 +54,37 @@ class BigDetailMarkerFragment : Fragment() {
         val markerDetail : MarkerDetail
         markerDetail = bundle?.getSerializable("serializedObject") as MarkerDetail
 
-        val query = FirebaseDatabase.getInstance().reference.child("Users").orderByChild("user_id").equalTo(markerDetail.uid)
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
+        val userquery = FirebaseDatabase.getInstance().reference.child("Users").orderByChild("user_id").equalTo(markerDetail.uid)
+        userquery.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapshot1: DataSnapshot in dataSnapshot.children) {
-                    val user: User = dataSnapshot1.getValue(User::class.java)!!
+                    user = dataSnapshot1.getValue(User::class.java)!!
+                }
+                if (user.url_photo == ""){
+                    photo_user.setImageResource(R.drawable.photo_user)
+                }else{
                     Picasso.get().load(user.url_photo).into(photo_user)
                 }
+                edit_owner.setText(user.user_name + " " + user.last_name)
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Maybe not internet (Failed to read value) :(" , Toast.LENGTH_SHORT).show()
             }
         })
+
+        val placequery = FirebaseDatabase.getInstance().reference.child("Place").orderByChild("id").equalTo(markerDetail.idplace)
+        placequery.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (dataSnapshot1: DataSnapshot in dataSnapshot.children) {
+                    place = dataSnapshot1.getValue(Place::class.java)!!
+                }
+                edit_name_place.setText(place.name)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Maybe not internet (Failed to read value) :(" , Toast.LENGTH_SHORT).show()
+            }
+        })
+
 
         edit_latitude.setText(markerDetail.latitude.toString())
         edit_longitude.setText(markerDetail.longitude.toString())
