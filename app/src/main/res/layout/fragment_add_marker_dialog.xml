@@ -1,16 +1,14 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:scrollbarThumbVertical="@android:color/transparent"
-    android:padding="@dimen/activity_horizontal_margin">
-
-
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:scrollbarThumbVertical="@android:color/transparent">
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -28,14 +26,14 @@
     </RelativeLayout>
 
         <!---BLOCK 1-->
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 style="@style/CategoryStyle"
-                android:text="@string/latlng" />
+                android:text="@string/latlng"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -49,20 +47,20 @@
                     style="@style/EditorFieldStyle"
                     android:hint="@string/latitude"
                     android:inputType="textCapWords"
-                    android:autofillHints="" />
-
+                    android:autofillHints=""/>
                 <EditText
                     android:id="@+id/edit_longitude"
                     style="@style/EditorFieldStyle"
                     android:hint="@string/longitude"
                     android:inputType="textCapWords"
-                    android:autofillHints="" />
+                    android:autofillHints=""/>
             </LinearLayout>
         </LinearLayout>
 
 
 
-        <!---BLOCK 2-->
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,7 +93,6 @@
 
 
 
-        <!---BLOCK 3-->
         <LinearLayout
             android:id="@+id/container_date"
             android:layout_width="match_parent"
@@ -125,8 +122,42 @@
         </LinearLayout>
 
 
-        <!---BLOCK 4-->
+
+
+
         <LinearLayout
+            android:id="@+id/container_bait"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/bait_l" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <com.company.imetlin.fishmarker.customview.spinner.MultiSpinner
+                    android:id="@+id/simpleMultiSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:hintText="Multi Selection"/>
+
+                <com.company.imetlin.fishmarker.customview.spinner.MultiSpinnerSearch
+                    android:id="@+id/searchMultiSpinnerUnlimited"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintText="@string/bait" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
             android:id="@+id/container_dept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,7 +188,6 @@
         </LinearLayout>
 
 
-        <!---BLOCK 5-->
 
         <LinearLayout
             android:id="@+id/container_number_of_fish"
@@ -188,7 +218,6 @@
         </LinearLayout>
 
 
-        <!---BLOCK 6-->
         <LinearLayout
             android:id="@+id/container_note"
             android:layout_width="match_parent"
@@ -215,11 +244,10 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <!---BLOCK 7 BUTTONS-->
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="50dp">
             <Button
                 android:id="@+id/btnCancel"
@@ -246,4 +274,5 @@
     </LinearLayout>
 
 
-</ScrollView>
+
+</androidx.core.widget.NestedScrollView>

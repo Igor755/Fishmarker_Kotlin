@@ -11,4 +11,9 @@
     <dimen name="cardCornerRadius">24dp</dimen>
     <dimen name="layout_margin_start_text">30dp</dimen>
 
+
+    /////////////////Spinner
+    <dimen name="margin_basic_25">0.25dp</dimen>
+    <dimen name="font_size">15sp</dimen>
+
 </resources>

@@ -6,19 +6,21 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.company.imetlin.fishmarker.R
+import com.company.imetlin.fishmarker.customview.spinner.DataSpinner
 import com.company.imetlin.fishmarker.modelclass.MarkerDetail
 import com.company.imetlin.fishmarker.singleton.Singleton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_add_marker_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_latitude
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_longitude
-import kotlinx.android.synthetic.main.fragment_add_marker_dialog.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,11 +28,10 @@ class CardMarkerFragment : DialogFragment() {
 
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
 
-    override fun onCreateView(inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private val TAG: String = "CardMarkerFragment"
+    val listInt = emptyList<Int>()
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_marker_dialog, container, false)
     }
 
@@ -40,7 +41,6 @@ class CardMarkerFragment : DialogFragment() {
         val bundle: Bundle? = arguments
         val latitude: Double = bundle?.getDouble("latitude")!!
         val longitude: Double = bundle.getDouble("longitude")
-
         btnDelete.visibility = View.INVISIBLE
 
 
@@ -84,6 +84,81 @@ class CardMarkerFragment : DialogFragment() {
             val sdf = SimpleDateFormat(myFormat, Locale.US)
             tvDate.text = sdf.format(calendar.time)
 
+        }
+
+
+        val list = Arrays.asList(*resources.getStringArray(R.array.bait_array))
+
+        val list2 = Arrays.asList<Int>(
+            R.drawable.bait_red_worm,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.bait_maggot_white,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.bait_maybug_larva,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.add
+        )
+
+
+
+/*
+        <!--
+        <string-array name="bait_array">
+        <item>Red Worm</item>
+        <item>Black Worm </item>
+        <item>Sea worm</item>
+        <item>Maggot (white)</item>
+        <item>Maggot (red)</item>
+        <item>Bloodworm </item>
+        <item>Peas</item>
+        <item>Corn</item>
+        <item>Maybug larva</item>
+        <item>Caddis larva</item>
+        <item>Cazar</item>
+        <item>Bark beetle</item>
+        <item>Live bait</item>
+        <item>Silicone</item>
+        <item>Spinner</item>
+        <item>Another</item>
+
+        </string-array>-->*/
+
+        val listArray0: MutableList<DataSpinner> = ArrayList<DataSpinner>()
+
+
+
+        for (i in list.indices) {
+            val h = DataSpinner()
+            h.id = (i + 1).toLong()
+            h.name = list[i]
+            h.image = list2[i]
+            h.isSelected = false
+            listArray0.add(h)
+        }
+
+        searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!")
+        searchMultiSpinnerUnlimited.setSearchHint("Find Data")
+
+        searchMultiSpinnerUnlimited.setItems(listArray0, -1
+        ) { items ->
+            for (i in items.indices) {
+                if (items[i].isSelected) {
+                    Log.i(
+                        CardMarkerFragment().TAG,
+                        i.toString() + " : " + items[i].name + " : " + items[i]
+                            .isSelected
+                    )
+                }
+            }
         }
 
     }
@@ -269,7 +344,7 @@ class CardMarkerFragment : DialogFragment() {
                 Integer.parseInt(amountUpdate),
                 noteUpdate.toString(),
                 idplaceUpdate
-            );
+            )
 
             val delmark = FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate.toString())
             delmark.removeValue()

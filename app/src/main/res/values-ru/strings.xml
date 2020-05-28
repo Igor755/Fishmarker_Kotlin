@@ -172,7 +172,32 @@
     ///////////////exit app
     <string name="exit_title">Вы действительно хотите выйти?</string>
     <string name="exit_text">Сейчас вы выйдите из приложения и вам необходимо будет зайти снова</string>
-
     <string name="owner">Владелец</string>
+
+
+    //////////////Spinner
+
+    <string-array name="bait_array">
+        <item>Красный червь</item>
+        <item>Черный червь</item>
+        <item>Морской червь</item>
+        <item>Опарыш (белый)</item>
+        <item>Опарыш (красный)</item>
+        <item>Мотыль</item>
+        <item>Горох</item>
+        <item>Кукуруза</item>
+        <item>Личинка майского жука</item>
+        <item>Личинка ручейника</item>
+        <item>Казара</item>
+        <item>Короед</item>
+        <item>Живец</item>
+        <item>Силикон</item>
+        <item>Блесна</item>
+    </string-array>
+
+    <string name="bait">наживка</string>
+    <string name="bait_l">Наживка</string>
+    <string name="not_found">Не найдено!</string>
+    <string name="type_to_search">Поиск</string>
 
 </resources>

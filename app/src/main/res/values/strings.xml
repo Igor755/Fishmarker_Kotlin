@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">FishMarker</string>
 
     //////////////////////////////////REGISTRATION
@@ -172,9 +172,59 @@
     ///////////////exit app
     <string name="exit_title">You seriosly want exit?</string>
     <string name="exit_text"> Now you exit the application and you will need to login to the new</string>
-
-
     <string name="owner">Owner</string>
+
+    //////////////Spinner
+
+    <string-array name="bait_array" tools:ignore="InconsistentArrays">
+        <item>Красный червь</item>
+        <item>Черный червь</item>
+        <item>Морской червь</item>
+        <item>Опарыш (белый)</item>
+        <item>Опарыш (красный)</item>
+        <item>Мотыль</item>
+        <item>Горох</item>
+        <item>Кукуруза</item>
+        <item>Личинка майского жука</item>
+        <item>Личинка ручейника</item>
+        <item>Казара</item>
+        <item>Короед</item>
+        <item>Живец</item>
+        <item>Силикон</item>
+        <item>Блесна</item>
+        <item>Другое</item>
+    </string-array>
+
+<!--
+    <string-array name="bait_array">
+        <item>Red Worm</item>
+        <item>Black Worm </item>
+        <item>Sea worm</item>
+        <item>Maggot (white)</item>
+        <item>Maggot (red)</item>
+        <item>Bloodworm </item>
+        <item>Peas</item>
+        <item>Corn</item>
+        <item>Maybug larva</item>
+        <item>Caddis larva</item>
+        <item>Cazar</item>
+        <item>Bark beetle</item>
+        <item>Live bait</item>
+        <item>Silicone</item>
+        <item>Spinner</item>
+        <item>Another</item>
+
+    </string-array>-->
+
+
+    <string name="bait_l">Bait</string>
+    <string name="bait">bait</string>
+    <string name="not_found">Not Found!</string>
+    <string name="type_to_search">Type to Search</string>
+
+
+
+
 
 
 </resources>

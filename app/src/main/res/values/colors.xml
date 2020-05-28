@@ -10,4 +10,8 @@
         <color name="colorGreen">#00CC00</color>
         <color name="colorYew">#FFFF00</color>
         <color name="orange">#FF5600</color>
+        <color name="list_even">#AAAAAA</color>
+        <color name="list_odd">#E1E2E2</color>
+        <color name="list_selected">#455FB6</color>
+        <color name="stroke_border">#D7D7D7</color>
 </resources>
