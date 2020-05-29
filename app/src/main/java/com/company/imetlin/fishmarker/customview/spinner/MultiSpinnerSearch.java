@@ -353,11 +353,10 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
                 convertView.setBackgroundColor(ContextCompat.getColor(getContext(), background));
             }
             // holder.imageView.setTag(holder);
-
             return convertView;
         }
 
-        
+
         @SuppressLint("DefaultLocale")
         @Override
         public Filter getFilter() {

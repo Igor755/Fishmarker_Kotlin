@@ -75,7 +75,7 @@ class CardMarkerFragment : DialogFragment() {
             datePickerDialog.show()
 
         }
-        dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, day ->
+        dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
 
 
             calendar.set(Calendar.YEAR, year)
@@ -138,12 +138,7 @@ class CardMarkerFragment : DialogFragment() {
         ) { items ->
             for (i in items.indices) {
                 if (items[i].isSelected) {
-                    Log.i(
-                        CardMarkerFragment().TAG,
-                        i.toString() + " : " + items[i].name + " : " + items[i]
-                            .isSelected
-                    )
-                }
+                    Log.i(CardMarkerFragment().TAG, i.toString() + " : " + items[i].name + " : " + items[i].isSelected) }
             }
         }
 
