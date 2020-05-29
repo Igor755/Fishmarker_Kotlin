@@ -290,7 +290,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-//            //Log.i(TAG, "getView() enter");
+//          //Log.i(TAG, "getView() enter");
             ViewHolder holder;
 
             if (convertView == null) {
@@ -310,17 +310,15 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
                 convertView.setBackgroundColor(ContextCompat.getColor(getContext(), backgroundColor));
             }
 
-
             final DataSpinner data = arrayList.get(position);
-
             holder.textView.setText(data.getName());
-
             Glide.with(getContext()).load(data.getImage()).dontTransform().into(holder.imageView);
 
             //Picasso.get().load(data.getImage()).into(holder.imageView);
             //holder.imageView.set
             holder.textView.setTypeface(null, Typeface.NORMAL);
             //holder.imageView.setChecked(data.isSelected());
+
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -350,7 +348,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
                 convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.list_selected));
             } else {
                 holder.textView.setTypeface(null, Typeface.NORMAL);
-                holder.textView.setTextColor(Color.GRAY);
+                holder.textView.setTextColor(Color.BLACK);
                 holder.imageView.setBackgroundColor(Color.TRANSPARENT);
                 convertView.setBackgroundColor(ContextCompat.getColor(getContext(), background));
             }
@@ -359,15 +357,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
             return convertView;
         }
 
-
-      /*  public Integer toPx(Integer b) {
-
-             b = Integer.parseInt(String.valueOf(getContext().getResources().getDisplayMetrics().density));
-            return  b;
-
-        }*/
-
-
+        
         @SuppressLint("DefaultLocale")
         @Override
         public Filter getFilter() {
@@ -385,8 +375,6 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
                     List<DataSpinner> FilteredArrList = new ArrayList<>();
-
-
                     /*
                      *
                      *  If constraint(CharSequence that is received) is null returns the mOriginalValues(Original) values
@@ -415,7 +403,6 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
                 }
             };
         }
-
         private class ViewHolder {
             TextView textView;
             ImageView imageView;

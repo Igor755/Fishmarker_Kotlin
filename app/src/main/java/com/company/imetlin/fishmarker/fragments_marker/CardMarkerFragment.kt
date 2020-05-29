@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.graphics.toColorInt
 import androidx.fragment.app.DialogFragment
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.customview.spinner.DataSpinner
@@ -87,9 +89,9 @@ class CardMarkerFragment : DialogFragment() {
         }
 
 
-        val list = Arrays.asList(*resources.getStringArray(R.array.bait_array))
+        val list = listOf(*resources.getStringArray(R.array.bait_array))
 
-        val list2 = Arrays.asList<Int>(
+        val list2 = listOf<Int>(
             R.drawable.bait_red_worm,
             R.drawable.bait_black_worm,
             R.drawable.bait_sea_worm,
@@ -130,6 +132,7 @@ class CardMarkerFragment : DialogFragment() {
 
         searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!")
         searchMultiSpinnerUnlimited.setSearchHint("Find Data")
+       //searchMultiSpinnerUnlimited.hintText.toColorInt(0xff0000ff)
 
         searchMultiSpinnerUnlimited.setItems(listArray0, -1
         ) { items ->
@@ -174,19 +177,9 @@ class CardMarkerFragment : DialogFragment() {
                 val amountOfFish: Int = edit_number_of_fish.text.toString().toInt()
                 val note: String = edit_note.text.toString()
 
-                val newMarker = MarkerDetail(
-                    idUser,
-                    idMarker,
-                    latitude,
-                    longitude,
-                    titleMarker,
-                    dateMarker,
-                    dept,
-                    amountOfFish,
-                    note,idplace
-                )
-                FirebaseDatabase.getInstance().getReference("Marker").child(idMarker)
-                    .setValue(newMarker)
+                val newMarker = MarkerDetail(idUser, idMarker, latitude, longitude, titleMarker, dateMarker, dept, amountOfFish, note,idplace)
+
+                FirebaseDatabase.getInstance().getReference("Marker").child(idMarker).setValue(newMarker)
                 val bundle = Bundle()
                 bundle.putString("idMarker", idMarker)
                 bundle.putString("titleMarker", titleMarker)
