@@ -188,10 +188,14 @@
         <item>Личинка майского жука</item>
         <item>Личинка ручейника</item>
         <item>Казара</item>
+        <item>Муха</item>
         <item>Короед</item>
         <item>Живец</item>
         <item>Силикон</item>
         <item>Блесна</item>
+        <item>Вертушка</item>
+        <item>Воблер</item>
+        <item>Мушка</item>
         <item>Другое</item>
     </string-array>
 
@@ -208,10 +212,14 @@
         <item>Maybug larva</item>
         <item>Caddis larva</item>
         <item>Cazar</item>
+        <item>Fly</item>
         <item>Bark beetle</item>
         <item>Live bait</item>
         <item>Silicone</item>
         <item>Spinner</item>
+        <item>Pinwheel</item>
+        <item>Wobbler</item>
+        <item>Muzzle Sight</item>
         <item>Another</item>
 
     </string-array>-->

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.company.imetlin.fishmarker.R;
 import com.squareup.picasso.Picasso;
 
@@ -256,6 +258,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
     public interface LimitExceedListener {
         void onLimitListener(DataSpinner data);
     }
+
     //Adapter Class
     public class MyAdapter extends BaseAdapter implements Filterable {
 
@@ -284,6 +287,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
             return position;
         }
 
+
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
 //            //Log.i(TAG, "getView() enter");
@@ -310,7 +314,10 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
             final DataSpinner data = arrayList.get(position);
 
             holder.textView.setText(data.getName());
-            Picasso.get().load(data.getImage()).into(holder.imageView);
+
+            Glide.with(getContext()).load(data.getImage()).dontTransform().into(holder.imageView);
+
+            //Picasso.get().load(data.getImage()).into(holder.imageView);
             //holder.imageView.set
             holder.textView.setTypeface(null, Typeface.NORMAL);
             //holder.imageView.setChecked(data.isSelected());
@@ -351,6 +358,15 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
 
             return convertView;
         }
+
+
+      /*  public Integer toPx(Integer b) {
+
+             b = Integer.parseInt(String.valueOf(getContext().getResources().getDisplayMetrics().density));
+            return  b;
+
+        }*/
+
 
         @SuppressLint("DefaultLocale")
         @Override

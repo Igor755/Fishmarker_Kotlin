@@ -91,46 +91,29 @@ class CardMarkerFragment : DialogFragment() {
 
         val list2 = Arrays.asList<Int>(
             R.drawable.bait_red_worm,
-            R.drawable.add,
-            R.drawable.add,
+            R.drawable.bait_black_worm,
+            R.drawable.bait_sea_worm,
             R.drawable.bait_maggot_white,
-            R.drawable.add,
-            R.drawable.add,
-            R.drawable.add,
-            R.drawable.add,
+            R.drawable.bait_maggot_red,
+            R.drawable.bait_bloodworm,
+            R.drawable.bait_peas,
+            R.drawable.bait_corn,
             R.drawable.bait_maybug_larva,
-            R.drawable.add,
-            R.drawable.add,
-            R.drawable.add,
-            R.drawable.add,
-            R.drawable.add,
-            R.drawable.add,
-            R.drawable.add
+            R.drawable.bait_caddis_larva,
+            R.drawable.bait_cazar,
+            R.drawable.bait_fly,
+            R.drawable.bait_bark_beetle,
+            R.drawable.bait_live,
+            R.drawable.bait_silicone,
+            R.drawable.bait_spinner,
+            R.drawable.bait_pinwheel,
+            R.drawable.bait_wobbler,
+            R.drawable.bait_muzzle_sight,
+            R.drawable.bait_another
         )
 
 
 
-/*
-        <!--
-        <string-array name="bait_array">
-        <item>Red Worm</item>
-        <item>Black Worm </item>
-        <item>Sea worm</item>
-        <item>Maggot (white)</item>
-        <item>Maggot (red)</item>
-        <item>Bloodworm </item>
-        <item>Peas</item>
-        <item>Corn</item>
-        <item>Maybug larva</item>
-        <item>Caddis larva</item>
-        <item>Cazar</item>
-        <item>Bark beetle</item>
-        <item>Live bait</item>
-        <item>Silicone</item>
-        <item>Spinner</item>
-        <item>Another</item>
-
-        </string-array>-->*/
 
         val listArray0: MutableList<DataSpinner> = ArrayList<DataSpinner>()
 

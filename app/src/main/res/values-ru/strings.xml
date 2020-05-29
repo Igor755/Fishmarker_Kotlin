@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">FishMarker</string>
 
     //////////////////////////////////REGISTRATION
@@ -177,7 +177,7 @@
 
     //////////////Spinner
 
-    <string-array name="bait_array">
+    <string-array name="bait_array" tools:ignore="InconsistentArrays">
         <item>Красный червь</item>
         <item>Черный червь</item>
         <item>Морской червь</item>
@@ -189,10 +189,14 @@
         <item>Личинка майского жука</item>
         <item>Личинка ручейника</item>
         <item>Казара</item>
+        <item>Муха</item>
         <item>Короед</item>
         <item>Живец</item>
         <item>Силикон</item>
         <item>Блесна</item>
+        <item>Вертушка</item>
+        <item>Воблер</item>
+        <item>Другое</item>
     </string-array>
 
     <string name="bait">наживка</string>
