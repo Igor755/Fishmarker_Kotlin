@@ -190,7 +190,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
         /*
         Added Select all Dialog Button.
          */
-        builder.setNeutralButton(android.R.string.selectAll, new DialogInterface.OnClickListener() {
+       /* builder.setNeutralButton(android.R.string.selectAll, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 adapter.arrayList = adapter.mOriginalValues;
@@ -202,7 +202,15 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
 
 
             }
-        });
+        });*/
+
+       builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+           @Override
+           public void onClick(DialogInterface dialog, int i) {
+               dialog.cancel();
+
+           }
+       });
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 

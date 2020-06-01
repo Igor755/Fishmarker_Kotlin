@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_add_marker_map.*
+import java.io.Serializable
 
 
 class MapMarkerFragment : Fragment() , OnMapReadyCallback {
@@ -213,10 +214,11 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                         bundle.putString("4", java.lang.String.valueOf(modelClass.longitude))
                         bundle.putString("5", modelClass.title)
                         bundle.putString("6", modelClass.date)
-                        bundle.putString("7", java.lang.String.valueOf(modelClass.depth))
-                        bundle.putString("8", java.lang.String.valueOf(modelClass.amount))
-                        bundle.putString("9", modelClass.note)
-                        bundle.putString("10", modelClass.idplace)
+                        bundle.putSerializable("7",modelClass.idBait as Serializable)
+                        bundle.putString("8", java.lang.String.valueOf(modelClass.depth))
+                        bundle.putString("9", java.lang.String.valueOf(modelClass.amount))
+                        bundle.putString("10", modelClass.note)
+                        bundle.putString("11", modelClass.idplace)
 
 
                         fragment.arguments = bundle

@@ -1,5 +1,6 @@
 package com.company.imetlin.fishmarker.modelclass
 
+import com.company.imetlin.fishmarker.customview.spinner.DataSpinner
 import java.io.Serializable
 
 data class MarkerDetail(
@@ -9,12 +10,15 @@ data class MarkerDetail(
     var longitude: Double,
     var title: String,
     var date: String,
+    var idBait: MutableList<DataSpinner>?,
     var depth: Double,
     var amount: Int,
     var note: String,
-    var idplace : String?) : Serializable{
+    var idplace: String?) : Serializable{
 
 
     constructor() :
-            this("", "", 0.0, 0.0, "","", 0.0, 0, "", "")
+            this("", "", 0.0, 0.0, "","", null,0.0, 0, "", "")
+
+
 }

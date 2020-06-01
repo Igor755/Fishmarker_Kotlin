@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.graphics.toColorInt
+import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.customview.spinner.DataSpinner
@@ -23,8 +24,10 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_marker_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_latitude
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_longitude
+import org.xml.sax.DTDHandler
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CardMarkerFragment : DialogFragment() {
 
@@ -134,13 +137,14 @@ class CardMarkerFragment : DialogFragment() {
         searchMultiSpinnerUnlimited.setSearchHint("Find Data")
        //searchMultiSpinnerUnlimited.hintText.toColorInt(0xff0000ff)
 
-        searchMultiSpinnerUnlimited.setItems(listArray0, -1
-        ) { items ->
+        searchMultiSpinnerUnlimited.setItems(listArray0, -1) { items ->
             for (i in items.indices) {
                 if (items[i].isSelected) {
                     Log.i(CardMarkerFragment().TAG, i.toString() + " : " + items[i].name + " : " + items[i].isSelected) }
             }
         }
+
+
 
     }
 
@@ -168,11 +172,12 @@ class CardMarkerFragment : DialogFragment() {
                 val longitude: Double = edit_longitude.text.toString().toDouble()
                 val titleMarker: String = edit_title_marker.text.toString()
                 val dateMarker: String = tvDate.text.toString()
+                val bait : MutableList<DataSpinner>? = searchMultiSpinnerUnlimited.selectedItems
                 val dept: Double = edit_dept.text.toString().toDouble()
                 val amountOfFish: Int = edit_number_of_fish.text.toString().toInt()
                 val note: String = edit_note.text.toString()
 
-                val newMarker = MarkerDetail(idUser, idMarker, latitude, longitude, titleMarker, dateMarker, dept, amountOfFish, note,idplace)
+                val newMarker = MarkerDetail(idUser, idMarker, latitude, longitude, titleMarker, dateMarker, bait, dept, amountOfFish, note,idplace)
 
                 FirebaseDatabase.getInstance().getReference("Marker").child(idMarker).setValue(newMarker)
                 val bundle = Bundle()
@@ -203,15 +208,31 @@ class CardMarkerFragment : DialogFragment() {
         val longitudeUpdate = bundle?.getString("4")
         val titleUpdate = bundle?.getString("5")
         val dateUpdate = bundle?.getString("6")
-        val depthUpdate = bundle?.getString("7")
-        val amountUpdate = bundle?.getString("8")
-        val noteUpdate = bundle?.getString("9")
-        val idplaceUpdate = bundle?.getString("10")
+        val idbait = arguments?.getSerializable("7") as MutableList<DataSpinner>
+        val depthUpdate = bundle?.getString("8")
+        val amountUpdate = bundle?.getString("9")
+        val noteUpdate = bundle?.getString("10")
+        val idplaceUpdate = bundle?.getString("11")
 
         edit_latitude.setText(latitudeUpdate)
         edit_longitude.setText(longitudeUpdate)
         edit_title_marker.setText(titleUpdate)
         tvDate.text = dateUpdate
+
+            //searchMultiSpinnerUnlimited.selectedItems
+
+
+            //idbait   = searchMultiSpinnerUnlimited.onItemSelectedListener.onItemSelected()
+
+
+        searchMultiSpinnerUnlimited.setItems(idbait,-1){ items ->
+            for (i in items.indices) {
+                if (items[i].isSelected) {
+                    Log.i(CardMarkerFragment().TAG, i.toString() + " : " + items[i].name + " : " + items[i].isSelected) }
+            }
+        }
+
+
         edit_dept.setText(depthUpdate)
         edit_number_of_fish.setText(amountUpdate)
         edit_note.setText(noteUpdate)
@@ -228,6 +249,7 @@ class CardMarkerFragment : DialogFragment() {
                 longitudeUpdate,
                 titleUpdate,
                 dateUpdate,
+                idbait,
                 depthUpdate,
                 amountUpdate,
                 noteUpdate,idplaceUpdate
@@ -248,6 +270,7 @@ class CardMarkerFragment : DialogFragment() {
                 val longitude: String = edit_longitude.text.toString()
                 val title: String = edit_title_marker.text.toString()
                 val displayDate: String = tvDate.text.toString()
+                val bait : MutableList<DataSpinner> = searchMultiSpinnerUnlimited.selectedItems
                 val depth: String = edit_dept.text.toString()
                 val amountoffish: String = edit_number_of_fish.text.toString()
                 val note: String = edit_note.text.toString()
@@ -259,6 +282,7 @@ class CardMarkerFragment : DialogFragment() {
                     java.lang.Double.valueOf(longitude),
                     title,
                     displayDate,
+                    bait,
                     java.lang.Double.valueOf(depth), amountoffish.toInt(),
                     note,idplaceUpdate
                 )
@@ -287,6 +311,7 @@ class CardMarkerFragment : DialogFragment() {
         longitudeUpdate: String?,
         titleUpdate: String?,
         dateUpdate: String?,
+        idBait : MutableList<DataSpinner>,
         depthUpdate: String?,
         amountUpdate: String?,
         noteUpdate: String?,
@@ -311,6 +336,7 @@ class CardMarkerFragment : DialogFragment() {
                 longitudeUpdate!!.toDouble(),
                 titleUpdate.toString(),
                 dateUpdate.toString(),
+                idBait,
                 depthUpdate!!.toDouble(),
                 Integer.parseInt(amountUpdate),
                 noteUpdate.toString(),
