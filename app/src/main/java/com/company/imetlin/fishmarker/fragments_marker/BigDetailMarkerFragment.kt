@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.company.imetlin.fishmarker.R
+import com.company.imetlin.fishmarker.adapter.AdapterBait
 import com.company.imetlin.fishmarker.modelclass.MarkerDetail
 import com.company.imetlin.fishmarker.modelclass.Place
 import com.company.imetlin.fishmarker.modelclass.User
@@ -93,6 +95,10 @@ class BigDetailMarkerFragment : Fragment() {
         edit_dept.setText(markerDetail.depth.toString())
         edit_number_of_fish.setText(markerDetail.amount.toString())
         edit_note.setText(markerDetail.note)
+
+        val adapterBait = markerDetail.idBait?.let { AdapterBait(it) }
+        bait_recycler?.layoutManager = LinearLayoutManager(context)
+        bait_recycler?.adapter = adapterBait
 
 
         btnOk.setOnClickListener {

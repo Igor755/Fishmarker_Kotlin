@@ -175,6 +175,72 @@
         </LinearLayout>
 
 
+
+
+        <!---BLOCK BAIT-->
+        <LinearLayout
+            android:id="@+id/container_bait"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/bait_l" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bait_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!---BLOCK 4-->
         <LinearLayout
             android:id="@+id/container_dept"

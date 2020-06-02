@@ -14,7 +14,7 @@ import com.company.imetlin.fishmarker.modelclass.BigWater
 import com.facebook.FacebookSdk.getApplicationContext
 
 
-class AdapterPlaceBigWater(context: Context) :
+class AdapterBigWater(context: Context) :
     ArrayAdapter<BigWater>(context, 0, BigWater.values()) {
 
     var layoutInflater: LayoutInflater? = null

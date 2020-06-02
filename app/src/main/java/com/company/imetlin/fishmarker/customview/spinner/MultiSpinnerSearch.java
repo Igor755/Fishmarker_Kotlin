@@ -249,9 +249,10 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
         setAdapter(adapterSpinner);
 
         if (position != -1) {
+
             items.get(position).setSelected(true);
-            //listener.onItemsSelected(items);
             onCancel(null);
+
         }
     }
 
