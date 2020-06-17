@@ -1,6 +1,5 @@
 package com.company.imetlin.fishmarker.adapter
 
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView

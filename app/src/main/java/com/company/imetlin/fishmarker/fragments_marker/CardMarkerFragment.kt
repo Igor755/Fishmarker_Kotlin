@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -12,8 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.graphics.toColorInt
-import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.customview.spinner.DataSpinner
@@ -24,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_marker_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_latitude
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_longitude
-import org.xml.sax.DTDHandler
+import kotlinx.android.synthetic.main.spinner_alert_dialog_listview_search.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -92,57 +89,7 @@ class CardMarkerFragment : DialogFragment() {
         }
 
 
-        val list = listOf(*resources.getStringArray(R.array.bait_array))
-
-        val list2 = listOf<Int>(
-            R.drawable.bait_red_worm,
-            R.drawable.bait_black_worm,
-            R.drawable.bait_sea_worm,
-            R.drawable.bait_maggot_white,
-            R.drawable.bait_maggot_red,
-            R.drawable.bait_bloodworm,
-            R.drawable.bait_peas,
-            R.drawable.bait_corn,
-            R.drawable.bait_maybug_larva,
-            R.drawable.bait_caddis_larva,
-            R.drawable.bait_cazar,
-            R.drawable.bait_fly,
-            R.drawable.bait_bark_beetle,
-            R.drawable.bait_live,
-            R.drawable.bait_silicone,
-            R.drawable.bait_spinner,
-            R.drawable.bait_pinwheel,
-            R.drawable.bait_wobbler,
-            R.drawable.bait_muzzle_sight,
-            R.drawable.bait_another
-        )
-
-
-
-
-        val listArray0: MutableList<DataSpinner> = ArrayList<DataSpinner>()
-
-
-
-        for (i in list.indices) {
-            val h = DataSpinner()
-            h.id = (i + 1).toLong()
-            h.name = list[i]
-            h.image = list2[i]
-            h.isSelected = false
-            listArray0.add(h)
-        }
-
-        searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!")
-        searchMultiSpinnerUnlimited.setSearchHint("Find Data")
-       //searchMultiSpinnerUnlimited.hintText.toColorInt(0xff0000ff)
-
-        searchMultiSpinnerUnlimited.setItems(listArray0, -1) { items ->
-            for (i in items.indices) {
-                if (items[i].isSelected) {
-                    Log.i(CardMarkerFragment().TAG, i.toString() + " : " + items[i].name + " : " + items[i].isSelected) }
-            }
-        }
+        spinerFillUp()
 
 
 
@@ -208,7 +155,7 @@ class CardMarkerFragment : DialogFragment() {
         val longitudeUpdate = bundle?.getString("4")
         val titleUpdate = bundle?.getString("5")
         val dateUpdate = bundle?.getString("6")
-        val idbait = arguments?.getSerializable("7") as MutableList<DataSpinner>
+        var idbait = arguments?.getSerializable("7") as MutableList<DataSpinner>
         val depthUpdate = bundle?.getString("8")
         val amountUpdate = bundle?.getString("9")
         val noteUpdate = bundle?.getString("10")
@@ -219,19 +166,13 @@ class CardMarkerFragment : DialogFragment() {
         edit_title_marker.setText(titleUpdate)
         tvDate.text = dateUpdate
 
-            //searchMultiSpinnerUnlimited.selectedItems
 
-
-            //idbait   = searchMultiSpinnerUnlimited.onItemSelectedListener.onItemSelected()
-
-
-        searchMultiSpinnerUnlimited.setItems(idbait,-1){ items ->
+        searchMultiSpinnerUnlimited.setItems(idbait, -1) { items ->
             for (i in items.indices) {
                 if (items[i].isSelected) {
                     Log.i(CardMarkerFragment().TAG, i.toString() + " : " + items[i].name + " : " + items[i].isSelected) }
             }
         }
-
 
         edit_dept.setText(depthUpdate)
         edit_number_of_fish.setText(amountUpdate)
@@ -252,51 +193,73 @@ class CardMarkerFragment : DialogFragment() {
                 idbait,
                 depthUpdate,
                 amountUpdate,
-                noteUpdate,idplaceUpdate
+                noteUpdate,
+                idplaceUpdate
             )
 
         }
 
 
         btnOk.setOnClickListener {
-
             if (isEmpty()) {
-
                 Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show()
-
             } else {
-
                 val latitude: String = edit_latitude.text.toString()
                 val longitude: String = edit_longitude.text.toString()
                 val title: String = edit_title_marker.text.toString()
                 val displayDate: String = tvDate.text.toString()
-                val bait : MutableList<DataSpinner> = searchMultiSpinnerUnlimited.selectedItems
+                val idbaite  = searchMultiSpinnerUnlimited.selectedItems
                 val depth: String = edit_dept.text.toString()
                 val amountoffish: String = edit_number_of_fish.text.toString()
                 val note: String = edit_note.text.toString()
 
-                val markerInformation = MarkerDetail(
-                    uidUpdate,
-                    idMarkerUpdate,
-                    java.lang.Double.valueOf(latitude),
-                    java.lang.Double.valueOf(longitude),
-                    title,
-                    displayDate,
-                    bait,
-                    java.lang.Double.valueOf(depth), amountoffish.toInt(),
-                    note,idplaceUpdate
-                )
 
-                if (idMarkerUpdate != null) {
-                    FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate)
-                        .setValue(markerInformation)
+                if (idbaite.size == 0){
+                    val markerInformation = MarkerDetail(
+                        uidUpdate,
+                        idMarkerUpdate,
+                        java.lang.Double.valueOf(latitude),
+                        java.lang.Double.valueOf(longitude),
+                        title,
+                        displayDate,
+                        idbait,
+                        java.lang.Double.valueOf(depth),
+                        amountoffish.toInt(),
+                        note,
+                        idplaceUpdate
+                    )
+
+                    if (idMarkerUpdate != null) {
+                        FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate)
+                            .setValue(markerInformation)
+                    }
+                    Toast.makeText(context, "update success", Toast.LENGTH_SHORT).show()
+                    Singleton.UpdateMarker(markerInformation)
+                    dialog?.dismiss()
+
+                }else{
+                    val markerInformation = MarkerDetail(
+                        uidUpdate,
+                        idMarkerUpdate,
+                        java.lang.Double.valueOf(latitude),
+                        java.lang.Double.valueOf(longitude),
+                        title,
+                        displayDate,
+                        idbaite,
+                        java.lang.Double.valueOf(depth),
+                        amountoffish.toInt(),
+                        note,
+                        idplaceUpdate
+                    )
+
+                    if (idMarkerUpdate != null) {
+                        FirebaseDatabase.getInstance().getReference("Marker").child(idMarkerUpdate)
+                            .setValue(markerInformation)
+                    }
+                    Toast.makeText(context, "update success", Toast.LENGTH_SHORT).show()
+                    Singleton.UpdateMarker(markerInformation)
+                    dialog?.dismiss()
                 }
-
-
-                Toast.makeText(context, "update success", Toast.LENGTH_SHORT).show()
-                Singleton.UpdateMarker(markerInformation)
-
-                dialog?.dismiss()
 
             }
 
@@ -362,12 +325,69 @@ class CardMarkerFragment : DialogFragment() {
 
     fun isEmpty(): Boolean {
 
+        println(searchMultiSpinnerUnlimited.adapter.isEmpty)
+        println(searchMultiSpinnerUnlimited.adapter.isEmpty)
+
+        println(searchMultiSpinnerUnlimited.adapter.count)
+        println(searchMultiSpinnerUnlimited.adapter.count)
+
+        searchMultiSpinnerUnlimited.adapter
+
         return TextUtils.isEmpty(edit_latitude.text) ||
                 TextUtils.isEmpty(edit_longitude.text) ||
                 TextUtils.isEmpty(edit_title_marker.text) ||
                 TextUtils.isEmpty(tvDate.text) ||
+               // searchMultiSpinnerUnlimited.adapter.isEmpty ||
                 TextUtils.isEmpty(edit_dept.text) ||
                 TextUtils.isEmpty(edit_number_of_fish.text) ||
                 TextUtils.isEmpty(edit_note.text)
+    }
+
+    fun spinerFillUp(){
+
+        val list = listOf(*resources.getStringArray(R.array.bait_array))
+
+        val list2 = listOf<Int>(
+            R.drawable.bait_red_worm,
+            R.drawable.bait_black_worm,
+            R.drawable.bait_sea_worm,
+            R.drawable.bait_maggot_white,
+            R.drawable.bait_maggot_red,
+            R.drawable.bait_bloodworm,
+            R.drawable.bait_peas,
+            R.drawable.bait_corn,
+            R.drawable.bait_maybug_larva,
+            R.drawable.bait_caddis_larva,
+            R.drawable.bait_cazar,
+            R.drawable.bait_fly,
+            R.drawable.bait_bark_beetle,
+            R.drawable.bait_live,
+            R.drawable.bait_silicone,
+            R.drawable.bait_spinner,
+            R.drawable.bait_pinwheel,
+            R.drawable.bait_wobbler,
+            R.drawable.bait_muzzle_sight,
+            R.drawable.bait_another
+        )
+
+        val listArray0: MutableList<DataSpinner> = ArrayList<DataSpinner>()
+        for (i in list.indices) {
+            val h = DataSpinner()
+            h.id = (i + 1).toLong()
+            h.name = list[i]
+            h.image = list2[i]
+            h.isSelected = false
+            listArray0.add(h)
+        }
+
+        searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!")
+        searchMultiSpinnerUnlimited.setSearchHint("Find Data")
+
+        searchMultiSpinnerUnlimited.setItems(listArray0, -1) { items ->
+            for (i in items.indices) {
+                if (items[i].isSelected) {
+                    Log.i(CardMarkerFragment().TAG, i.toString() + " : " + items[i].name + " : " + items[i].isSelected) }
+            }
+        }
     }
 }
