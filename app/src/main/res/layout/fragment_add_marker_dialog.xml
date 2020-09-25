@@ -139,19 +139,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2">
-
-                <com.company.imetlin.fishmarker.customview.spinner.MultiSpinner
+<!--
+                <com.company.imetlin.fishmarker.customview.spinner.delete.MultiSpinner
                     android:id="@+id/simpleMultiSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:hintText="Multi Selection"/>
+                    app:hintText="Multi Selection"/>-->
 
                 <com.company.imetlin.fishmarker.customview.spinner.MultiSpinnerSearch
                     android:id="@+id/searchMultiSpinnerUnlimited"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hintText="@string/bait" />
+                    android:textColorHint= "@color/list_even"
+                    app:hintText="@string/bait"/>
             </RelativeLayout>
         </LinearLayout>
 

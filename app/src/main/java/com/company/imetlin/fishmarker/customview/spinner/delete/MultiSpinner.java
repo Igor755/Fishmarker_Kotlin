@@ -1,4 +1,4 @@
-package com.company.imetlin.fishmarker.customview.spinner;
+package com.company.imetlin.fishmarker.customview.spinner.delete;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -6,22 +6,19 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
-
 import androidx.appcompat.widget.AppCompatSpinner;
-
-
 import com.company.imetlin.fishmarker.R;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class MultiSpinner extends AppCompatSpinner implements DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnCancelListener {
+class MultiSpinner{
+
+} /*extends AppCompatSpinner implements DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnCancelListener {
+
     private boolean[] selected;
     private List<String> items;
-
     private MultiSpinnerListener listener;
-
     private String spinnerTitle = "";
     private String defaultText = "Select Items";
     private String emptyTitle = "Not Found!";
@@ -29,7 +26,6 @@ public class MultiSpinner extends AppCompatSpinner implements DialogInterface.On
     public MultiSpinner(Context context) {
         super(context);
     }
-
     public MultiSpinner(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
         TypedArray a = arg0.obtainStyledAttributes(arg1, R.styleable.MultiSpinnerSearch);
@@ -62,20 +58,17 @@ public class MultiSpinner extends AppCompatSpinner implements DialogInterface.On
                 spinnerBuffer.append(", ");
             }
         }
-
         String spinnerText = spinnerBuffer.toString();
         if (spinnerText.length() > 2) {
             spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
         } else {
             spinnerText = defaultText;
         }
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.spinner_textview_for_spinner, new String[]{spinnerText});
         setAdapter(adapter);
         if (selected.length > 0) {
             listener.onItemsSelected(selected);
         }
-
     }
 
     @Override
@@ -90,10 +83,8 @@ public class MultiSpinner extends AppCompatSpinner implements DialogInterface.On
                 dialog.cancel();
             }
         });
-
         //builder.setMultiChoiceItems(items.toArray(new CharSequence[items.size()]), selected, this);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -104,17 +95,16 @@ public class MultiSpinner extends AppCompatSpinner implements DialogInterface.On
         return true;
     }
 
-    /**
+    *//**
      * Sets items to this spinner.
      *
      * @param items    A TreeMap where the keys are the values to display in the spinner
      *                 and the value the initial selected state of the key.
      * @param listener A MultiSpinnerListener.
-     */
+     *//*
     public void setItems(LinkedHashMap<String, Boolean> items, MultiSpinnerListener listener) {
         this.items = new ArrayList<>(items.keySet());
         this.listener = listener;
-
         List<Boolean> values = new ArrayList<>(items.values());
         selected = new boolean[values.size()];
         for (int i = 0; i < items.size(); i++) {
@@ -132,3 +122,4 @@ public class MultiSpinner extends AppCompatSpinner implements DialogInterface.On
 }
 
 
+*/

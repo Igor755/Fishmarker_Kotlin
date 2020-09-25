@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -28,17 +27,15 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.company.imetlin.fishmarker.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterface.OnCancelListener {
-    private static final String TAG = MultiSpinnerSearch.class.getSimpleName();
 
+    private static final String TAG = MultiSpinnerSearch.class.getSimpleName();
     public static AlertDialog.Builder builder;
     public static AlertDialog ad;
-
     private int limit = -1;
     private int selected = 0;
     private String defaultText = "";
@@ -46,10 +43,8 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
     private String emptyTitle = "Not Found!";
     private String searchHint = "Type to search";
     private boolean colorSeparation = false;
-
     private SpinnerListener listener;
     private LimitExceedListener limitListener;
-
     private MyAdapter adapter;
     private List<DataSpinner> items;
 
@@ -108,6 +103,14 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
         return selectedItems;
     }
 
+    /*public void setSelectedItems(List<DataSpinner> selectedArray) {
+        for (DataSpinner item : items) {
+            if (item.isSelected()) {
+                selectedArray.add(item);
+            }
+        }
+    }*/
+
     public List<Long> getSelectedIds() {
         List<Long> selectedItemsIds = new ArrayList<>();
         for (DataSpinner item : items) {
@@ -121,16 +124,13 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
     @Override
     public void onCancel(DialogInterface dialog) {
         // refresh text on spinner
-
         StringBuilder spinnerBuffer = new StringBuilder();
-
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).isSelected()) {
                 spinnerBuffer.append(items.get(i).getName());
                 spinnerBuffer.append(", ");
             }
         }
-
         String spinnerText = spinnerBuffer.toString();
         if (spinnerText.length() > 2)
             spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
@@ -142,7 +142,6 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
 
         if (adapter != null)
             adapter.notifyDataSetChanged();
-
         listener.onItemsSelected(items);
     }
 
@@ -152,24 +151,17 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
         super.performClick();
         builder = new AlertDialog.Builder(getContext());
         builder.setTitle(spinnerTitle);
-
-
         final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         final View view = inflater.inflate(R.layout.spinner_alert_dialog_listview_search, null);
         builder.setView(view);
-
         final ListView listView = view.findViewById(R.id.alertSearchListView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
         listView.setFastScrollEnabled(false);
         adapter = new MyAdapter(getContext(), items);
         listView.setAdapter(adapter);
-
         final TextView emptyText = view.findViewById(R.id.empty);
         emptyText.setText(emptyTitle);
         listView.setEmptyView(emptyText);
-
         final EditText editText = view.findViewById(R.id.alertSearchEditText);
         editText.setHint(searchHint);
         editText.addTextChangedListener(new TextWatcher() {
@@ -204,19 +196,17 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
             }
         });*/
 
-       builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int i) {
-               dialog.cancel();
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                dialog.cancel();
 
-           }
-       });
+            }
+        });
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 //Log.i(TAG, " ITEMS : " + items.size());
                 dialog.cancel();
             }
@@ -230,12 +220,9 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
     }
 
     public void setItems(List<DataSpinner> items, int position, SpinnerListener listener) {
-
         this.items = items;
         this.listener = listener;
-
         StringBuilder spinnerBuffer = new StringBuilder();
-
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).isSelected()) {
                 spinnerBuffer.append(items.get(i).getName());
@@ -244,15 +231,11 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
         }
         if (spinnerBuffer.length() > 2)
             defaultText = spinnerBuffer.toString().substring(0, spinnerBuffer.toString().length() - 2);
-
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(getContext(), R.layout.spinner_textview_for_spinner, new String[]{defaultText});
         setAdapter(adapterSpinner);
-
         if (position != -1) {
-
             items.get(position).setSelected(true);
             onCancel(null);
-
         }
     }
 
@@ -270,7 +253,6 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
 
     //Adapter Class
     public class MyAdapter extends BaseAdapter implements Filterable {
-
         List<DataSpinner> arrayList;
         List<DataSpinner> mOriginalValues; //Original Values
         LayoutInflater inflater;
@@ -296,18 +278,14 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
             return position;
         }
 
-
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-//          //Log.i(TAG, "getView() enter");
             ViewHolder holder;
-
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = inflater.inflate(R.layout.spinner_item_listview_multiple, parent, false);
                 holder.textView = convertView.findViewById(R.id.alertTextView);
                 holder.imageView = convertView.findViewById(R.id.imageView);
-
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -318,16 +296,10 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
                 background = backgroundColor;
                 convertView.setBackgroundColor(ContextCompat.getColor(getContext(), backgroundColor));
             }
-
             final DataSpinner data = arrayList.get(position);
             holder.textView.setText(data.getName());
             Glide.with(getContext()).load(data.getImage()).dontTransform().into(holder.imageView);
-
-            //Picasso.get().load(data.getImage()).into(holder.imageView);
-            //holder.imageView.set
             holder.textView.setTypeface(null, Typeface.NORMAL);
-            //holder.imageView.setChecked(data.isSelected());
-
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -411,6 +383,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements DialogInterf
                 }
             };
         }
+
         private class ViewHolder {
             TextView textView;
             ImageView imageView;

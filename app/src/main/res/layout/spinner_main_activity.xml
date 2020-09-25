@@ -3,11 +3,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.company.imetlin.fishmarker.customview.spinner.MultiSpinner
+    <!--<com.company.imetlin.fishmarker.customview.spinner.delete.MultiSpinner
         android:id="@+id/simpleMultiSpinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp" />-->
 
     <com.company.imetlin.fishmarker.customview.spinner.MultiSpinnerSearch
         android:id="@+id/searchMultiSpinner"
