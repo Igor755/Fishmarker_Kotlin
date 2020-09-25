@@ -316,22 +316,11 @@ class CardMarkerFragment : DialogFragment() {
         searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!")
         searchMultiSpinnerUnlimited.setSearchHint("Find Data")
 
-        val iterator: MutableListIterator<DataSpinner> = listDataSpinner.listIterator()
+        /*val iterator: MutableListIterator<DataSpinner> = listDataSpinner.listIterator()
         array.forEach {
             while (iterator.hasNext()) {
                 val next: DataSpinner = iterator.next()
                 if (it.name == next.name) {
-                    next.isSelected = true
-                    /*for (j in listDataSpinner.indices)
-                       if (next.name == listDataSpinner[j].name){
-                          listDataSpinner[j].isSelected = true}*/
-                }
-            }
-        }
-      /*  array.forEach {
-            while (iterator.hasNext()) {
-                val next: DataSpinner = iterator.next()
-                if (listDataSpinner.contains(it)){
                     next.isSelected = true
                     *//*for (j in listDataSpinner.indices)
                        if (next.name == listDataSpinner[j].name){
@@ -339,6 +328,14 @@ class CardMarkerFragment : DialogFragment() {
                 }
             }
         }*/
+      /*  array.forEach {
+                if (listDataSpinner.contains(it)){
+                    listDataSpinner.indexOf(it)
+                    it.isSelected = true
+                    listDataSpinner.add(it)
+                }
+            }
+*/
        /* for (i in array.indices) {
             while (iterator.hasNext()) {
                 val next: DataSpinner = iterator.next()
