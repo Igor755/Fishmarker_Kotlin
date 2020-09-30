@@ -316,27 +316,33 @@ class CardMarkerFragment : DialogFragment() {
         searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!")
         searchMultiSpinnerUnlimited.setSearchHint("Find Data")
 
-        /*val iterator: MutableListIterator<DataSpinner> = listDataSpinner.listIterator()
+        var iterator: MutableListIterator<DataSpinner> = listDataSpinner.listIterator()
         array.forEach {
+            println(it)
             while (iterator.hasNext()) {
                 val next: DataSpinner = iterator.next()
                 if (it.name == next.name) {
                     next.isSelected = true
-                    *//*for (j in listDataSpinner.indices)
+                    /*for (j in listDataSpinner.indices)
                        if (next.name == listDataSpinner[j].name){
-                          listDataSpinner[j].isSelected = true}*//*
+                          listDataSpinner[j].isSelected = true}*/
                 }
             }
-        }*/
-      /*  array.forEach {
+            iterator = listDataSpinner.listIterator()
+        }
+
+        /*
+        array.forEach {
                 if (listDataSpinner.contains(it)){
-                    listDataSpinner.indexOf(it)
-                    it.isSelected = true
-                    listDataSpinner.add(it)
+                    val index = listDataSpinner.indexOf(it)
+                    listDataSpinner[index].isSelected = true
+                   // it.isSelected = true
+                   // listDataSpinner.add(it)
                 }
             }
 */
-       /* for (i in array.indices) {
+        /*
+        for (i in array.indices) {
             while (iterator.hasNext()) {
                 val next: DataSpinner = iterator.next()
                 if (array[i].name == next.name) {
@@ -345,7 +351,16 @@ class CardMarkerFragment : DialogFragment() {
                        if (next.name == listDataSpinner[j].name){
                           listDataSpinner[j].isSelected = true}*//* }
             }
+        }
+*/
+        /*
+        for (spin in listDataSpinner) {
+            for (spin2 in array) {
+                if (spin.name == spin2.name)
+                    spin.isSelected = true
+            }
         }*/
+
         searchMultiSpinnerUnlimited.setItems(listDataSpinner, -1) { items ->
 
         }
