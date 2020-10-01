@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.company.imetlin.fishmarker.R
+import com.company.imetlin.fishmarker.extension.navigateTo
+import com.company.imetlin.fishmarker.extension.navigateToWithoutAnimation
 import com.company.imetlin.fishmarker.gpstracker.GpsTracker
 import com.company.imetlin.fishmarker.singleton.Singleton
 import com.facebook.FacebookSdk.getApplicationContext
@@ -35,16 +37,13 @@ import kotlinx.android.synthetic.main.fragment_add_marker_map.*
 import java.io.Serializable
 
 
-class MapMarkerFragment : Fragment() , OnMapReadyCallback {
+class MapMarkerFragment : Fragment(), OnMapReadyCallback {
 
     private var googlemap: GoogleMap? = null
-    private lateinit var  mUiSettings : UiSettings
-    private lateinit var context_fargment : Context
-
-    private var latitude : Double = 0.0
-    private var longitude : Double = 0.0
-
-
+    private lateinit var mUiSettings: UiSettings
+    private lateinit var context_fargment: Context
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
     private var alert_detail: AlertDialog.Builder? = null
 
     /////////////////////////////////////////////////ALERT DIALOG
@@ -57,7 +56,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
     private var note: TextView? = null
     private var title_alert: TextView? = null
     private var big_detail: ImageButton? = null
-    private var idplace : String = ""
+    private var idplace: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +70,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return (when(item.itemId) {
+        return (when (item.itemId) {
             R.id.add_marker_on_gps -> {
                 addMarkerOnGPSCoordinate()
                 true
@@ -84,9 +83,14 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                 super.onOptionsItemSelected(item)
         })
     }
-    fun addMarkerOnGPSCoordinate(){
 
-        if (ContextCompat.checkSelfPermission(context_fargment, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+    fun addMarkerOnGPSCoordinate() {
+
+        if (ContextCompat.checkSelfPermission(
+                context_fargment,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
 
             val gps = context?.let { GpsTracker(it) }
 
@@ -119,12 +123,11 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
     }
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_add_marker_map, container, false)
         val mapFragment: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        context_fargment = requireActivity().baseContext
+        context_fargment = requireActivity().applicationContext
         Singleton.setContext(context_fargment)
         return view
     }
@@ -138,34 +141,35 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         mUiSettings.isMapToolbarEnabled = false
         bottom_sheet.visibility = View.GONE
 
-        val  extras : Bundle = requireActivity().intent.extras
-        val latitude_place : Double = extras.getDouble("latitude")
-        val longitude_place : Double = extras.getDouble("longitude")
-        val zoom_place : Float = extras.getFloat("zoom")
+        val extras: Bundle = requireActivity().intent.extras
+        val latitude_place: Double = extras.getDouble("latitude")
+        val longitude_place: Double = extras.getDouble("longitude")
+        val zoom_place: Float = extras.getFloat("zoom")
         idplace = extras.getString("idplace")
 
-        val cameraPosition : CameraPosition? = CameraPosition.Builder()
-            .target(LatLng(latitude_place,longitude_place))
+        val cameraPosition: CameraPosition? = CameraPosition.Builder()
+            .target(LatLng(latitude_place, longitude_place))
             .zoom(zoom_place)
             .build()
-        val cameraUpdate : CameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+        val cameraUpdate: CameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
         googlemap?.animateCamera(cameraUpdate)
 
-        googlemap?.setOnMapLongClickListener {point ->
+        googlemap?.setOnMapLongClickListener { point ->
             onMapLongClick(point.latitude, point.longitude)
         }
-        googlemap?.setOnMarkerClickListener{marker ->
+        googlemap?.setOnMarkerClickListener { marker ->
             onMarkerClick(marker)
         }
-        googlemap?.setOnMapClickListener{ _ ->
+        googlemap?.setOnMapClickListener { _ ->
             onMapClick()
         }
         Singleton.LoaderData(mMap)
-
     }
-    fun onMapClick(){
+
+    fun onMapClick() {
         if (bottom_sheet.visibility == View.VISIBLE) {
-            val hide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide_detail_marker)
+            val hide =
+                AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide_detail_marker)
             bottom_sheet.startAnimation(hide)
             bottom_sheet.visibility = View.GONE
             mUiSettings.isZoomControlsEnabled = true
@@ -175,8 +179,7 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         }
     }
 
-    fun onMarkerClick(marker : Marker): Boolean {
-
+    private fun onMarkerClick(marker: Marker): Boolean {
         marker.showInfoWindow()
         mUiSettings.isZoomControlsEnabled = false
         val show = AnimationUtils.loadAnimation(
@@ -206,27 +209,34 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                 for (modelClass in Singleton.allmarkers) {
                     if (modelClass.latitude == marker.position.latitude && modelClass.longitude == marker.position.longitude) {
 
-                        val fragment : DialogFragment =  CardMarkerFragment()
-                        val bundle  =  Bundle()
-                        bundle.putString("1", modelClass.uid)
-                        bundle.putString("2", modelClass.id_marker_key)
-                        bundle.putString("3", java.lang.String.valueOf(modelClass.latitude))
-                        bundle.putString("4", java.lang.String.valueOf(modelClass.longitude))
-                        bundle.putString("5", modelClass.title)
-                        bundle.putString("6", modelClass.date)
-                        bundle.putSerializable("7",modelClass.idBait as Serializable)
-                        bundle.putString("8", java.lang.String.valueOf(modelClass.depth))
-                        bundle.putString("9", java.lang.String.valueOf(modelClass.amount))
-                        bundle.putString("10", modelClass.note)
-                        bundle.putString("11", modelClass.idplace)
+                        /*    // val fragment : DialogFragment =  CardMarkerFragment()
+                             val bundle  =  Bundle()
+                             bundle.putString("1", modelClass.uid)
+                             bundle.putString("2", modelClass.id_marker_key)
+                             bundle.putString("3", java.lang.String.valueOf(modelClass.latitude))
+                             bundle.putString("4", java.lang.String.valueOf(modelClass.longitude))
+                             bundle.putString("5", modelClass.title)
+                             bundle.putString("6", modelClass.date)
+                             bundle.putSerializable("7",modelClass.idBait as Serializable)
+                             bundle.putString("8", java.lang.String.valueOf(modelClass.depth))
+                             bundle.putString("9", java.lang.String.valueOf(modelClass.amount))
+                             bundle.putString("10", modelClass.note)
+                             bundle.putString("11", modelClass.idplace)*/
 
+                        navigateTo(
+                            R.id.fragment_container_marker,
+                            CardMarkerFragment(), args = Bundle().apply {
+                                putParcelable("existMarker", modelClass)
+                            },
+                            backStackTag = MapMarkerFragment::class.java.name
+                        )
 
-                        fragment.arguments = bundle
-                        fragment.setTargetFragment(this,1)
-                        activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
+                        //fragment.arguments = bundle
+                        //fragment.setTargetFragment(this,1)
+                        //activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
                         hideButtonSheet()
                     }
-                    }
+                }
             } else {
                 Toast.makeText(context, R.string.foreign_markers, Toast.LENGTH_SHORT).show()
                 hideButtonSheet()
@@ -234,35 +244,41 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
             }
         })
         return true
-
     }
-    fun onMapLongClick(latitude : Double, longitude : Double){
 
+    fun onMapLongClick(latitude: Double, longitude: Double) {
         val builder = AlertDialog.Builder(context)
         builder.setTitle(getString(R.string.add_marker_on_map))
         builder.setMessage(
-                context?.resources?.getString(R.string.add_marker_s) + "\n" +
-                        getString(R.string.lat_c) + " " + latitude + "\n" +
-                        getString(R.string.lon_c) + " " + longitude)
-        builder.setPositiveButton(R.string.yes){ _, _ ->
-            val fragment : DialogFragment  =  CardMarkerFragment()
-            val bundle  =  Bundle()
-            bundle.putDouble("latitude", latitude)
-            bundle.putDouble("longitude", longitude)
-            bundle.putString("idplace",idplace)
-            fragment.arguments = bundle
-
-            fragment.setTargetFragment(this,1)
-            activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
-            Toast.makeText(context,R.string.go_go,Toast.LENGTH_SHORT).show()
+            context?.resources?.getString(R.string.add_marker_s) + "\n" +
+                    getString(R.string.lat_c) + " " + latitude + "\n" +
+                    getString(R.string.lon_c) + " " + longitude
+        )
+        builder.setPositiveButton(R.string.yes) { _, _ ->
+            // val fragment : DialogFragment  =  CardMarkerFragment()
+            // val bundle  =  Bundle()
+            // bundle.putDouble("latitude", latitude)
+            // bundle.putDouble("longitude", longitude)
+            // bundle.putString("idplace",idplace)
+            // fragment.arguments = bundle
+            navigateTo(
+                R.id.fragment_container_marker,
+                CardMarkerFragment(), args = Bundle().apply {
+                    putDouble("latitude", latitude)
+                    putDouble("longitude", longitude)
+                    putString("idplace", idplace)
+                },
+                backStackTag = CardMarkerFragment::class.java.name
+            )
+            // fragment.setTargetFragment(this,1)
+            // activity?.supportFragmentManager?.let { fragment.show(it, "CardMarkerFragment") }
+            // Toast.makeText(context,R.string.go_go,Toast.LENGTH_SHORT).show()
         }
-        builder.setNegativeButton(R.string.no){ _, _ ->
-            Toast.makeText(context,R.string.agree,Toast.LENGTH_SHORT).show()
+        builder.setNegativeButton(R.string.no) { _, _ ->
+            Toast.makeText(context, R.string.agree, Toast.LENGTH_SHORT).show()
         }
         val dialog: AlertDialog = builder.create()
         dialog.show()
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -271,31 +287,34 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
         if (resultCode == Activity.RESULT_OK) {
             val titleMarker = data?.getStringExtra("titleMarker")
             val idMarker = data?.getStringExtra("idMarker")
-            val latitude: Double? = data?.getDoubleExtra("latitude",0.0)
+            val latitude: Double? = data?.getDoubleExtra("latitude", 0.0)
             val longitude: Double? = data?.getDoubleExtra("longitude", 0.0)
-            val resource : Resources = context?.resources!!
-            val myIconFish : Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val resource: Resources = context?.resources!!
+            val myIconFish: Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 resource.getDrawable(R.drawable.fishmy30_old, requireContext().theme)
             } else {
-                resource.getDrawable(R.drawable.fishmy30_old)            }
+                resource.getDrawable(R.drawable.fishmy30_old)
+            }
             val bitmap_my = (myIconFish as BitmapDrawable).bitmap
             Singleton.createMarker(latitude, longitude, titleMarker, bitmap_my)
 
         }
     }
+
     fun hideButtonSheet() {
 
         if (bottom_sheet.visibility == View.VISIBLE) {
-            val hide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide_detail_marker)
+            val hide =
+                AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide_detail_marker)
             bottom_sheet.startAnimation(hide)
             bottom_sheet.visibility = View.GONE
         }
     }
-    fun bigDetailMarker(bigdetailmarker : Marker) {
 
+    private fun bigDetailMarker(bigDetailMarker: Marker) {
 
         for (modelClass in Singleton.allmarkers) {
-            if (modelClass.latitude == bigdetailmarker.position.latitude && modelClass.longitude == bigdetailmarker.position.longitude) {
+            if (modelClass.latitude == bigDetailMarker.position.latitude && modelClass.longitude == bigDetailMarker.position.longitude) {
                 val li = LayoutInflater.from(context)
                 val promptsView: View = li.inflate(R.layout.alert_detail_marker, null)
 
@@ -331,13 +350,12 @@ class MapMarkerFragment : Fragment() , OnMapReadyCallback {
                 val buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE)
                 buttonbackground.setTextColor(context?.resources?.getColor(R.color.colorWhite)!!)
 
-
                 big_detail?.setOnClickListener {
                     val fragment: Fragment = BigDetailMarkerFragment()
                     alert11.cancel()
 
                     val bundle = Bundle()
-                    bundle.putSerializable("serializedObject",modelClass)
+                    bundle.putSerializable("serializedObject", modelClass)
                     fragment.arguments = bundle
 
                     activity?.supportFragmentManager

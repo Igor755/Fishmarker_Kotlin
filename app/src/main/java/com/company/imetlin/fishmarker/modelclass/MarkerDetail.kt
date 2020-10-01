@@ -1,8 +1,11 @@
 package com.company.imetlin.fishmarker.modelclass
 
+import android.os.Parcelable
 import com.company.imetlin.fishmarker.customview.spinner.DataSpinner
+import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+@Parcelize
 data class MarkerDetail(
     var uid: String?,
     var id_marker_key: String?,
@@ -14,7 +17,7 @@ data class MarkerDetail(
     var depth: Double,
     var amount: Int,
     var note: String,
-    var idplace: String?) : Serializable{
+    var idplace: String?) : Serializable, Parcelable{
 
 
     constructor() :

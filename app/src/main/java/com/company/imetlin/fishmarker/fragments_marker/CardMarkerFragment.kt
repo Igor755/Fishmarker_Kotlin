@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.customview.spinner.DataSpinner
 import com.company.imetlin.fishmarker.modelclass.MarkerDetail
@@ -29,13 +30,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CardMarkerFragment : DialogFragment() {
+class CardMarkerFragment :Fragment() {
 
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
     private val TAG: String = "CardMarkerFragment"
-    val listInt = emptyList<Int>()
-    val array : MutableList<DataSpinner> = mutableListOf<DataSpinner>()
-
+    val arraySpinner : MutableList<DataSpinner> = mutableListOf<DataSpinner>()
+    private var existMarker: MarkerDetail? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_marker_dialog, container, false)
@@ -48,7 +48,7 @@ class CardMarkerFragment : DialogFragment() {
         val latitude: Double = bundle?.getDouble("latitude")!!
         val longitude: Double = bundle.getDouble("longitude")
         btnDelete.visibility = View.INVISIBLE
-        spinerFillUp(array)
+        spinerFillUp(arraySpinner)
         if (latitude == 0.0 && longitude == 0.0) {
             updateMarker()
         } else {
@@ -57,16 +57,14 @@ class CardMarkerFragment : DialogFragment() {
         edit_latitude.isEnabled = false
         edit_longitude.isEnabled = false
         btnCancel.setOnClickListener {
-            dialog?.dismiss()
+            activity?.onBackPressed()
+            //dialog?.dismiss()
         }
         tvDate.setOnClickListener {
             val day = calendar.get(Calendar.DAY_OF_MONTH)
             val month = calendar.get(Calendar.MONTH)
             val year = calendar.get(Calendar.YEAR)
-            val datePickerDialog: DatePickerDialog = DatePickerDialog(
-                context,
-                R.style.ThemeOverlay_AppCompat_Dialog,
-                dateSetListener,
+            val datePickerDialog: DatePickerDialog = DatePickerDialog(context, R.style.ThemeOverlay_AppCompat_Dialog, dateSetListener,
                 year,
                 month,
                 day
@@ -92,7 +90,6 @@ class CardMarkerFragment : DialogFragment() {
         edit_latitude.setText(latitude.toString())
         edit_longitude.setText(longitude.toString())
         btnOk.setOnClickListener {
-
             if (isEmpty()) {
                 Toast.makeText(context, "Empty field", Toast.LENGTH_LONG).show()
             } else {
@@ -116,47 +113,50 @@ class CardMarkerFragment : DialogFragment() {
                 bundle.putDouble("longitude", longitude)
                 val intent2 = Intent()
                 intent2.putExtras(bundle)
+//                startActivityForResult(intent2, Activity.RESULT_OK)
                 targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent2)
                 Singleton.addMarker(newMarker)
-                dialog?.dismiss()
+                activity?.onBackPressed()
+                //dialog?.dismiss()
             }
         }
     }
 
     fun updateMarker() {
+
+        if (arguments?.getParcelable<MarkerDetail>("existMarker") != null) {
+            existMarker = arguments?.getParcelable<MarkerDetail>("existMarker")
+        }
+
         val bundle: Bundle? = arguments
-        val uidUpdate = bundle?.getString("1")
-        val idMarkerUpdate = bundle?.getString("2")
-        val latitudeUpdate = bundle?.getString("3")
-        val longitudeUpdate = bundle?.getString("4")
-        val titleUpdate = bundle?.getString("5")
-        val dateUpdate = bundle?.getString("6")
-        val idbait = arguments?.getSerializable("7") as MutableList<DataSpinner>
-        val depthUpdate = bundle?.getString("8")
-        val amountUpdate = bundle?.getString("9")
-        val noteUpdate = bundle?.getString("10")
-        val idplaceUpdate = bundle?.getString("11")
-        edit_latitude.setText(latitudeUpdate)
-        edit_longitude.setText(longitudeUpdate)
+        val uidUpdate = existMarker?.uid
+        val idMarkerUpdate = existMarker?.id_marker_key
+        val latitudeUpdate = existMarker?.latitude
+        val longitudeUpdate = existMarker?.longitude
+        val titleUpdate = existMarker?.title
+        val dateUpdate = existMarker?.date
+        val idbait = existMarker?.idBait
+        val depthUpdate = existMarker?.depth
+        val amountUpdate = existMarker?.amount
+        val noteUpdate = existMarker?.note
+        val idplaceUpdate = existMarker?.idplace
+        edit_latitude.setText(latitudeUpdate.toString())
+        edit_longitude.setText(longitudeUpdate.toString())
         edit_title_marker.setText(titleUpdate)
         tvDate.text = dateUpdate
 
-        spinerFillUpdate(idbait)
-       // searchMultiSpinnerUnlimited.setSelectedItems(idbait)
-      /* searchMultiSpinnerUnlimited.setItems(idbait, -1) {
-            for (i in idbait.indices) {
-                idbait[i].isSelected = true
-            }
-        }
-*/
-        edit_dept.setText(depthUpdate)
-        edit_number_of_fish.setText(amountUpdate)
+        idbait?.let { spinerFillUp(it) }
+
+        edit_dept.setText(depthUpdate.toString())
+        edit_number_of_fish.setText(amountUpdate.toString())
         edit_note.setText(noteUpdate)
         btnDelete.visibility = View.VISIBLE
         btnDelete.setOnClickListener {
-            deleteMarker(uidUpdate, idMarkerUpdate, latitudeUpdate, longitudeUpdate,
-                titleUpdate, dateUpdate, idbait, depthUpdate,
-                amountUpdate, noteUpdate, idplaceUpdate)
+            idbait?.let { it1 ->
+                deleteMarker(uidUpdate, idMarkerUpdate, latitudeUpdate.toString(), longitudeUpdate.toString(),
+                    titleUpdate, dateUpdate, it1, depthUpdate.toString(),
+                    amountUpdate.toString(), noteUpdate, idplaceUpdate)
+            }
 
         }
         btnOk.setOnClickListener {
@@ -191,7 +191,8 @@ class CardMarkerFragment : DialogFragment() {
                     }
                     Toast.makeText(context, "update success", Toast.LENGTH_SHORT).show()
                     Singleton.UpdateMarker(markerInformation)
-                    dialog?.dismiss()
+                    activity?.onBackPressed()
+                    //dialog?.dismiss()
                 }else{
                     val markerInformation = MarkerDetail(
                         uidUpdate,
@@ -212,7 +213,8 @@ class CardMarkerFragment : DialogFragment() {
                     }
                     Toast.makeText(context, "update success", Toast.LENGTH_SHORT).show()
                     Singleton.UpdateMarker(markerInformation)
-                    dialog?.dismiss()
+                    activity?.onBackPressed()
+                   // dialog?.dismiss()
                 }
             }
         }
@@ -255,7 +257,8 @@ class CardMarkerFragment : DialogFragment() {
             delmark.removeValue()
             Singleton.deleteMarker(modelClassDelete)
             Toast.makeText(context, android.R.string.yes, Toast.LENGTH_SHORT).show()
-            dialog?.dismiss()
+            activity?.onBackPressed()
+            //dialog?.dismiss()
         }
         alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
             Toast.makeText(context, android.R.string.no, Toast.LENGTH_SHORT).show()
@@ -278,11 +281,10 @@ class CardMarkerFragment : DialogFragment() {
                 TextUtils.isEmpty(edit_note.text)
     }
 
-    fun spinerFillUpdate(array :  MutableList<DataSpinner>) {
+    fun spinerFillUp(arraySpinerUpdate :  MutableList<DataSpinner>){
 
-        //println(array)
-        val listNameDataSpiner = listOf(*resources.getStringArray(R.array.bait_array))
-        val listImageDataSpiner = listOf<Int>(
+        val listNameBait = listOf(*resources.getStringArray(R.array.bait_array))
+        val listImageBait = listOf<Int>(
             R.drawable.bait_red_worm,
             R.drawable.bait_black_worm,
             R.drawable.bait_sea_worm,
@@ -305,143 +307,39 @@ class CardMarkerFragment : DialogFragment() {
             R.drawable.bait_another
         )
         val listDataSpinner: MutableList<DataSpinner> = ArrayList<DataSpinner>()
-        for (i in listNameDataSpiner.indices) {
+        for (i in listNameBait.indices) {
             val dataSpinner = DataSpinner()
             dataSpinner.id = (i + 1).toLong()
-            dataSpinner.name = listNameDataSpiner[i]
-            dataSpinner.image = listImageDataSpiner[i]
+            dataSpinner.name = listNameBait[i]
+            dataSpinner.image = listImageBait[i]
             dataSpinner.isSelected = false
             listDataSpinner.add(dataSpinner)
         }
+        if (arraySpinerUpdate.size != 0){
+            var iterator: MutableListIterator<DataSpinner> = listDataSpinner.listIterator()
+            arraySpinerUpdate.forEach {
+                println(it)
+                while (iterator.hasNext()) {
+                    val next: DataSpinner = iterator.next()
+                    if (it.name == next.name) {
+                        next.isSelected = true
+                    }
+                }
+                iterator = listDataSpinner.listIterator()
+            }
+            /*
+            for (spin in listDataSpinner) {
+                for (spin2 in array) {
+                    if (spin.name == spin2.name)
+                        spin.isSelected = true
+                }
+            }*/
+        }
         searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!")
         searchMultiSpinnerUnlimited.setSearchHint("Find Data")
-
-        var iterator: MutableListIterator<DataSpinner> = listDataSpinner.listIterator()
-        array.forEach {
-            println(it)
-            while (iterator.hasNext()) {
-                val next: DataSpinner = iterator.next()
-                if (it.name == next.name) {
-                    next.isSelected = true
-                    /*for (j in listDataSpinner.indices)
-                       if (next.name == listDataSpinner[j].name){
-                          listDataSpinner[j].isSelected = true}*/
-                }
-            }
-            iterator = listDataSpinner.listIterator()
-        }
-
-        /*
-        array.forEach {
-                if (listDataSpinner.contains(it)){
-                    val index = listDataSpinner.indexOf(it)
-                    listDataSpinner[index].isSelected = true
-                   // it.isSelected = true
-                   // listDataSpinner.add(it)
-                }
-            }
-*/
-        /*
-        for (i in array.indices) {
-            while (iterator.hasNext()) {
-                val next: DataSpinner = iterator.next()
-                if (array[i].name == next.name) {
-                    iterator.next().isSelected = true
-                    *//*for (j in listDataSpinner.indices)
-                       if (next.name == listDataSpinner[j].name){
-                          listDataSpinner[j].isSelected = true}*//* }
-            }
-        }
-*/
-        /*
-        for (spin in listDataSpinner) {
-            for (spin2 in array) {
-                if (spin.name == spin2.name)
-                    spin.isSelected = true
-            }
-        }*/
-
         searchMultiSpinnerUnlimited.setItems(listDataSpinner, -1) { items ->
-
-        }
-
-/*
-            while (iterator.hasNext()) {
-                val next: MarkerDetail = iterator.next()
-                if (!next.uid.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
-                    my_ic = R.drawable.fishanother30
-                } else {
-                    my_ic = R.drawable.fishmy30_old
-                }
-                if (next.latitude.equals(updatemarker.latitude) &&
-                    next.longitude.equals(updatemarker.longitude)
-                ) {
-                    iterator.set(updatemarker)
-                    val marker_update = Singleton.googlemap!!.addMarker(
-                        MarkerOptions()
-                            .position(
-                                LatLng(
-                                    updatemarker.latitude,
-                                    updatemarker.longitude
-                                )
-                            )
-                            .title(updatemarker.title)
-                            .icon(BitmapDescriptorFactory.fromResource(my_ic))
-                    )
-                    markers_array.add(marker_update)
-                } else {
-                    val marker_update = Singleton.googlemap!!.addMarker(
-                        MarkerOptions()
-                            .position(LatLng(next.latitude, next.longitude))
-                            .title(next.title)
-                            .icon(BitmapDescriptorFactory.fromResource(my_ic))
-                    )
-                    markers_array.add(marker_update)
-                }*/
-
-
-    }
-
-
-    fun spinerFillUp(array :  MutableList<DataSpinner>){
-
-        val list = listOf(*resources.getStringArray(R.array.bait_array))
-        val list2 = listOf<Int>(
-            R.drawable.bait_red_worm,
-            R.drawable.bait_black_worm,
-            R.drawable.bait_sea_worm,
-            R.drawable.bait_maggot_white,
-            R.drawable.bait_maggot_red,
-            R.drawable.bait_bloodworm,
-            R.drawable.bait_peas,
-            R.drawable.bait_corn,
-            R.drawable.bait_maybug_larva,
-            R.drawable.bait_caddis_larva,
-            R.drawable.bait_cazar,
-            R.drawable.bait_fly,
-            R.drawable.bait_bark_beetle,
-            R.drawable.bait_live,
-            R.drawable.bait_silicone,
-            R.drawable.bait_spinner,
-            R.drawable.bait_pinwheel,
-            R.drawable.bait_wobbler,
-            R.drawable.bait_muzzle_sight,
-            R.drawable.bait_another
-        )
-        val listArray0: MutableList<DataSpinner> = ArrayList<DataSpinner>()
-        for (i in list.indices) {
-            val h = DataSpinner()
-            h.id = (i + 1).toLong()
-            h.name = list[i]
-            h.image = list2[i]
-            h.isSelected = false
-            listArray0.add(h)
-        }
-        searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!")
-        searchMultiSpinnerUnlimited.setSearchHint("Find Data")
-        searchMultiSpinnerUnlimited.setItems(listArray0, -1) { items ->
-            for (i in array.indices) {
-                array[i].isSelected = true
+            for (i in arraySpinerUpdate.indices) {
+                arraySpinerUpdate[i].isSelected = true
                 if (items[i].isSelected) {
                     Log.i(CardMarkerFragment().TAG, i.toString() + " : " + items[i].name + " : " + items[i].isSelected) }
             }

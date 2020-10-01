@@ -1,12 +1,43 @@
 package com.company.imetlin.fishmarker.customview.spinner;
 
-public class DataSpinner {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import kotlinx.android.parcel.Parcelize;
+
+public class DataSpinner implements Parcelable {
     private long id;
     private String name;
     private boolean isSelected;
     private Integer image;
     private Object object;
 
+    public DataSpinner(){
+
+    }
+
+    protected DataSpinner(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        isSelected = in.readByte() != 0;
+        if (in.readByte() == 0) {
+            image = null;
+        } else {
+            image = in.readInt();
+        }
+    }
+
+    public static final Creator<DataSpinner> CREATOR = new Creator<DataSpinner>() {
+        @Override
+        public DataSpinner createFromParcel(Parcel in) {
+            return new DataSpinner(in);
+        }
+
+        @Override
+        public DataSpinner[] newArray(int size) {
+            return new DataSpinner[size];
+        }
+    };
 
     public Integer getImage() {
         return image;
@@ -64,5 +95,23 @@ public class DataSpinner {
      */
     public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeByte((byte) (isSelected ? 1 : 0));
+        if (image == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(image);
+        }
     }
 }
