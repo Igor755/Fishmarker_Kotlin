@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.adapter.AdapterBait
-import com.company.imetlin.fishmarker.modelclass.MarkerDetail
-import com.company.imetlin.fishmarker.modelclass.Place
-import com.company.imetlin.fishmarker.modelclass.User
+import com.company.imetlin.fishmarker.model.MarkerDetail
+import com.company.imetlin.fishmarker.model.Place
+import com.company.imetlin.fishmarker.model.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

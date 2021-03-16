@@ -12,7 +12,7 @@ import android.widget.Toast
 import com.company.imetlin.fishmarker.R
 import androidx.recyclerview.widget.RecyclerView
 import com.company.imetlin.fishmarker.helper_class.StaticHelper
-import com.company.imetlin.fishmarker.modelclass.Place
+import com.company.imetlin.fishmarker.model.Place
 import com.google.firebase.database.*
 import java.lang.String
 

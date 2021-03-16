@@ -55,11 +55,10 @@ class GpsTracker(context: Context) : Service(), LocationListener {
     // The minimum time between updates in milliseconds
     private val MIN_TIME_BW_UPDATES = 1000 * 60 * 1 // 1 minute
         .toLong()
-//  private static final long MIN_TIME_BW_UPDATES = 1000 ; // 1 sec
-
+    //  private static final long MIN_TIME_BW_UPDATES = 1000 ; // 1 sec
     //  private static final long MIN_TIME_BW_UPDATES = 1000 ; // 1 sec
     // Declaring a Location Manager
-    protected var locationManager: LocationManager? = null
+    var locationManager: LocationManager? = null
 
     init {
         getLocation()
@@ -167,7 +166,7 @@ class GpsTracker(context: Context) : Service(), LocationListener {
                 // for Activity#requestPermissions for more details.
                 return
             }
-            locationManager!!.removeUpdates(mContext?.let { GpsTracker(it) })
+            locationManager!!.removeUpdates(GpsTracker(mContext!!))
         }
     }
 
@@ -246,16 +245,16 @@ class GpsTracker(context: Context) : Service(), LocationListener {
         return null
     }
 
-    override fun onLocationChanged(p0: Location?) {
+    override fun onLocationChanged(p0: Location) {
     }
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
     }
 
-    override fun onProviderEnabled(p0: String?) {
+    override fun onProviderEnabled(p0: String) {
     }
 
-    override fun onProviderDisabled(p0: String?) {
+    override fun onProviderDisabled(p0: String) {
     }
 
 }

@@ -1,4 +1,4 @@
-package com.company.imetlin.fishmarker.modelclass
+package com.company.imetlin.fishmarker.model
 
 import android.os.Parcelable
 import com.company.imetlin.fishmarker.customview.spinner.DataSpinner

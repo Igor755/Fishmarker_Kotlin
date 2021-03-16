@@ -2,6 +2,9 @@ package com.company.imetlin.fishmarker.fragments_registration
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +13,10 @@ import com.company.imetlin.fishmarker.ProfileActivity
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
+import com.company.imetlin.fishmarker.AuthActivity
 import com.company.imetlin.fishmarker.R
-import com.company.imetlin.fishmarker.modelclass.User
+import com.company.imetlin.fishmarker.extension.addKeyboardListener
+import com.company.imetlin.fishmarker.model.User
 import com.facebook.*
 import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.fragment_sign_in.*
@@ -22,40 +27,31 @@ import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 
-class SignInFragment : Fragment() {
+class SignInFragment : Fragment(R.layout.fragment_sign_in), TextWatcher {
 
     private var mAuth: FirebaseAuth? = null
-    private var callbackManager: CallbackManager? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
-    }
+    //private var callbackManager: CallbackManager? = null
 
     private fun signIn(email: String, password: String) {
         mAuth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 checkIfEmailVerified()
             } else {
-                Toast.makeText(
-                    context,R.string.autorithation,
-                    Toast.LENGTH_SHORT
-                ).show()
+                btnLoginMainLogin.isLoading = false
+                Toast.makeText(context,R.string.autorithation, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun checkIfEmailVerified() {
-
         val user: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         if (user.isEmailVerified) {
-
+            btnLoginMainLogin.isLoading = false
             val intent = Intent(activity, ProfileActivity::class.java)
             startActivity(intent)
-
             activity?.supportFragmentManager?.beginTransaction()?.remove(SignInFragment())?.commit()
-
         } else {
-
+            btnLoginMainLogin.isLoading = false
             Toast.makeText(context, R.string.verify, Toast.LENGTH_SHORT).show()
             FirebaseAuth.getInstance().signOut()
         }
@@ -63,25 +59,29 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mAuth = FirebaseAuth.getInstance()
-        callbackManager = CallbackManager.Factory.create()
-
-    /*    withFacebook.setOnClickListener {
-            facebooklogin()
+        context?.let { ctx ->
+            addKeyboardListener(ctx as AuthActivity, tiEtLoginEmail)
+            addKeyboardListener(ctx, tiEtLoginPassword)
         }
-*/
-        btn_sign_in.setOnClickListener {
+        mAuth = FirebaseAuth.getInstance()
+        //callbackManager = CallbackManager.Factory.create()
+        /*withFacebook.setOnClickListener {
+            facebooklogin()
+        }*/
+        tiEtLoginEmail.addTextChangedListener(this)
+        tiEtLoginPassword.addTextChangedListener(this)
 
-            val email : String = et_email.text.toString().trim()
-            val password = et_password.text.toString().trim()
+        btnLoginMainLogin.setOnClickListener {
+            val email : String = tiEtLoginEmail.text.toString().trim()
+            val password = tiEtLoginPassword.text.toString().trim()
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(context, R.string.empty_email_or_password, Toast.LENGTH_SHORT).show()
             } else {
+                btnLoginMainLogin.isLoading = true
                 signIn(email, password)
             }
         }
-        btn_registration.setOnClickListener {
+        btnLoginMainRegistration.setOnClickListener {
             activity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(R.id.fragment_container_auth, RegistrationFragment())
@@ -96,44 +96,25 @@ class SignInFragment : Fragment() {
                 ?.commit()
         }
     }
-    private fun facebooklogin() {
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
-        LoginManager.getInstance()
-            .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult) {
-                    handleFacebookAccessToken(result.accessToken)
-                }
-                override fun onCancel() {
-                    Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show()
-                }
-                override fun onError(error: FacebookException?) {
-                    Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
-                }
-            })
+
+    private fun validateFields() {
+        btnLoginMainLogin.isEnabled = listOf(
+            (tiEtLoginEmail.text!!.isNotEmpty()
+                    && Patterns.EMAIL_ADDRESS.matcher(
+                tiEtLoginEmail.text.toString()
+            ).matches()),
+            tiEtLoginPassword.text!!.isNotEmpty(),
+            tiEtLoginPassword.length() >= 8,
+        ).all { it }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callbackManager?.onActivityResult(requestCode, resultCode, data)
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
     }
 
-    private fun handleFacebookAccessToken(token: AccessToken) {
-        val credential: AuthCredential = FacebookAuthProvider.getCredential(token.token)
-        mAuth?.signInWithCredential(credential)?.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Toast.makeText(context, "FAIL" + task.exception, Toast.LENGTH_SHORT).show()
-            } else {
-                val userID: String = FirebaseAuth.getInstance().currentUser!!.uid
-                val email: String? = task.result?.user?.email
-                val user = email?.let { User(userID, it) }
-                FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user)
-                updateUI()
-            }
-        }
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        validateFields()
     }
 
-    private fun updateUI() {
-        val intent = Intent(activity, ProfileActivity::class.java)
-        startActivity(intent)
+    override fun afterTextChanged(s: Editable?) {
     }
 }

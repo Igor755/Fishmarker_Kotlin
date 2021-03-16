@@ -16,7 +16,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.company.imetlin.fishmarker.helper_class.StaticHelper
 import com.company.imetlin.fishmarker.helper_class.StaticHelper.Companion.filepathimage
-import com.company.imetlin.fishmarker.modelclass.User
+import com.company.imetlin.fishmarker.model.User
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -64,7 +64,7 @@ class ProfileFragment : Fragment() {
 
         firebaseStorage = FirebaseStorage.getInstance().getReference("images")
         pref = PreferenceManager.getDefaultSharedPreferences(context)
-        adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, StaticHelper.getValue())
+        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, StaticHelper.getValue())
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
         spinner_location.adapter = adapter
 
@@ -201,14 +201,14 @@ class ProfileFragment : Fragment() {
 
     fun localLoadUser() {
 
-        val user_name: String = pref.getString("user_name", "")
-        val user_last_name: String = pref.getString("user_last_name", "")
-        val user_email: String = pref.getString("user_email", "")
-        val user_telephone: String = pref.getString("user_telephone", "")
-        val user_trophies: String = pref.getString("user_trophies", "")
-        val user_preferred: String = pref.getString("user_prefered", "")
-        val user_location: String = pref.getString("user_location", "")
-        val user_photo: String = pref.getString("user_photo", "")
+        val user_name: String? = pref.getString("user_name", "")
+        val user_last_name: String? = pref.getString("user_last_name", "")
+        val user_email: String? = pref.getString("user_email", "")
+        val user_telephone: String? = pref.getString("user_telephone", "")
+        val user_trophies: String? = pref.getString("user_trophies", "")
+        val user_preferred: String? = pref.getString("user_prefered", "")
+        val user_location: String? = pref.getString("user_location", "")
+        val user_photo: String? = pref.getString("user_photo", "")
         val position: Int = adapter.getPosition(user_location)
 
         spinner_location.setSelection(position)
@@ -321,7 +321,7 @@ class ProfileFragment : Fragment() {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
 
-            filePath = data.data
+            filePath = data.data!!
             photo_user_image_view.setImageDrawable(null)
             Picasso.get().load(filePath).fit().into(photo_user_image_view)
             photo_user_image_view.setImageURI(filePath)
@@ -334,7 +334,7 @@ class ProfileFragment : Fragment() {
 
         val contentResolverUri: ContentResolver = requireContext().contentResolver
         val mimeTypeMap: MimeTypeMap = MimeTypeMap.getSingleton()
-        return mimeTypeMap.getExtensionFromMimeType(contentResolverUri.getType(uri))
+        return mimeTypeMap.getExtensionFromMimeType(contentResolverUri.getType(uri)).toString()
 
     }
 

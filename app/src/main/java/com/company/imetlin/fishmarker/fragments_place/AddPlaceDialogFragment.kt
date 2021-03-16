@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.company.imetlin.fishmarker.R
-import com.company.imetlin.fishmarker.modelclass.Place
+import com.company.imetlin.fishmarker.model.Place
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.*

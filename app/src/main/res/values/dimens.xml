@@ -1,4 +1,43 @@
 <resources>
+    <dimen name="offset_1">1dp</dimen>
+    <dimen name="offset_2">2dp</dimen>
+    <dimen name="offset_4">4dp</dimen>
+    <dimen name="offset_6">6dp</dimen>
+    <dimen name="offset_8">8dp</dimen>
+    <dimen name="offset_10">10dp</dimen>
+    <dimen name="offset_12">12dp</dimen>
+    <dimen name="offset_16">16dp</dimen>
+    <dimen name="offset_20">20dp</dimen>
+    <dimen name="offset_24">24dp</dimen>
+    <dimen name="offset_32">32dp</dimen>
+    <dimen name="offset_36">36dp</dimen>
+    <dimen name="offset_40">40dp</dimen>
+    <dimen name="offset_48">48dp</dimen>
+    <dimen name="offset_56">56dp</dimen>
+    <dimen name="offset_72">72dp</dimen>
+    <dimen name="offset_80">80dp</dimen>
+    <dimen name="offset_130">130dp</dimen>
+    <dimen name="offset_400">400dp</dimen>
+
+    <!--region Elevation-->
+    <dimen name="elevation_1">1dp</dimen>
+    <dimen name="elevation_2">2dp</dimen>
+    <dimen name="elevation_4">4dp</dimen>
+    <dimen name="elevation_8">8dp</dimen>
+
+    <!--region Typography-->
+    <!--https://material.io/design/typography/the-type-system.html#type-scale-->
+    <dimen name="headline_1">32sp</dimen>
+    <dimen name="headline_2">24sp</dimen>
+    <dimen name="headline_3">20sp</dimen>
+    <dimen name="headline_3_5">18sp</dimen>
+    <dimen name="headline_4">16sp</dimen>
+    <dimen name="headline_5">15sp</dimen>
+
+    <!--region Corner-->
+    <dimen name="corner_4">4dp</dimen>
+    <dimen name="corner_8">8dp</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -6,14 +45,11 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-
     <dimen name="height_one_item">190dp</dimen>
     <dimen name="cardCornerRadius">24dp</dimen>
     <dimen name="layout_margin_start_text">30dp</dimen>
 
-
     /////////////////Spinner
     <dimen name="margin_basic_25">0.25dp</dimen>
     <dimen name="font_size">15sp</dimen>
-
 </resources>

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.company.imetlin.fishmarker.PlaceActivity
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.adapter.AdapterBigWater
-import com.company.imetlin.fishmarker.modelclass.BigWater
+import com.company.imetlin.fishmarker.model.BigWater
 
 class  BigWaterFragment : Fragment() {
 

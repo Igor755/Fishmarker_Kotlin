@@ -14,4 +14,8 @@
         <color name="list_odd">#E1E2E2</color>
         <color name="list_selected">#455FB6</color>
         <color name="stroke_border">#D7D7D7</color>
+        <color name="colorGreyVariantLight">#F2F2F2</color>
+        <color name="colorGreyLight">#939292</color>
+        <color name="colorPrimaryLight">#6A86DD</color>
+        <color name="colorGrey">#808080</color>
 </resources>

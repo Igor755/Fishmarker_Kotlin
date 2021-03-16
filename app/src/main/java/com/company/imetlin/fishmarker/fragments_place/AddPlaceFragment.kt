@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.company.imetlin.fishmarker.MarkerActivity
 import com.company.imetlin.fishmarker.adapter.AdapterPlace
 import com.company.imetlin.fishmarker.helper_class.StaticHelper.Companion.allplace
-import com.company.imetlin.fishmarker.modelclass.Place
+import com.company.imetlin.fishmarker.model.Place
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_place.*
@@ -62,7 +62,7 @@ class AddPlaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val intent: Intent = activity?.intent!!
-        val nameBigWater: String = intent.getStringExtra("nameBigWater")
+        val nameBigWater: String = intent.getStringExtra("nameBigWater").toString()
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: Query = database.getReference("Place").orderByChild("uid").equalTo(mAuth.currentUser?.uid)
         allplace.clear()

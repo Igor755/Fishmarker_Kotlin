@@ -33,9 +33,7 @@
     <string name="sent_pass">Отправить мой пароль</string>
     <string name="forgot">Забыт пароль</string>
     <string name="not_valid_name">не валидное имя</string>
-    /////
     <string name="registration">Регистрация</string>
-
     <string name="registration_big">РЕГИСТРАЦИЯ</string>
     <string name="places">Места</string>
     <string name="markers">Маркера</string>
@@ -51,6 +49,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="auth_cancel">Отмена</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>

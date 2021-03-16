@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.fragments_marker.CardMarkerFragment
-import com.company.imetlin.fishmarker.modelclass.MarkerDetail
+import com.company.imetlin.fishmarker.model.MarkerDetail
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng

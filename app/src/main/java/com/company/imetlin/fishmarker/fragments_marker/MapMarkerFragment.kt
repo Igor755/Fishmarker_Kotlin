@@ -141,11 +141,11 @@ class MapMarkerFragment : Fragment(), OnMapReadyCallback {
         mUiSettings.isMapToolbarEnabled = false
         bottom_sheet.visibility = View.GONE
 
-        val extras: Bundle = requireActivity().intent.extras
-        val latitude_place: Double = extras.getDouble("latitude")
+        val extras: Bundle? = requireActivity().intent.extras
+        val latitude_place: Double = extras!!.getDouble("latitude")
         val longitude_place: Double = extras.getDouble("longitude")
         val zoom_place: Float = extras.getFloat("zoom")
-        idplace = extras.getString("idplace")
+        idplace = extras.getString("idplace").toString()
 
         val cameraPosition: CameraPosition? = CameraPosition.Builder()
             .target(LatLng(latitude_place, longitude_place))
@@ -345,7 +345,7 @@ class MapMarkerFragment : Fragment(), OnMapReadyCallback {
                     context?.resources?.getString(R.string.ok),
                     DialogInterface.OnClickListener { _, _ -> })
                 val alert11: AlertDialog = alert_detail!!.create()
-                alert11.window.setBackgroundDrawableResource(R.color.orange)
+                alert11.window?.setBackgroundDrawableResource(R.color.orange)
                 alert11.show()
                 val buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE)
                 buttonbackground.setTextColor(context?.resources?.getColor(R.color.colorWhite)!!)

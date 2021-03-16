@@ -11,21 +11,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.customview.spinner.DataSpinner
-import com.company.imetlin.fishmarker.modelclass.MarkerDetail
+import com.company.imetlin.fishmarker.model.MarkerDetail
 import com.company.imetlin.fishmarker.singleton.Singleton
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_marker_dialog.*
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_latitude
 import kotlinx.android.synthetic.main.fragment_add_place_dialog.edit_longitude
-import kotlinx.android.synthetic.main.spinner_alert_dialog_listview_search.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -64,7 +59,7 @@ class CardMarkerFragment :Fragment() {
             val day = calendar.get(Calendar.DAY_OF_MONTH)
             val month = calendar.get(Calendar.MONTH)
             val year = calendar.get(Calendar.YEAR)
-            val datePickerDialog: DatePickerDialog = DatePickerDialog(context, R.style.ThemeOverlay_AppCompat_Dialog, dateSetListener,
+            val datePickerDialog: DatePickerDialog = DatePickerDialog(requireContext(), R.style.ThemeOverlay_AppCompat_Dialog, dateSetListener,
                 year,
                 month,
                 day
@@ -86,7 +81,7 @@ class CardMarkerFragment :Fragment() {
         val bundle: Bundle? = arguments
         val latitude: Double = bundle?.getDouble("latitude")!!
         val longitude: Double = bundle.getDouble("longitude")
-        val idplace: String = bundle.getString("idplace")
+        val idplace: String = bundle.getString("idplace").toString()
         edit_latitude.setText(latitude.toString())
         edit_longitude.setText(longitude.toString())
         btnOk.setOnClickListener {

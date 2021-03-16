@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ProgressWheel">
+        <attr name="pw_progressIndeterminate" format="boolean" />
+        <attr name="pw_barColor" format="color" />
+        <attr name="pw_rimColor" format="color" />
+        <attr name="pw_rimWidth" format="dimension" />
+        <attr name="pw_spinSpeed" format="float" />
+        <attr name="pw_barSpinCycleTime" format="integer" />
+        <attr name="pw_circleRadius" format="dimension" />
+        <attr name="pw_fillRadius" format="boolean" />
+        <attr name="pw_barWidth" format="dimension" />
+        <attr name="pw_linearProgress" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CheckableLayout">
+        <attr name="android:checked" />
+        <attr name="cl_enableChildren" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="LoadingLayout">
+        <attr name="cornerRadius" />
+        <attr name="android:background" />
+        <attr name="android:elevation" />
+        <attr name="ll_isLoading" format="boolean" />
+        <attr name="ll_progressColor" format="color|reference" />
+        <attr name="ll_animation" format="flags">
+            <flag name="fade" value="0" />
+            <flag name="slide" value="1" />
+        </attr>
+        <attr name="ll_progressGravity" format="flags">
+            <flag name="center" value="17" />
+            <flag name="end" value="8388613" />
+            <flag name="right" value="5" />
+            <flag name="center_vertical" value="16" />
+            <flag name="center_horizontal" value="1" />
+            <flag name="start" value="8388611" />
+            <flag name="bottom" value="80" />
+            <flag name="top" value="48" />
+            <flag name="left" value="3" />
+            <flag name="clip_horizontal" value="8" />
+            <flag name="clip_vertical" value="128" />
+            <flag name="fill" value="119" />
+            <flag name="fill_horizontal" value="7" />
+            <flag name="fill_vertical" value="112" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="EmptyView">
+        <attr name="android:text" />
+        <attr name="android:src" />
+        <attr name="ev_buttonText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="LoadingButton">
+        <attr name="android:text" />
+        <attr name="android:textAppearance" />
+        <attr name="android:singleLine" />
+        <attr name="android:maxLines" />
+        <attr name="android:minHeight" />
+        <attr name="android:minWidth" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="android:textAllCaps" />
+        <attr name="android:drawablePadding" />
+        <attr name="android:drawableStart" />
+        <attr name="android:drawableLeft" />
+        <attr name="android:drawableRight" />
+        <attr name="android:drawableEnd" />
+        <attr name="android:drawableTop" />
+        <attr name="android:drawableBottom" />
+        <attr name="android:elevation" />
+        <attr name="android:stateListAnimator" />
+        <attr name="android:enabled" />
+        <attr name="android:paddingStart" />
+        <attr name="android:paddingTop" />
+        <attr name="android:paddingBottom" />
+        <attr name="android:paddingEnd" />
+        <attr name="android:insetLeft" />
+        <attr name="android:insetTop" />
+        <attr name="android:insetBottom" />
+        <attr name="android:insetRight" />
+        <attr name="cornerRadius" />
+        <attr name="drawableTint" />
+        <attr name="strokeColor" format="color|reference" />
+        <attr name="lb_background" format="color|reference" />
+        <attr name="lb_progressColor" format="color|reference" />
+        <attr name="lb_isLoading" format="boolean" />
+        <attr name="lb_textGravity" format="flags">
+            <flag name="center" value="17" />
+            <flag name="end" value="8388613" />
+            <flag name="right" value="5" />
+            <flag name="center_vertical" value="16" />
+            <flag name="center_horizontal" value="1" />
+            <flag name="start" value="8388611" />
+            <flag name="bottom" value="80" />
+            <flag name="top" value="48" />
+            <flag name="left" value="3" />
+            <flag name="clip_horizontal" value="8" />
+            <flag name="clip_vertical" value="128" />
+            <flag name="fill" value="119" />
+            <flag name="fill_horizontal" value="7" />
+            <flag name="fill_vertical" value="112" />
+        </attr>
+        <attr name="lb_progressGravity" format="flags">
+            <flag name="center" value="17" />
+            <flag name="end" value="8388613" />
+            <flag name="right" value="5" />
+            <flag name="center_vertical" value="16" />
+            <flag name="center_horizontal" value="1" />
+            <flag name="start" value="8388611" />
+            <flag name="bottom" value="80" />
+            <flag name="top" value="48" />
+            <flag name="left" value="3" />
+            <flag name="clip_horizontal" value="8" />
+            <flag name="clip_vertical" value="128" />
+            <flag name="fill" value="119" />
+            <flag name="fill_horizontal" value="7" />
+            <flag name="fill_vertical" value="112" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CodeView">
+        <attr name="android:textAppearance" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="cv_length" format="integer" />
+        <attr name="cv_fieldType" format="flags">
+            <flag name="none" value="0" />
+            <flag name="underline" value="1" />
+            <flag name="outline" value="2" />
+        </attr>
+        <attr name="cv_fieldWidth" format="dimension" />
+        <attr name="cv_fieldHeight" format="dimension" />
+        <attr name="cv_fieldCorner" format="dimension" />
+        <attr name="cv_fieldSpacing" format="dimension" />
+        <attr name="cv_fieldElevation" format="dimension" />
+        <attr name="cv_fieldElevationColor" format="color|reference" />
+        <attr name="cv_fieldBackgroundColor" format="color|reference" />
+        <attr name="cv_fieldStrokeColor" format="color|reference" />
+        <attr name="cv_selectedFieldStrokeColor" format="color|reference" />
+        <attr name="cv_fieldStrokeWidth" format="dimension" />
+        <attr name="cv_selectedFieldStrokeWidth" format="dimension" />
+        <attr name="cv_isCursorVisible" format="boolean" />
+        <attr name="cv_cursorWidth" format="dimension" />
+        <attr name="cv_cursorColor" format="color|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="HeaderAlertDialog">
+        <attr name="had_headerColor" format="color" />
+        <attr name="had_headerTextColor" format="color" />
+        <attr name="had_headerTextAppearance" format="reference" />
+        <attr name="had_messageTextAppearance" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="HeaderBottomSheetDialog">
+        <attr name="hbsd_headerTextAppearance" format="reference" />
+        <attr name="hbsd_messageTextAppearance" format="reference" />
+    </declare-styleable>
+</resources>

@@ -1,4 +1,4 @@
-package com.company.imetlin.fishmarker.modelclass
+package com.company.imetlin.fishmarker.model
 
 data class User(var user_id: String = "",
            var user_name: String = "",

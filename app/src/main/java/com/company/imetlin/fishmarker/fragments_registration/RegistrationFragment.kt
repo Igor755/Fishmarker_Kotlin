@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.company.imetlin.fishmarker.R
 import com.company.imetlin.fishmarker.helper_class.StaticHelper
-import com.company.imetlin.fishmarker.modelclass.User
+import com.company.imetlin.fishmarker.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
@@ -27,7 +27,7 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
         progressbar!!.visibility = View.INVISIBLE
-        val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, StaticHelper.getValue())
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, StaticHelper.getValue())
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
         spinner_location.adapter = adapter
         button_register.setOnClickListener {
