@@ -1,6 +1,8 @@
 package com.company.imetlin.fishmarker.fragments_registration
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_registration.*
 
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment : Fragment(R.layout.fragment_registration), TextWatcher {
 
     private lateinit var mAuth: FirebaseAuth
 
@@ -26,11 +28,11 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
-        progressbar!!.visibility = View.INVISIBLE
+            //progressbar!!.visibility = View.INVISIBLE
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, StaticHelper.getValue())
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
         spinner_location.adapter = adapter
-        button_register.setOnClickListener {
+        btnRegistrationMainLogin.setOnClickListener {
             newRegistrationUser()
         }
     }
@@ -54,49 +56,49 @@ class RegistrationFragment : Fragment() {
     fun newRegistrationUser() {
 
         val position = spinner_location.selectedItemPosition
-        val name: String = edit_text_name.text.toString().trim()
-        val email: String = edit_text_email.text.toString().trim()
-        val password: String = edit_text_password.text.toString().trim()
-        val location: String? = StaticHelper.getValue()[position]
+        val name: String = tiEtRegName.text.toString().trim()
+        val email: String = tiEtRegEmail.text.toString().trim()
+        val password: String = tiEtRegPassword.text.toString().trim()
+        val location: String = StaticHelper.getValue()[position]
 
         if (name.isEmpty()) {
-            edit_text_name.error = getText(R.string.empty_name)
-            edit_text_name.requestFocus()
+            tiEtRegName.error = getText(R.string.empty_name)
+            tiEtRegName.requestFocus()
             return
         }
         if (email.isEmpty()) {
-            edit_text_email.error = getText(R.string.empty_email)
-            edit_text_email.requestFocus()
+            tiEtRegEmail.error = getText(R.string.empty_email)
+            tiEtRegEmail.requestFocus()
             return
         }
         if (password.isEmpty()) {
-            edit_text_password.error = getText(R.string.password_empty)
-            edit_text_password.requestFocus()
+            tiEtRegPassword.error = getText(R.string.password_empty)
+            tiEtRegPassword.requestFocus()
             return
         }
-        if (!isNameValid(edit_text_name.text.toString())) {
-            edit_text_name.error = getText(R.string.not_valid_name)
-            edit_text_name.requestFocus()
+        if (!isNameValid(tiEtRegName.text.toString())) {
+            tiEtRegName.error = getText(R.string.not_valid_name)
+            tiEtRegName.requestFocus()
             return
         }
-        if (!isEmailValid(edit_text_email.text.toString())) {
-            edit_text_email.error = getText(R.string.not_valid_email)
-            edit_text_email.requestFocus()
+        if (!isEmailValid(tiEtRegEmail.text.toString())) {
+            tiEtRegEmail.error = getText(R.string.not_valid_email)
+            tiEtRegEmail.requestFocus()
             return
         }
-        if (!isPasswordValid(edit_text_password.text.toString())) {
-            edit_text_password.error = getText(R.string.requirements)
-            edit_text_password.requestFocus()
+        if (!isPasswordValid(tiEtRegPassword.text.toString())) {
+            tiEtRegPassword.error = getText(R.string.requirements)
+            tiEtRegPassword.requestFocus()
             return
         }
-        progressbar!!.visibility = View.VISIBLE
+      //  progressbar!!.visibility = View.VISIBLE
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val userID: String = FirebaseAuth.getInstance().currentUser!!.uid
                 val user: User = User(userID, name, email, location.toString())
                 FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(user)
                     .addOnCompleteListener { task ->
-                        progressbar!!.visibility = View.INVISIBLE
+                    //    progressbar!!.visibility = View.INVISIBLE
 
                         if (task.isSuccessful) {
                             sendVerificationEmail()
@@ -107,7 +109,7 @@ class RegistrationFragment : Fragment() {
 
             } else {
                 Toast.makeText(context, task.exception?.message, Toast.LENGTH_SHORT).show()
-                progressbar!!.visibility = View.INVISIBLE
+               // progressbar!!.visibility = View.INVISIBLE
             }
         }
     }
@@ -127,5 +129,17 @@ class RegistrationFragment : Fragment() {
                 Toast.makeText(context, "DON'T SEND, NO INTERNET", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+        TODO("Not yet implemented")
     }
 }

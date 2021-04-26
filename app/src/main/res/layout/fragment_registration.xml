@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.company.imetlin.fishmarker.fragments_registration.RegistrationFragment">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/offset_32"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:paddingBottom="@dimen/offset_32"
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/web_fish"
-            /><!--android:onClick="RulesClick"-->
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/web_fish"/>
 
         <TextView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
@@ -28,7 +30,155 @@
             android:textAlignment="center"
             android:textSize="20sp"/>
 
-        <EditText
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/offset_12"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_40"
+                android:layout_marginTop="@dimen/offset_12"
+                android:layout_marginBottom="@dimen/offset_4"
+                android:text="@string/Name"
+                android:textSize="@dimen/headline_5" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiLoginName"
+                style="@style/TextInputLayout"
+                android:layout_marginStart="@dimen/offset_32"
+                android:layout_marginEnd="@dimen/offset_32"
+                android:layout_marginBottom="@dimen/offset_16"
+                android:elevation="@dimen/offset_4"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiEtRegName"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:hint="@string/name"
+                    android:inputType="textEmailAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_40"
+                android:layout_marginBottom="@dimen/offset_4"
+                android:text="@string/Email"
+                android:textSize="@dimen/headline_5" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiLoginEmail"
+                style="@style/TextInputLayout"
+                android:layout_marginStart="@dimen/offset_32"
+                android:layout_marginEnd="@dimen/offset_32"
+                android:layout_marginBottom="@dimen/offset_16"
+                android:elevation="@dimen/offset_4"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiEtRegEmail"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_40"
+                android:layout_marginBottom="@dimen/offset_4"
+                android:text="@string/Password"
+                android:textSize="@dimen/headline_5" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiLoginPassword"
+                style="@style/TextInputLayout"
+                android:layout_marginStart="@dimen/offset_32"
+                android:layout_marginEnd="@dimen/offset_32"
+                android:layout_marginBottom="@dimen/offset_16"
+                android:elevation="@dimen/offset_4"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                app:hintEnabled="false"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorGreyLight">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiEtRegPassword"
+                    style="@style/EditText"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_40"
+            android:layout_marginBottom="@dimen/offset_4"
+            android:text="@string/Location"
+            android:textSize="@dimen/headline_5"/>
+
+        <FrameLayout
+            android:layout_marginStart="@dimen/offset_32"
+            android:layout_marginEnd="@dimen/offset_32"
+            android:layout_width="match_parent"
+            android:elevation="@dimen/offset_4"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <View
+                android:layout_width="match_parent"
+                android:elevation="@dimen/offset_4"
+                android:layout_height="@dimen/offset_48"
+                android:background="@drawable/bg_rounded_item_white" />
+
+            <Spinner
+                android:elevation="@dimen/offset_4"
+                android:id="@+id/spinner_location"
+                android:layout_width="match_parent"
+                android:paddingStart = "@dimen/offset_6"
+                android:paddingEnd = "@dimen/offset_12"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/location"/>
+        </FrameLayout>
+
+        <!--<Spinner
+            android:id="@+id/spinner_location"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/offset_32"
+            android:layout_marginEnd="@dimen/offset_32"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/location"/>-->
+
+        <com.company.imetlin.fishmarker.widgets.LoadingButton
+            android:id="@+id/btnRegistrationMainLogin"
+            style="@style/ButtonPrimary"
+            android:textAllCaps="false"
+            android:layout_marginTop="@dimen/offset_24"
+            android:textColor="@color/colorWhite"
+            android:text="@string/registration"/>
+
+       <!-- <EditText
             android:id="@+id/edit_text_name"
             android:layout_width="300dp"
             android:imeOptions="actionDone"
@@ -37,7 +187,6 @@
             android:layout_height="wrap_content"
             android:nextFocusDown="@id/edit_text_email"
             android:hint="@string/Name"/>
-
 
         <EditText
             android:id="@+id/edit_text_email"
@@ -48,7 +197,6 @@
             android:nextFocusDown="@id/edit_text_password"
             android:hint="@string/Email"/>
 
-
         <EditText
             android:id="@+id/edit_text_password"
             android:layout_width="300dp"
@@ -58,8 +206,6 @@
             android:layout_height="wrap_content"
             android:nextFocusDown="@id/spinner_location"
             android:hint="@string/Password"/>
-
-
 
         <Spinner
             android:id="@+id/spinner_location"
@@ -77,18 +223,14 @@
             android:textColor="@color/colorWhite"
             android:text="@string/registration_big"
             android:textAllCaps="false" />
-
     </LinearLayout>
-
-
 
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true" />-->
 
-
-
-</RelativeLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
